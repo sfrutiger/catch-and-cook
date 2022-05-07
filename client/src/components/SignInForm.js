@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
-const LoginForm = () => {
+const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,7 +14,7 @@ const LoginForm = () => {
     setError("");
     try {
       await signIn(email, password);
-      navigate("/account");
+      navigate("/signedin");
     } catch (e) {
       setError(e.message);
       console.log(e.message);
@@ -50,18 +50,19 @@ const LoginForm = () => {
           />
         </div>
         <div className="flex flex-row">
-          <button className="bg-blue-600 w-full p-4 my-2 text-white mr-1">
-            Log in
+          <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 mr-1">
+            Sign in
           </button>
           <Link to="/" className="w-full">
-            <div className="bg-blue-600 p-4 my-2 text-white text-center ml-1">
+            <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1">
               Cancel
-            </div>
+            </button>
           </Link>
         </div>
       </form>
+      <div className="text-red-400">{error}</div>
     </div>
   );
 };
 
-export default LoginForm;
+export default SignInForm;

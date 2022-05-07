@@ -27,8 +27,8 @@ const SignUpForm = () => {
         <h1 className="text-2xl py-2">Sign up for a free account</h1>
         <p className="py-2">
           Already have an account?{" "}
-          <Link to="/login" className="underline">
-            Log in.
+          <Link to="/signin" className="underline">
+            Sign in.
           </Link>
         </p>
       </div>
@@ -50,13 +50,13 @@ const SignUpForm = () => {
           />
         </div>
         <div className="flex flex-row">
-          <button className="bg-blue-600 w-full p-4 my-2 text-white mr-1">
+          <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 mr-1">
             Sign Up
           </button>
           <Link to="/" className="w-full">
-            <div className="bg-blue-600 p-4 my-2 text-white text-center ml-1">
+            <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1">
               Cancel
-            </div>
+            </button>
           </Link>
         </div>
       </form>

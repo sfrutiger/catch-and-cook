@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
+  /* signOut, */
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../firebase";
@@ -20,9 +20,10 @@ export const AuthContextProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const logout = () => {
+  // cannot get this to work in context
+  /* const logOut = () => {
     return signOut(auth);
-  };
+  }; */
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -35,7 +36,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ createUser, user, logout, signIn }}>
+    <UserContext.Provider value={{ createUser, user, /* logOut, */ signIn }}>
       {children}
     </UserContext.Provider>
   );
