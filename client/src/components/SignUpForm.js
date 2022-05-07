@@ -14,7 +14,7 @@ const SignUpForm = () => {
     setError("");
     try {
       await createUser(email, password);
-      navigate("/account");
+      navigate("/");
     } catch (e) {
       setError(e.message);
       console.log(e.message);
@@ -49,10 +49,18 @@ const SignUpForm = () => {
             type="password"
           />
         </div>
-        <button className="bg-blue-600 w-full p-4 my-2 text-white">
-          Sign Up
-        </button>
+        <div className="flex flex-row">
+          <button className="bg-blue-600 w-full p-4 my-2 text-white mr-1">
+            Sign Up
+          </button>
+          <Link to="/" className="w-full">
+            <div className="bg-blue-600 p-4 my-2 text-white text-center ml-1">
+              Cancel
+            </div>
+          </Link>
+        </div>
       </form>
+      <div className="text-red-400">{error}</div>
     </div>
   );
 };
