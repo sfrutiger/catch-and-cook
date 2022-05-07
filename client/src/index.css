@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply bg-slate-500 text-white;
+  }
+
+  .login-buttons {
+    @apply w-full h-[1.8rem] bg-white text-slate-500 rounded mb-2;
+  }
+
+  .login-buttons-mobile {
+    @apply w-[150px] h-[1.8rem] bg-white text-slate-500 rounded mb-2;
+  }
+}
