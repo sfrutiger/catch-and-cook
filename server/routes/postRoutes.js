@@ -1,7 +1,29 @@
-const express = require('express')
-const router = express.Router()
-const { getPosts, createPost } = require('../controllers/postController')
+const express = require("express");
+const router = express.Router();
+const auth = require("../middleware/auth");
+const Post = require("../models/postModel");
 
-router.route('/').get(getPosts).post(createPost)
+// @desc Get posts
+// @route GET /api/posts
+// @access Public
+router.get("/", (req, res) => {
+  const posts = Post.find().then((posts) => res.status(200).json(posts));
+});
 
-module.exports = router
+// @desc Create post
+// @route POST /api/posts
+// @access Private
+router.post("/", auth, (req, res) => {
+  const post = Post.create({
+    author: req.body.author,
+    species: req.body.species,
+    date: req.body.date,
+    location: req.body.location,
+    conditions: req.body.conditions,
+    method: req.body.method,
+    details: req.body.details,
+    recipes: req.body.recipes,
+  }).then((post) => res.status(200).json(post));
+});
+
+module.exports = router;

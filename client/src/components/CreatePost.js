@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { UserAuth } from "../context/AuthContext";
+import { getAuth } from "firebase/auth";
 
 const CreatePost = ({ getPosts }) => {
-  const { user } = UserAuth;
   const [species, setSpecies] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
@@ -15,21 +14,34 @@ const CreatePost = ({ getPosts }) => {
 
   const navigate = useNavigate();
 
-  const createPost = async () => {
-    try {
-      await axios.post("/api/posts", {
-        author: user,
-        species: species,
-        date: date,
-        location: location,
-        conditions: conditions,
-        method: method,
-        details: details,
-        recipes: recipes,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  const createPost = () => {
+    auth.currentUser.getIdToken(true).then(function (idToken) {
+      axios
+        .post(
+          "/api/posts",
+          {
+            author: user,
+            species: species,
+            date: date,
+            location: location,
+            conditions: conditions,
+            method: method,
+            details: details,
+            recipes: recipes,
+          },
+          {
+            headers: {
+              authtoken: idToken,
+            },
+          }
+        )
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -45,9 +57,8 @@ const CreatePost = ({ getPosts }) => {
         details,
         recipes
       );
-      console.log("create post");
-      navigate("/");
       getPosts();
+      navigate("/");
     } catch (e) {
       console.log(e.message);
     }
@@ -59,7 +70,7 @@ const CreatePost = ({ getPosts }) => {
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col py-2">
           <label className="py-2">Species</label>
-          <input
+          <textarea
             onChange={(e) => setSpecies(e.target.value)}
             className="border py-1"
             type="text"
