@@ -28,7 +28,7 @@ const SignOutButton = () => {
   return (
     <>
       <div className="w-[110px] absolute right-4 top-4 hidden sm:flex flex-col">
-        <button onClick={handleLogout} className="signin-buttons">
+        <button onClick={handleLogout} className="buttons">
           Sign Out
         </button>
       </div>

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import { AuthContextProvider } from "./context/AuthContext";
 import axios from "axios";
 import Header from "./components/Header";
 import Feed from "./components/Feed";
@@ -8,9 +10,9 @@ import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
-import { Route, Routes, Navigate } from "react-router-dom";
-import { AuthContextProvider } from "./context/AuthContext";
 import NotFound from "./components/NotFound";
+import CreatePost from "./components/CreatePost";
+import CreatePostButton from "./components/CreatePostButton";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -68,6 +70,16 @@ function App() {
               <ProtectedRoute>
                 <Feed posts={posts} />
                 <SignOutButton />
+                <CreatePostButton />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="createpost"
+            element={
+              <ProtectedRoute>
+                <CreatePost getPosts={getPosts} />
               </ProtectedRoute>
             }
           />

@@ -9,10 +9,10 @@ const SignInButton = ({ logout }) => {
     <>
       <div className="w-[110px] absolute right-4 top-4 hidden sm:flex flex-col">
         <Link to="/signin">
-          <button className="signin-buttons">Sign In</button>
+          <button className="buttons">Sign In</button>
         </Link>
         <Link to="/signup">
-          <button className="signin-buttons">Sign Up</button>
+          <button className="buttons">Sign Up</button>
         </Link>
       </div>
 
