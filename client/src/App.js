@@ -21,6 +21,7 @@ function App() {
     try {
       const response = await axios.get("/api/posts");
       setPosts(response.data);
+      console.log("get posts");
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +80,7 @@ function App() {
             path="createpost"
             element={
               <ProtectedRoute>
-                <CreatePost getPosts={getPosts} />
+                <CreatePost setPosts={setPosts} posts={posts} />
               </ProtectedRoute>
             }
           />

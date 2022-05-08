@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
-const CreatePost = ({ getPosts }) => {
+const CreatePost = ({ posts, setPosts }) => {
   const [species, setSpecies] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
@@ -38,6 +38,7 @@ const CreatePost = ({ getPosts }) => {
             },
           }
         )
+        .then((response) => setPosts((posts) => [...posts, response.data]))
         .catch(function (error) {
           console.log(error);
         });
@@ -57,8 +58,7 @@ const CreatePost = ({ getPosts }) => {
         details,
         recipes
       );
-      getPosts();
-      navigate("/");
+      navigate("/signedin");
     } catch (e) {
       console.log(e.message);
     }
