@@ -54,7 +54,7 @@ const CreatePost = ({ posts, setPosts }) => {
             },
           }
         )
-        .then((response) => setPosts((posts) => [...posts, response.data]))
+        .then((response) => setPosts((posts) => [response.data, ...posts]))
         .catch(function (error) {
           console.log(error);
         });
@@ -128,6 +128,7 @@ const CreatePost = ({ posts, setPosts }) => {
           conditions={conditions}
           recipes={recipes}
           handleSubmit={handleSubmit}
+          previousStep={previousStep}
         />
       );
   }

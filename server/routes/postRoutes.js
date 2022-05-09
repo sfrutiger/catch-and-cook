@@ -7,7 +7,9 @@ const Post = require("../models/postModel");
 // @route GET /api/posts
 // @access Public
 router.get("/", (req, res) => {
-  const posts = Post.find().then((posts) => res.status(200).json(posts));
+  const posts = Post.find()
+    .sort({ _id: -1 })
+    .then((posts) => res.status(200).json(posts));
 });
 
 // @desc Create post
