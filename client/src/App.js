@@ -11,7 +11,7 @@ import SignUpForm from "./components/SignUpForm";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import NotFound from "./components/NotFound";
-import CreatePost from "./components/CreatePost";
+import CreatePost from "./components/createpost/CreatePost";
 import CreatePostButton from "./components/CreatePostButton";
 
 function App() {
