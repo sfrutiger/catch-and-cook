@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 import { getAuth } from "firebase/auth";
 import Picture from "./Picture";
 import SpeciesAndMethod from "./SpeciesAndMethods";
 import LocationAndConditions from "./LocationAndConditions";
 import Recipes from "./Recipes";
 import Confirm from "./Confirm";
+import { storage } from "../../firebase";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const CreatePost = ({ posts, setPosts }) => {
   const [step, setStep] = useState(1);
+  const [picture, setPicture] = useState(null);
+  const [pictureURL, setPictureURL] = useState("");
   const [species, setSpecies] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
@@ -61,9 +66,18 @@ const CreatePost = ({ posts, setPosts }) => {
     });
   };
 
+  const uploadPicture = () => {
+    /* e.preventDefault(); */
+    const storageRef = ref(storage, uuidv4());
+    uploadBytes(storageRef, picture).then((snapshot) => {
+      console.log("Uploaded a blob or file!");
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      await uploadPicture();
       await createPost(
         user,
         species,
@@ -82,7 +96,16 @@ const CreatePost = ({ posts, setPosts }) => {
 
   switch (step) {
     case 1:
-      return <Picture nextStep={nextStep} />;
+      return (
+        <Picture
+          nextStep={nextStep}
+          picture={picture}
+          setPicture={setPicture}
+          pictureURL={pictureURL}
+          setPictureURL={setPictureURL}
+          uploadPicture={uploadPicture}
+        />
+      );
     case 2:
       return (
         <SpeciesAndMethod
@@ -129,6 +152,7 @@ const CreatePost = ({ posts, setPosts }) => {
           recipes={recipes}
           handleSubmit={handleSubmit}
           previousStep={previousStep}
+          pictureURL={pictureURL}
         />
       );
   }

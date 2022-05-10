@@ -8,10 +8,12 @@ const Confirm = ({
   method,
   details,
   recipes,
+  pictureURL,
 }) => {
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
       {/* <p>{post.author.email}</p> */}
+      <img src={pictureURL} alt="Catch" />
       <p>{species}</p>
       <p>{date}</p>
       <p>{location}</p>
