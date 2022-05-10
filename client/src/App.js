@@ -16,6 +16,7 @@ import CreatePostButton from "./components/CreatePostButton";
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [checkForPosts, setCheckForPosts] = useState(false);
 
   const getPosts = async () => {
     try {
@@ -27,8 +28,9 @@ function App() {
     }
   };
 
-  if (!posts.length) {
+  if (!posts.length && checkForPosts === false) {
     getPosts();
+    setCheckForPosts(true);
   }
 
   return (

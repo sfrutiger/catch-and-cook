@@ -4,6 +4,9 @@ const postSchema = mongoose.Schema({
   author: {
     type: Object,
   },
+  pictureDownloadURL: {
+    type: String,
+  },
   species: {
     type: String,
   },

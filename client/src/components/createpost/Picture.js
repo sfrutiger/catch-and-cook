@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom";
 
-const Picture = ({ nextStep, setPicture, pictureURL, setPictureURL }) => {
+const Picture = ({
+  nextStep,
+  setPicture,
+  picturePreviewURL,
+  setPicturePreviewURL,
+}) => {
   function handleChange(e) {
     setPicture(e.target.files[0]);
-    setPictureURL(URL.createObjectURL(e.target.files[0]));
+    setPicturePreviewURL(URL.createObjectURL(e.target.files[0]));
   }
 
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
-      <img src={pictureURL} alt="Catch" />
+      <img src={picturePreviewURL} alt="Catch" />
       <form>
         <input type="file" onChange={(e) => handleChange(e)} />
       </form>

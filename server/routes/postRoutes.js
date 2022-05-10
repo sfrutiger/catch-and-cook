@@ -18,6 +18,7 @@ router.get("/", (req, res) => {
 router.post("/", auth, (req, res) => {
   const post = Post.create({
     author: req.body.author,
+    pictureDownloadURL: req.body.pictureDownloadURL,
     species: req.body.species,
     date: req.body.date,
     location: req.body.location,

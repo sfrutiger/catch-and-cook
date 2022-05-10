@@ -9,12 +9,13 @@ import LocationAndConditions from "./LocationAndConditions";
 import Recipes from "./Recipes";
 import Confirm from "./Confirm";
 import { storage } from "../../firebase";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const CreatePost = ({ posts, setPosts }) => {
   const [step, setStep] = useState(1);
   const [picture, setPicture] = useState(null);
-  const [pictureURL, setPictureURL] = useState("");
+  const [picturePreviewURL, setPicturePreviewURL] = useState("");
+  const [pictureDownloadURL, setPictureDownloadURL] = useState("");
   const [species, setSpecies] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
@@ -45,6 +46,7 @@ const CreatePost = ({ posts, setPosts }) => {
           "/api/posts",
           {
             author: user,
+            pictureDownloadURL: downloadURL,
             species: species,
             date: date,
             location: location,
@@ -66,20 +68,21 @@ const CreatePost = ({ posts, setPosts }) => {
     });
   };
 
-  const uploadPicture = () => {
-    /* e.preventDefault(); */
-    const storageRef = ref(storage, uuidv4());
-    uploadBytes(storageRef, picture).then((snapshot) => {
-      console.log("Uploaded a blob or file!");
-    });
+  let downloadURL;
+
+  const uploadPicture = async () => {
+    const storageID = uuidv4();
+    const storageRef = ref(storage, storageID);
+    await uploadBytes(storageRef, picture);
+    return (downloadURL = await getDownloadURL(storageRef));
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
       await uploadPicture();
-      await createPost(
+      createPost(
         user,
+        downloadURL,
         species,
         date,
         location,
@@ -89,21 +92,23 @@ const CreatePost = ({ posts, setPosts }) => {
         recipes
       );
       navigate("/signedin");
-    } catch (e) {
-      console.log(e.message);
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
   switch (step) {
+    default:
     case 1:
       return (
         <Picture
           nextStep={nextStep}
           picture={picture}
           setPicture={setPicture}
-          pictureURL={pictureURL}
-          setPictureURL={setPictureURL}
+          picturePreviewURL={picturePreviewURL}
+          setPicturePreviewURL={setPicturePreviewURL}
           uploadPicture={uploadPicture}
+          handleSubmit={handleSubmit}
         />
       );
     case 2:
@@ -147,12 +152,13 @@ const CreatePost = ({ posts, setPosts }) => {
           species={species}
           method={method}
           details={details}
+          date={date}
           location={location}
           conditions={conditions}
           recipes={recipes}
           handleSubmit={handleSubmit}
           previousStep={previousStep}
-          pictureURL={pictureURL}
+          picturePreviewURL={picturePreviewURL}
         />
       );
   }
