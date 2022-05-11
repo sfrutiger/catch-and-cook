@@ -3,8 +3,15 @@
 @tailwind utilities;
 
 @layer base {
-  * {
+  body {
     @apply bg-slate-500 text-white;
+  }
+
+  input {
+    @apply bg-slate-400;
+  }
+  textarea {
+    @apply bg-slate-400;
   }
 
   .buttons {

@@ -15,10 +15,9 @@ const CreatePost = ({ posts, setPosts }) => {
   const [step, setStep] = useState(1);
   const [picture, setPicture] = useState(null);
   const [picturePreviewURL, setPicturePreviewURL] = useState("");
-  const [pictureDownloadURL, setPictureDownloadURL] = useState("");
   const [species, setSpecies] = useState("");
   const [date, setDate] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState([]);
   const [conditions, setConditions] = useState("");
   const [method, setMethod] = useState("");
   const [details, setDetails] = useState("");
@@ -80,17 +79,7 @@ const CreatePost = ({ posts, setPosts }) => {
   const handleSubmit = async (e) => {
     try {
       await uploadPicture();
-      createPost(
-        user,
-        downloadURL,
-        species,
-        date,
-        location,
-        conditions,
-        method,
-        details,
-        recipes
-      );
+      createPost();
       navigate("/signedin");
     } catch (error) {
       console.log(error.message);

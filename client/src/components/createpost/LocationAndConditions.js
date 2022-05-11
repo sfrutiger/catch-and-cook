@@ -1,3 +1,5 @@
+import Map from "./Map";
+
 const LocationAndConditions = ({
   nextStep,
   previousStep,
@@ -10,6 +12,14 @@ const LocationAndConditions = ({
 }) => {
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
+      <Map setLocation={setLocation}></Map>
+      {location ? (
+        <div>
+          {location[1]}, {location[0]}
+        </div>
+      ) : (
+        <></>
+      )}
       <form>
         <div className="flex flex-col py-2">
           <label className="py-2">Date</label>
@@ -20,15 +30,10 @@ const LocationAndConditions = ({
             value={date}
           />
         </div>
-        <div className="flex flex-col py-2">
+        {/*  <div className="flex flex-col py-2">
           <label className="py-2">Location</label>
-          <textarea
-            onChange={(e) => setLocation(e.target.value)}
-            className="border py-1"
-            type="text"
-            value={location}
-          />
-        </div>
+          <textarea className="border py-1" type="text" value={location} />
+        </div> */}
         <div className="form-items">
           <label className="py-2">Conditions</label>
           <input

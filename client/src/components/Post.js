@@ -5,7 +5,9 @@ const Post = ({ post }) => {
       <img src={post.pictureDownloadURL} alt="catch" />
       <p>{post.species}</p>
       <p>{post.date}</p>
-      <p>{post.location}</p>
+      <p>
+        {post.location[1]}, {post.location[0]}
+      </p>
       <p>{post.conditions}</p>
       <p>{post.method}</p>
       <p>{post.details}</p>

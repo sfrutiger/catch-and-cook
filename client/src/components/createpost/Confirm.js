@@ -16,7 +16,9 @@ const Confirm = ({
       <img src={picturePreviewURL} alt="Catch" />
       <p>{species}</p>
       <p>{date}</p>
-      <p>{location}</p>
+      <p>
+        {location[1]}, {location[0]}
+      </p>
       <p>{conditions}</p>
       <p>{method}</p>
       <p>{details}</p>

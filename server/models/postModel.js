@@ -14,7 +14,7 @@ const postSchema = mongoose.Schema({
     type: String,
   },
   location: {
-    type: String,
+    type: Array,
   },
   conditions: {
     type: String,

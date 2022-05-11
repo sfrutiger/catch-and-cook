@@ -44,7 +44,7 @@ const SignOutButton = () => {
         className={
           !nav
             ? "hidden"
-            : "absolute left-0 w-full h-screen flex flex-col justify-start items-center"
+            : "absolute left-0 top-0 w-full h-full flex flex-col justify-start items-center"
         }
       >
         <button onClick={handleLogout} className="signin-buttons-mobile mt-12">
