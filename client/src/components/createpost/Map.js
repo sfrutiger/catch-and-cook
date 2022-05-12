@@ -10,14 +10,18 @@ const Map = ({ setLocation }) => {
     lng: longitude,
   };
 
+  const addCatchLocation = (e) => {
+    setLatitude(e.latLng.lat());
+    setLongitude(e.latLng.lng());
+    setLocation([e.latLng.lng(), e.latLng.lat()]);
+  };
+
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_FIREBASE_API_KEY}>
       <GoogleMap
         id="map"
         onClick={(e) => {
-          setLatitude(e.latLng.lat());
-          setLongitude(e.latLng.lng());
-          setLocation([longitude, latitude]);
+          addCatchLocation(e);
         }}
         mapContainerStyle={{
           height: "400px",
@@ -25,6 +29,7 @@ const Map = ({ setLocation }) => {
         }}
         zoom={9}
         center={mapCenter}
+        mapTypeId={"satellite"}
       >
         {latitude ? (
           <Marker position={{ lat: latitude, lng: longitude }} />

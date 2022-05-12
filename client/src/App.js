@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
 import axios from "axios";
@@ -28,10 +28,15 @@ function App() {
     }
   };
 
-  if (!posts.length && checkForPosts === false) {
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  // this seems to not always load, trying useEffect instead
+  /*   if (!posts.length && checkForPosts === false) {
     getPosts();
     setCheckForPosts(true);
-  }
+  } */
 
   return (
     <AuthContextProvider>
