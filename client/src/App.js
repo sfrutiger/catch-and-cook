@@ -16,13 +16,11 @@ import CreatePostButton from "./components/CreatePostButton";
 
 function App() {
   const [posts, setPosts] = useState([]);
-  const [checkForPosts, setCheckForPosts] = useState(false);
 
   const getPosts = async () => {
     try {
       const response = await axios.get("/api/posts");
       setPosts(response.data);
-      console.log("get posts");
     } catch (error) {
       console.log(error);
     }

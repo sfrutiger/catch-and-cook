@@ -17,7 +17,7 @@ const CreatePost = ({ posts, setPosts }) => {
   const [picturePreviewURL, setPicturePreviewURL] = useState("");
   const [species, setSpecies] = useState("");
   const [date, setDate] = useState("");
-  const [location, setLocation] = useState([]);
+  const [location, setLocation] = useState("");
   const [conditions, setConditions] = useState("");
   const [method, setMethod] = useState("");
   const [details, setDetails] = useState("");
@@ -100,7 +100,7 @@ const CreatePost = ({ posts, setPosts }) => {
           handleSubmit={handleSubmit}
         />
       );
-    case 2:
+    case 3:
       return (
         <SpeciesAndMethod
           nextStep={nextStep}
@@ -113,7 +113,7 @@ const CreatePost = ({ posts, setPosts }) => {
           details={details}
         />
       );
-    case 3:
+    case 2:
       return (
         <LocationAndConditions
           nextStep={nextStep}
