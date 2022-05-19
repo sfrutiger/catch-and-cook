@@ -17,6 +17,7 @@ const CreatePost = ({ posts, setPosts }) => {
   const [picturePreviewURL, setPicturePreviewURL] = useState("");
   const [species, setSpecies] = useState("");
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [conditions, setConditions] = useState("");
   const [method, setMethod] = useState("");
@@ -48,6 +49,7 @@ const CreatePost = ({ posts, setPosts }) => {
             pictureDownloadURL: downloadURL,
             species: species,
             date: date,
+            time: time,
             location: location,
             conditions: conditions,
             method: method,
@@ -119,8 +121,10 @@ const CreatePost = ({ posts, setPosts }) => {
           nextStep={nextStep}
           previousStep={previousStep}
           setDate={setDate}
+          setTime={setTime}
           setLocation={setLocation}
           setConditions={setConditions}
+          time={time}
           date={date}
           location={location}
           conditions={conditions}
@@ -142,6 +146,7 @@ const CreatePost = ({ posts, setPosts }) => {
           method={method}
           details={details}
           date={date}
+          time={time}
           location={location}
           conditions={conditions}
           recipes={recipes}

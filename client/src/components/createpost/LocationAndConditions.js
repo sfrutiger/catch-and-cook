@@ -1,15 +1,39 @@
+import axios from "axios";
 import Map from "./Map";
 
 const LocationAndConditions = ({
   nextStep,
   previousStep,
   setDate,
+  setTime,
   setLocation,
   setConditions,
   date,
   location,
+  time,
   conditions,
 }) => {
+  const weatherAPIKey = process.env.REACT_APP_WEATHER_API_KEY;
+
+  let nearestHour;
+
+  const roundHour = () => {
+    nearestHour = time.split(":").map(Number);
+    if (nearestHour[1] > 29) {
+      nearestHour[0] = nearestHour[0] + 1;
+    }
+    return nearestHour;
+  };
+
+  roundHour();
+
+  const retrieveWeather = async () => {
+    const response = await axios.get(
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location[1]}%2C%20${location[0]}/${date}T${nearestHour[0]}:00:00?key=${weatherAPIKey}&include=current`
+    );
+    console.log(response);
+  };
+
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
       <Map setLocation={setLocation}></Map>
@@ -20,9 +44,12 @@ const LocationAndConditions = ({
       ) : (
         <></>
       )}
+      <h1 className=" py-2">
+        Input the location, date, and time of your catch. Tide and weather
+        conditions will be retrieved if date is within the past week.
+      </h1>
       <form>
         <div className="flex flex-col py-2">
-          <label className="py-2">Date</label>
           <input
             onChange={(e) => setDate(e.target.value)}
             className="border py-1"
@@ -30,17 +57,12 @@ const LocationAndConditions = ({
             value={date}
           />
         </div>
-        {/*  <div className="flex flex-col py-2">
-          <label className="py-2">Location</label>
-          <textarea className="border py-1" type="text" value={location} />
-        </div> */}
-        <div className="form-items">
-          <label className="py-2">Conditions</label>
+        <div className="flex flex-col py-2">
           <input
-            onChange={(e) => setConditions(e.target.value)}
-            className="border p-1"
-            type="text"
-            value={conditions}
+            onChange={(e) => setTime(e.target.value)}
+            className="border py-1"
+            type="time"
+            value={time}
           />
         </div>
       </form>
@@ -52,7 +74,10 @@ const LocationAndConditions = ({
           Back
         </button>
         <button
-          onClick={() => nextStep()}
+          onClick={() => {
+            retrieveWeather();
+            nextStep();
+          }}
           className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
         >
           Next
