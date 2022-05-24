@@ -19,7 +19,7 @@ const LocationAndConditions = ({
 
   const roundHour = () => {
     nearestHour = time.split(":").map(Number);
-    if (nearestHour[1] > 29) {
+    if (nearestHour[1] >= 30) {
       nearestHour[0] = nearestHour[0] + 1;
     }
     return nearestHour;
@@ -31,7 +31,7 @@ const LocationAndConditions = ({
     const response = await axios.get(
       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location[1]}%2C%20${location[0]}/${date}T${nearestHour[0]}:00:00?key=${weatherAPIKey}&include=current`
     );
-    console.log(response);
+    setConditions(response);
   };
 
   return (

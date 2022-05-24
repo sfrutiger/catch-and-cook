@@ -6,7 +6,6 @@ const Confirm = ({
   location,
   conditions,
   method,
-  details,
   recipes,
   picturePreviewURL,
 }) => {
@@ -19,9 +18,11 @@ const Confirm = ({
       <p>
         {location[1]}, {location[0]}
       </p>
-      <p>{conditions}</p>
+      <p>{conditions.data.currentConditions.conditions}</p>
+      <p>Temperature: {conditions.data.currentConditions.temp} °F</p>
+      <p>Wind: {conditions.data.currentConditions.windspeed} mph</p>
+      <p>Pressure: {conditions.data.currentConditions.pressure} millibars</p>
       <p>{method}</p>
-      <p>{details}</p>
       <p>{recipes}</p>
       <div className="flex flex-row">
         <button

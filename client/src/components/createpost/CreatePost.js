@@ -19,9 +19,8 @@ const CreatePost = ({ posts, setPosts }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
-  const [conditions, setConditions] = useState("");
+  const [conditions, setConditions] = useState([""]);
   const [method, setMethod] = useState("");
-  const [details, setDetails] = useState("");
   const [recipes, setRecipes] = useState("");
 
   // Proceed to next step
@@ -53,7 +52,6 @@ const CreatePost = ({ posts, setPosts }) => {
             location: location,
             conditions: conditions,
             method: method,
-            details: details,
             recipes: recipes,
           },
           {
@@ -109,10 +107,8 @@ const CreatePost = ({ posts, setPosts }) => {
           previousStep={previousStep}
           setSpecies={setSpecies}
           setMethod={setMethod}
-          setDetails={setDetails}
           species={species}
           method={method}
-          details={details}
         />
       );
     case 2:
@@ -144,7 +140,6 @@ const CreatePost = ({ posts, setPosts }) => {
         <Confirm
           species={species}
           method={method}
-          details={details}
           date={date}
           time={time}
           location={location}

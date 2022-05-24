@@ -3,10 +3,8 @@ const SpeciesAndMethods = ({
   previousStep,
   setSpecies,
   setMethod,
-  setDetails,
   species,
   method,
-  details,
 }) => {
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
@@ -27,15 +25,6 @@ const SpeciesAndMethods = ({
             className="border p-1"
             type="text"
             value={method}
-          />
-        </div>
-        <div className="form-items">
-          <label className="py-2">Details</label>
-          <input
-            onChange={(e) => setDetails(e.target.value)}
-            className="border p-1"
-            type="text"
-            value={details}
           />
         </div>
       </form>

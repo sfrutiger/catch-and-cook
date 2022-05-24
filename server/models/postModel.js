@@ -17,12 +17,9 @@ const postSchema = mongoose.Schema({
     type: Array,
   },
   conditions: {
-    type: String,
+    type: Object,
   },
   method: {
-    type: String,
-  },
-  details: {
     type: String,
   },
   recipes: {

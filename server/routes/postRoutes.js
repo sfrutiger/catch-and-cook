@@ -24,7 +24,6 @@ router.post("/", auth, (req, res) => {
     location: req.body.location,
     conditions: req.body.conditions,
     method: req.body.method,
-    details: req.body.details,
     recipes: req.body.recipes,
   }).then((post) => res.status(200).json(post));
 });

@@ -4,7 +4,6 @@ import { AuthContextProvider } from "./context/AuthContext";
 import axios from "axios";
 import Header from "./components/Header";
 import Feed from "./components/Feed";
-import SignInButton from "./components/SignInButton";
 import SignOutButton from "./components/SignOutButton";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
@@ -12,7 +11,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import NotFound from "./components/NotFound";
 import CreatePost from "./components/createpost/CreatePost";
-import CreatePostButton from "./components/CreatePostButton";
+import PublicFooter from "./components/PublicFooter";
+import PrivateFooter from "./components/PrivateFooter";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -30,12 +30,6 @@ function App() {
     getPosts();
   }, []);
 
-  // this seems to not always load, trying useEffect instead
-  /*   if (!posts.length && checkForPosts === false) {
-    getPosts();
-    setCheckForPosts(true);
-  } */
-
   return (
     <AuthContextProvider>
       <div className="App">
@@ -47,7 +41,7 @@ function App() {
             element={
               <PublicRoute>
                 <Feed posts={posts} />
-                <SignInButton />
+                <PublicFooter />
               </PublicRoute>
             }
           />
@@ -76,7 +70,7 @@ function App() {
               <ProtectedRoute>
                 <Feed posts={posts} />
                 <SignOutButton />
-                <CreatePostButton />
+                <PrivateFooter />
               </ProtectedRoute>
             }
           />
