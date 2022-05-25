@@ -4,7 +4,14 @@ import { FaBars, FaHome } from "react-icons/fa";
 const PrivateFooter = ({ setMenuOpen }) => {
   return (
     <div className="footer">
-      <FaHome className="text-2xl cursor-pointer" />
+      <Link
+        to="/signedin"
+        onClick={() => {
+          window.location.reload();
+        }}
+      >
+        <FaHome className="text-2xl cursor-pointer" />
+      </Link>
       <Link to="/createpost" className="w-[50%]">
         <button className="w-full h-[2.6rem] bg-white text-slate-500 rounded">
           Create Post

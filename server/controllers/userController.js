@@ -1,4 +1,4 @@
-const asyncHandler = require("express-async-handler");
+/* const asyncHandler = require("express-async-handler");
 
 // @desc Create user
 // @route POST /api/users
@@ -10,3 +10,4 @@ const createUser = asyncHandler(async (req, res) => {
 module.exports = {
   createUser,
 };
+ */

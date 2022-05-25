@@ -1,4 +1,25 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 const Post = ({ post }) => {
+  const [recipes, setRecipes] = useState([]);
+  const [skip, setSkip] = useState(0);
+
+  const getRecipes = async () => {
+    try {
+      const response = await axios.get(`/api/recipes?skip=${skip}`);
+      if (recipes.length > 0) {
+        setRecipes([...recipes, ...response.data]);
+      } else {
+        setRecipes(response.data);
+      }
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    getRecipes();
+  }, [skip]);
+
   return (
     <>
       {post._id ? (
@@ -29,7 +50,20 @@ const Post = ({ post }) => {
           )}
           <p>{post.species}</p>
           <p>{post.method}</p>
-          <p>{post.recipes}</p>
+          {recipes.length ? (
+            <>
+              <p>Recipes:</p>
+              <div>
+                {recipes.map((recipe) => (
+                  <div key={recipe._id} className="cursor-pointer">
+                    {recipe.title}
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            ""
+          )}
         </div>
       ) : (
         ""

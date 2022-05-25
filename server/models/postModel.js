@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const recipeSchema = require("./recipeModel");
 
 const postSchema = mongoose.Schema({
   author: {
@@ -23,7 +24,7 @@ const postSchema = mongoose.Schema({
     type: String,
   },
   recipes: {
-    type: String,
+    type: Array,
   },
 });
 
