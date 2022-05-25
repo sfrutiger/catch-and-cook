@@ -17,24 +17,35 @@ import PublicMenu from "./components/PublicMenu";
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [skip, setSkip] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const getPosts = async () => {
     try {
-      const response = await axios.get("/api/posts");
-      setPosts(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+      const response = await axios.get(`/api/posts?skip=${skip}`);
+      if (posts.length > 0) {
+        setPosts([...posts, ...response.data]);
+      } else {
+        setPosts(response.data);
+      }
+    } catch (e) {}
   };
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [skip]);
+
+  const handleScroll = (e) => {
+    const { offsetHeight, scrollTop, scrollHeight } = e.target;
+
+    if (offsetHeight + scrollTop === scrollHeight) {
+      setSkip(posts.length);
+    }
+  };
 
   return (
     <AuthContextProvider>
-      <div className="App">
+      <div className="App overflow-y-scroll h-[100vh]" onScroll={handleScroll}>
         <Header />
         <Routes>
           <Route

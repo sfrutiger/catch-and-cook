@@ -6,10 +6,22 @@ const Post = require("../models/postModel");
 // @desc Get posts
 // @route GET /api/posts
 // @access Public
-router.get("/", (req, res) => {
-  const posts = Post.find()
-    .sort({ _id: -1 })
-    .then((posts) => res.status(200).json(posts));
+// infinite scroll
+router.get("/", async (req, res) => {
+  try {
+    const skip =
+      req.query.skip && /^\d+$/.test(req.query.skip)
+        ? Number(req.query.skip)
+        : 0;
+
+    const posts = await Post.find({}, undefined, { skip, limit: 3 }).sort({
+      _id: -1,
+    });
+
+    res.send(posts);
+  } catch (e) {
+    res.status(500).send();
+  }
 });
 
 // @desc Create post
