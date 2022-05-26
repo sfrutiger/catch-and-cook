@@ -21,7 +21,10 @@ const CreatePost = ({ posts, setPosts }) => {
   const [location, setLocation] = useState("");
   const [conditions, setConditions] = useState([""]);
   const [method, setMethod] = useState("");
-  const [recipes, setRecipes] = useState("");
+  const [recipe, setRecipe] = useState("");
+  const [recipeName, setRecipeName] = useState("");
+  const [recipeIngredients, setRecipeIngredients] = useState("");
+  const [recipeInstructions, setRecipeInstructions] = useState("");
 
   // Proceed to next step
   const nextStep = () => {
@@ -52,7 +55,7 @@ const CreatePost = ({ posts, setPosts }) => {
             location: location,
             conditions: conditions,
             method: method,
-            recipes: recipes,
+            recipes: recipe,
           },
           {
             headers: {
@@ -61,6 +64,30 @@ const CreatePost = ({ posts, setPosts }) => {
           }
         )
         .then((response) => setPosts((posts) => [response.data, ...posts]))
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
+  };
+
+  const createRecipe = () => {
+    auth.currentUser.getIdToken(true).then(function (idToken) {
+      axios
+        .post(
+          "/api/recipes",
+          {
+            author: user,
+            name: recipeName,
+            ingredients: recipeIngredients,
+            instructions: recipeInstructions,
+          },
+          {
+            headers: {
+              authtoken: idToken,
+            },
+          }
+        )
+        .then((response) => setRecipe(response.data._id))
         .catch(function (error) {
           console.log(error);
         });
@@ -79,6 +106,9 @@ const CreatePost = ({ posts, setPosts }) => {
   const handleSubmit = async (e) => {
     try {
       await uploadPicture();
+      if (recipeName) {
+        await createRecipe();
+      }
       createPost();
       navigate("/signedin");
     } catch (error) {
@@ -131,8 +161,12 @@ const CreatePost = ({ posts, setPosts }) => {
         <Recipes
           nextStep={nextStep}
           previousStep={previousStep}
-          setRecipes={setRecipes}
-          recipes={recipes}
+          recipeName={recipeName}
+          recipeIngredients={recipeIngredients}
+          recipeInstructions={recipeInstructions}
+          setRecipeName={setRecipeName}
+          setRecipeIngredients={setRecipeIngredients}
+          setRecipeInstructions={setRecipeInstructions}
         />
       );
     case 5:
@@ -144,7 +178,7 @@ const CreatePost = ({ posts, setPosts }) => {
           time={time}
           location={location}
           conditions={conditions}
-          recipes={recipes}
+          recipeName={recipeName}
           handleSubmit={handleSubmit}
           previousStep={previousStep}
           picturePreviewURL={picturePreviewURL}

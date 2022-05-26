@@ -14,6 +14,7 @@ import PublicFooter from "./components/PublicFooter";
 import PrivateFooter from "./components/PrivateFooter";
 import PrivateMenu from "./components/PrivateMenu";
 import PublicMenu from "./components/PublicMenu";
+import RecipeDetails from "./components/RecipeDetails";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -77,6 +78,16 @@ function App() {
               </PublicRoute>
             }
           />
+          <Route
+            exact
+            path="recipedetails/:id"
+            element={
+              <>
+                <RecipeDetails />
+              </>
+            }
+          />
+
           <Route
             exact
             path="signedin"

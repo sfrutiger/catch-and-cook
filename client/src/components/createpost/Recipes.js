@@ -1,14 +1,41 @@
-const Recipes = ({ nextStep, previousStep, setRecipes, recipes }) => {
+const Recipes = ({
+  nextStep,
+  previousStep,
+  recipeName,
+  recipeIngredients,
+  recipeInstructions,
+  setRecipeName,
+  setRecipeIngredients,
+  setRecipeInstructions,
+}) => {
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
       <form>
         <div className="flex flex-col py-2">
-          <label className="py-2">Recipes</label>
-          <textarea
-            onChange={(e) => setRecipes(e.target.value)}
+          <label className="py-2">Recipe name </label>
+          <input
+            onChange={(e) => setRecipeName(e.target.value)}
             className="border py-1"
-            type="date"
-            value={recipes}
+            type="text"
+            value={recipeName}
+          />
+        </div>
+        <div className="flex flex-col py-2">
+          <label className="py-2">Ingredients</label>
+          <textarea
+            onChange={(e) => setRecipeIngredients(e.target.value)}
+            className="border py-1"
+            type="text"
+            value={recipeIngredients}
+          />
+        </div>
+        <div className="flex flex-col py-2">
+          <label className="py-2">Instructions</label>
+          <textarea
+            onChange={(e) => setRecipeInstructions(e.target.value)}
+            className="border py-1"
+            type="text"
+            value={recipeInstructions}
           />
         </div>
       </form>
@@ -26,6 +53,7 @@ const Recipes = ({ nextStep, previousStep, setRecipes, recipes }) => {
           Next
         </button>
       </div>
+      <p>*additional recipes can be added after posting</p>
     </div>
   );
 };

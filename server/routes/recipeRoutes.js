@@ -14,9 +14,7 @@ router.get("/", async (req, res) => {
         ? Number(req.query.skip)
         : 0;
 
-    const recipes = await Recipe.find({}, undefined, { skip, limit: 3 }).sort({
-      _id: -1,
-    });
+    const recipes = await Recipe.find();
 
     res.send(recipes);
   } catch (e) {
@@ -30,8 +28,8 @@ router.get("/", async (req, res) => {
 router.post("/", auth, (req, res) => {
   const recipe = Recipe.create({
     author: req.body.author,
-    pictureDownloadURL: req.body.pictureDownloadURL,
-    title: req.body.title,
+    /* pictureDownloadURL: req.body.pictureDownloadURL, */
+    name: req.body.name,
     ingredients: req.body.ingredients,
     instructions: req.body.instructions,
   }).then((recipe) => res.status(200).json(recipe));
