@@ -3,15 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
-  const [recipes, setRecipes] = useState([]);
+  const [postRecipes, setPostRecipes] = useState([]);
   const [skip, setSkip] = useState(0);
-
-  let recipeIDs;
-  if (post.recipes[0] != "") {
-    recipeIDs = post.recipes;
-  } else recipeIDs = null;
-
-  console.log(recipeIDs);
 
   let latitude = post.location[1];
   latitude = Math.round(latitude * 1000) / 1000;
@@ -33,14 +26,20 @@ const Post = ({ post }) => {
     longitude = longitude + "°";
   }
 
+  // handle retrieving linked recipes from database
+  let recipeIDs;
+  if (post.recipes[0] != "") {
+    recipeIDs = post.recipes;
+  } else recipeIDs = null;
+
   const getRecipes = async () => {
     try {
       const response = await axios.get(`/api/recipes`, {
         params: {
-          recipeIDs: recipeIDs.reduce((x, y) => `${x},${y}`),
+          recipes: recipeIDs.reduce((x, y) => `${x},${y}`),
         },
       });
-      setRecipes(response.data);
+      setPostRecipes(response.data);
     } catch (e) {}
   };
 
@@ -87,15 +86,15 @@ const Post = ({ post }) => {
           {recipeIDs ? (
             <div className="mt-4">
               <p>Recipes:</p>
-              <div className="flex">
-                {recipes.map((recipe) => (
+              <div className="flex mt-2">
+                {postRecipes.map((recipe) => (
                   <Link
                     to={`/recipedetails/${recipe._id}`}
                     state={recipe}
                     key={recipe._id}
-                    className="mr-8"
+                    className="shadow-3xl w-[200px] text-center p-4 cursor-pointer mr-4"
                   >
-                    <div className="cursor-pointer">{recipe.title}</div>
+                    <div className="cursor-pointer">{recipe.name}</div>
                   </Link>
                 ))}
               </div>

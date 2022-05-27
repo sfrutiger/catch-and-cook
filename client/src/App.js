@@ -10,8 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import NotFound from "./components/NotFound";
 import CreatePost from "./components/createpost/CreatePost";
-import PublicFooter from "./components/PublicFooter";
-import PrivateFooter from "./components/PrivateFooter";
+import Footer from "./components/Footer";
 import PrivateMenu from "./components/PrivateMenu";
 import PublicMenu from "./components/PublicMenu";
 import RecipeDetails from "./components/RecipeDetails";
@@ -56,7 +55,7 @@ function App() {
               <PublicRoute>
                 <Feed posts={posts} />
                 <PublicMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-                <PublicFooter setMenuOpen={setMenuOpen} />
+                <Footer setMenuOpen={setMenuOpen} />
               </PublicRoute>
             }
           />
@@ -84,6 +83,7 @@ function App() {
             element={
               <>
                 <RecipeDetails />
+                <Footer setMenuOpen={setMenuOpen} />
               </>
             }
           />
@@ -95,7 +95,7 @@ function App() {
               <ProtectedRoute>
                 <Feed posts={posts} />
                 <PrivateMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-                <PrivateFooter setMenuOpen={setMenuOpen} />
+                <Footer setMenuOpen={setMenuOpen} />
               </ProtectedRoute>
             }
           />

@@ -33,10 +33,10 @@ const PrivateMenu = ({ menuOpen, setMenuOpen }) => {
               className="absolute right-3 top-3 cursor-pointer"
             />
             <div className="w-full h-[30%] flex flex-col items-center justify-around">
-              <p>Settings</p>
-              <p>About</p>
-              <p>Invite friends</p>
-              <p onClick={handleLogout} className="cursor-pointer">
+              <p className="menu-items">Settings</p>
+              <p className="menu-items">About</p>
+              <p className="menu-items">Invite friends</p>
+              <p className="menu-items" onClick={handleLogout}>
                 Sign Out
               </p>
             </div>

@@ -7,7 +7,7 @@ const recipeSchema = mongoose.Schema({
   pictureDownloadURL: {
     type: String,
   },
-  title: {
+  name: {
     type: String,
   },
   ingredients: {

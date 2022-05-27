@@ -9,14 +9,14 @@ const Recipe = require("../models/recipeModel");
 // infinite scroll
 router.get("/", async (req, res) => {
   try {
-    const skip =
+    /*     const skip =
       req.query.skip && /^\d+$/.test(req.query.skip)
         ? Number(req.query.skip)
-        : 0;
+        : 0; */
 
-    const recipes = await Recipe.find();
-
-    res.send(recipes);
+    let recipeArray = req.query.recipes.split(",");
+    const response = await Recipe.find({ _id: { $in: recipeArray } });
+    res.send(response);
   } catch (e) {
     res.status(500).send();
   }

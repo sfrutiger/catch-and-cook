@@ -1,25 +1,7 @@
 import { FaTimes } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
 import { Link } from "react-router-dom";
 
 const PublicMenu = ({ menuOpen, setMenuOpen }) => {
-  const navigate = useNavigate();
-  const logOut = () => {
-    return signOut(auth);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logOut();
-      setMenuOpen(false);
-      navigate("/");
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
   return (
     <>
       {menuOpen ? (
@@ -34,12 +16,20 @@ const PublicMenu = ({ menuOpen, setMenuOpen }) => {
               className="absolute right-3 top-3 cursor-pointer"
             />
             <div className="w-full h-[30%] flex flex-col items-center justify-around">
-              <p>About</p>
-              <p>Invite friends</p>
-              <Link to="/signin" onClick={() => setMenuOpen(false)}>
+              <p className="menu-items">About</p>
+              <p className="menu-items">Invite friends</p>
+              <Link
+                className="menu-items"
+                to="/signin"
+                onClick={() => setMenuOpen(false)}
+              >
                 <p>Sign In</p>
               </Link>
-              <Link to="/signup" onClick={() => setMenuOpen(false)}>
+              <Link
+                className="menu-items"
+                to="/signup"
+                onClick={() => setMenuOpen(false)}
+              >
                 <p>Create Account</p>
               </Link>
             </div>
