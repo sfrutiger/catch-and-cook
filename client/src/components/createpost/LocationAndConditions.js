@@ -16,12 +16,28 @@ const LocationAndConditions = ({
   const weatherAPIKey = process.env.REACT_APP_WEATHER_API_KEY;
 
   let nearestHour;
+  let nearestDate = date;
+
+  const roundDate = () => {
+    nearestDate = Date.parse(nearestDate);
+    nearestDate = nearestDate + 86400000;
+    nearestDate = new Date(nearestDate);
+    nearestDate = nearestDate.toISOString("en-US", { timeZone: "GMT" });
+    nearestDate = nearestDate.split("T");
+    nearestDate = nearestDate[0];
+    console.log(nearestDate);
+    return nearestDate;
+  };
 
   const roundHour = () => {
     nearestHour = time.split(":").map(Number);
-    if (nearestHour[1] >= 30) {
+    if (nearestHour[1] >= 30 && nearestHour[0] === 23) {
+      nearestHour[0] = 0;
+      roundDate();
+    } else if (nearestHour[1] > +30 && nearestHour[0] !== 23) {
       nearestHour[0] = nearestHour[0] + 1;
     }
+    console.log(nearestHour);
     return nearestHour;
   };
 
@@ -29,7 +45,8 @@ const LocationAndConditions = ({
 
   const retrieveWeather = async () => {
     const response = await axios.get(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location[1]}%2C%20${location[0]}/${date}T${nearestHour[0]}:00:00?key=${weatherAPIKey}&include=current`
+      // there is a bug with this API that won't return current conditions for exactly 00:00:00, so by default the minutes are set to :01.
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location[1]}%2C%20${location[0]}/${nearestDate}T${nearestHour[0]}:01:00?key=${weatherAPIKey}&include=current`
     );
     setConditions(response);
   };
@@ -75,6 +92,7 @@ const LocationAndConditions = ({
         </button>
         <button
           onClick={() => {
+            setConditions([""]); // this is so it resets if you come back and change inputs after weather has been retrieved
             retrieveWeather();
             nextStep();
           }}

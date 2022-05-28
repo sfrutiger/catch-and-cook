@@ -21,7 +21,7 @@ const CreatePost = ({ posts, setPosts }) => {
   const [location, setLocation] = useState("");
   const [conditions, setConditions] = useState([""]);
   const [method, setMethod] = useState("");
-  const [recipe, setRecipe] = useState("");
+  const [recipeIDs, setRecipeIDs] = useState([""]);
   const [recipeName, setRecipeName] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
@@ -55,7 +55,7 @@ const CreatePost = ({ posts, setPosts }) => {
             location: location,
             conditions: conditions,
             method: method,
-            recipes: recipe,
+            recipes: recipeIDs,
           },
           {
             headers: {
@@ -70,10 +70,10 @@ const CreatePost = ({ posts, setPosts }) => {
     });
   };
 
-  const createRecipe = () => {
-    auth.currentUser.getIdToken(true).then(function (idToken) {
-      axios
-        .post(
+  const createRecipe = async () => {
+    await auth.currentUser.getIdToken(true).then(function (idToken) {
+      try {
+        const response = axios.post(
           "/api/recipes",
           {
             author: user,
@@ -86,11 +86,12 @@ const CreatePost = ({ posts, setPosts }) => {
               authtoken: idToken,
             },
           }
-        )
-        .then((response) => setRecipe(response.data._id))
-        .catch(function (error) {
-          console.log(error);
-        });
+        );
+        console.log(response);
+        setRecipeIDs([...response.data._id]);
+      } catch (error) {
+        console.log(error);
+      }
     });
   };
 
@@ -106,9 +107,7 @@ const CreatePost = ({ posts, setPosts }) => {
   const handleSubmit = async (e) => {
     try {
       await uploadPicture();
-      if (recipeName) {
-        await createRecipe();
-      }
+      await createRecipe();
       createPost();
       navigate("/signedin");
     } catch (error) {
