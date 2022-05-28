@@ -49,6 +49,9 @@ const SignInForm = () => {
             type="password"
           />
         </div>
+        <Link to="/forgotpassword">
+          <p>Forgot password?</p>
+        </Link>
         <div className="flex flex-row">
           <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 mr-1">
             Sign in

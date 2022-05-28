@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import PrivateMenu from "./components/PrivateMenu";
 import PublicMenu from "./components/PublicMenu";
 import RecipeDetails from "./components/RecipeDetails";
+import ForgotPassword from "./components/ForgotPassword";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -85,6 +86,16 @@ function App() {
                 <RecipeDetails />
                 <Footer setMenuOpen={setMenuOpen} />
               </>
+            }
+          />
+
+          <Route
+            exact
+            path="forgotpassword"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
             }
           />
 
