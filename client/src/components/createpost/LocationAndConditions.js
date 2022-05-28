@@ -25,7 +25,6 @@ const LocationAndConditions = ({
     nearestDate = nearestDate.toISOString("en-US", { timeZone: "GMT" });
     nearestDate = nearestDate.split("T");
     nearestDate = nearestDate[0];
-    console.log(nearestDate);
     return nearestDate;
   };
 
@@ -37,7 +36,6 @@ const LocationAndConditions = ({
     } else if (nearestHour[1] > +30 && nearestHour[0] !== 23) {
       nearestHour[0] = nearestHour[0] + 1;
     }
-    console.log(nearestHour);
     return nearestHour;
   };
 

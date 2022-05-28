@@ -28,7 +28,7 @@ const Post = ({ post }) => {
 
   // handle retrieving linked recipes from database
   let recipeIDs;
-  if (post.recipes[0] != "") {
+  if (post.recipes.length) {
     recipeIDs = post.recipes;
   } else recipeIDs = null;
 

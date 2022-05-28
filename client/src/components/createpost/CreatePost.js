@@ -21,7 +21,7 @@ const CreatePost = ({ posts, setPosts }) => {
   const [location, setLocation] = useState("");
   const [conditions, setConditions] = useState([""]);
   const [method, setMethod] = useState("");
-  const [recipeIDs, setRecipeIDs] = useState([""]);
+  /* const [recipeIDs, setRecipeIDs] = useState([]); */
   const [recipeName, setRecipeName] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
@@ -41,7 +41,7 @@ const CreatePost = ({ posts, setPosts }) => {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  const createPost = () => {
+  const createPost = (recipeIDs) => {
     auth.currentUser.getIdToken(true).then(function (idToken) {
       axios
         .post(
@@ -63,32 +63,40 @@ const CreatePost = ({ posts, setPosts }) => {
             },
           }
         )
-        .then((response) => setPosts((posts) => [response.data, ...posts]))
+        .then(function (response) {
+          setPosts((posts) => [response.data, ...posts]);
+        })
+        .then(() => console.log(recipeIDs))
         .catch(function (error) {
           console.log(error);
         });
     });
   };
 
-  const createRecipe = async () => {
-    await auth.currentUser.getIdToken(true).then(function (idToken) {
+  let recipeIDs = [];
+
+  const createRecipe = () => {
+    auth.currentUser.getIdToken(true).then(function (idToken) {
       try {
-        const response = axios.post(
-          "/api/recipes",
-          {
-            author: user,
-            name: recipeName,
-            ingredients: recipeIngredients,
-            instructions: recipeInstructions,
-          },
-          {
-            headers: {
-              authtoken: idToken,
+        axios
+          .post(
+            "/api/recipes",
+            {
+              author: user,
+              name: recipeName,
+              ingredients: recipeIngredients,
+              instructions: recipeInstructions,
             },
-          }
-        );
-        console.log(response);
-        setRecipeIDs([...response.data._id]);
+            {
+              headers: {
+                authtoken: idToken,
+              },
+            }
+          )
+          .then(function (response) {
+            recipeIDs = [...recipeIDs, response.data._id];
+            return createPost(recipeIDs);
+          });
       } catch (error) {
         console.log(error);
       }
@@ -107,8 +115,11 @@ const CreatePost = ({ posts, setPosts }) => {
   const handleSubmit = async (e) => {
     try {
       await uploadPicture();
-      await createRecipe();
-      createPost();
+      if (recipeName) {
+        createRecipe();
+      } else {
+        createPost();
+      }
       navigate("/signedin");
     } catch (error) {
       console.log(error.message);
