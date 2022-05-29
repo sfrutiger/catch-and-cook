@@ -1,7 +1,9 @@
 import { FaTimes } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { useState } from "react";
+import DisplayInMenu from "./DisplayInMenu";
 
 const PrivateMenu = ({ menuOpen, setMenuOpen }) => {
   const navigate = useNavigate();
@@ -9,7 +11,7 @@ const PrivateMenu = ({ menuOpen, setMenuOpen }) => {
     return signOut(auth);
   };
 
-  const handleLogout = async () => {
+  /*   const handleLogout = async () => {
     try {
       await logOut();
       setMenuOpen(false);
@@ -17,7 +19,7 @@ const PrivateMenu = ({ menuOpen, setMenuOpen }) => {
     } catch (e) {
       console.log(e.message);
     }
-  };
+  }; */
 
   return (
     <>
@@ -32,14 +34,7 @@ const PrivateMenu = ({ menuOpen, setMenuOpen }) => {
               onClick={() => setMenuOpen(false)}
               className="absolute right-3 top-3 cursor-pointer"
             />
-            <div className="w-full h-[30%] flex flex-col items-center justify-around">
-              <p className="menu-items">Settings</p>
-              <p className="menu-items">About</p>
-              <p className="menu-items">Invite friends</p>
-              <p className="menu-items" onClick={handleLogout}>
-                Sign Out
-              </p>
-            </div>
+            <DisplayInMenu setMenuOpen={setMenuOpen} />
           </div>
         </div>
       ) : (

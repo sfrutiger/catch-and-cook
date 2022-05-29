@@ -15,6 +15,7 @@ import PrivateMenu from "./components/PrivateMenu";
 import PublicMenu from "./components/PublicMenu";
 import RecipeDetails from "./components/RecipeDetails";
 import ForgotPassword from "./components/ForgotPassword";
+import About from "./components/About";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -88,7 +89,6 @@ function App() {
               </>
             }
           />
-
           <Route
             exact
             path="forgotpassword"
@@ -98,7 +98,7 @@ function App() {
               </PublicRoute>
             }
           />
-
+          <Route exact path="about" element={<About />} />
           <Route
             exact
             path="signedin"
