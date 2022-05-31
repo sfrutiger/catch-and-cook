@@ -29,17 +29,4 @@
   .menu-items {
     @apply shadow-3xl w-[200px] text-center mb-4 p-4 cursor-pointer;
   }
-
-  .footer {
-    @apply w-full 
-    h-[70px] 
-    flex 
-    flex-row 
-    items-center 
-    justify-around 
-    fixed 
-    bottom-0 
-    py-4 
-    bg-slate-700;
-  }
 }

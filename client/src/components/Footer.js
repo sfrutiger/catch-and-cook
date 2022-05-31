@@ -5,49 +5,36 @@ import { UserAuth } from "../context/AuthContext";
 const Footer = ({ setMenuOpen }) => {
   const { user } = UserAuth();
 
-  if (user) {
-    return (
-      <div className="footer">
+  return (
+    <div className="fixed bottom-0 w-full h-[70px] bg-slate-700 flex justify-center">
+      <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
         <Link
           to="/"
           /* onClick={() => {
             window.location.reload();
           }} */
         >
-          <FaHome className="text-2xl cursor-pointer" />
+          <FaHome className="text-2xl cursor-pointer m-0" />
         </Link>
-        <Link to="/createpost" className="w-[50%]">
-          <button className="w-full h-[2.6rem] bg-white text-slate-500 rounded">
-            Create Post
-          </button>
-        </Link>
+        {user ? (
+          <Link to="/createpost" className="w-[50%] max-w-[700px]">
+            <button className="w-full h-[2.6rem] bg-white text-slate-500 rounded">
+              Create Post
+            </button>
+          </Link>
+        ) : (
+          <Link to="/signin" className="w-[50%] max-w-[700px]">
+            <button className="buttons h-[2.6rem]">Sign In</button>
+          </Link>
+        )}
+
         <FaBars
           onClick={() => setMenuOpen(true)}
-          className="text-2xl cursor-pointer"
+          className="text-2xl cursor-pointer m-0"
         />
       </div>
-    );
-  } else {
-    return (
-      <div className="footer">
-        <Link
-          to="/signedin"
-          /* onClick={() => {
-            window.location.reload();
-          }} */
-        >
-          <FaHome className="text-2xl cursor-pointer" />
-        </Link>
-        <Link to="/signin" className="w-[50%]">
-          <button className="buttons h-[2.6rem]">Sign In</button>
-        </Link>
-        <FaBars
-          onClick={() => setMenuOpen(true)}
-          className="text-2xl cursor-pointer"
-        />
-      </div>
-    );
-  }
+    </div>
+  );
 };
 
 export default Footer;

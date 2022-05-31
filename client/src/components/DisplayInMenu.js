@@ -4,10 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import About from "./About";
+import { UserAuth } from "../context/AuthContext";
 
 const DisplayInMenu = ({ setMenuOpen }) => {
+  const { user } = UserAuth();
   const [displayCase, setDisplayCase] = useState("");
-
   const navigate = useNavigate();
   const logOut = () => {
     return signOut(auth);
@@ -38,14 +39,33 @@ const DisplayInMenu = ({ setMenuOpen }) => {
     default:
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
-          <p className="menu-items">Settings</p>
+          {user ? <p className="menu-items">Settings</p> : ""}
           <p className="menu-items" onClick={() => setDisplayCase("about")}>
             About
           </p>
           <p className="menu-items">Invite friends</p>
-          <p className="menu-items" onClick={handleLogout}>
-            Sign Out
-          </p>
+          {user ? (
+            <p className="menu-items" onClick={handleLogout}>
+              Sign Out
+            </p>
+          ) : (
+            <>
+              <Link
+                className="menu-items"
+                to="/signin"
+                onClick={() => setMenuOpen(false)}
+              >
+                <p>Sign In</p>
+              </Link>
+              <Link
+                className="menu-items"
+                to="/signup"
+                onClick={() => setMenuOpen(false)}
+              >
+                <p>Create Account</p>
+              </Link>
+            </>
+          )}
         </div>
       );
   }

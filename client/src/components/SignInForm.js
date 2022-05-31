@@ -53,14 +53,14 @@ const SignInForm = () => {
           <p>Forgot password?</p>
         </Link>
         <div className="flex flex-row">
-          <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 mr-1">
-            Sign in
-          </button>
-          <Link to="/" className="w-full">
-            <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1">
+          <Link to="/" className="w-full mr-1">
+            <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2">
               Cancel
             </button>
           </Link>
+          <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1">
+            Sign in
+          </button>
         </div>
       </form>
       <div className="text-red-400">{error}</div>

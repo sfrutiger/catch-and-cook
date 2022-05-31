@@ -1,26 +1,7 @@
 import { FaTimes } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
-import { useState } from "react";
 import DisplayInMenu from "./DisplayInMenu";
 
-const PrivateMenu = ({ menuOpen, setMenuOpen }) => {
-  const navigate = useNavigate();
-  const logOut = () => {
-    return signOut(auth);
-  };
-
-  /*   const handleLogout = async () => {
-    try {
-      await logOut();
-      setMenuOpen(false);
-      navigate("/");
-    } catch (e) {
-      console.log(e.message);
-    }
-  }; */
-
+const Menu = ({ menuOpen, setMenuOpen }) => {
   return (
     <>
       {menuOpen ? (
@@ -44,4 +25,4 @@ const PrivateMenu = ({ menuOpen, setMenuOpen }) => {
   );
 };
 
-export default PrivateMenu;
+export default Menu;

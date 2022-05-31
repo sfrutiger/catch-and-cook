@@ -11,8 +11,7 @@ import PublicRoute from "./components/PublicRoute";
 import NotFound from "./components/NotFound";
 import CreatePost from "./components/createpost/CreatePost";
 import Footer from "./components/Footer";
-import PrivateMenu from "./components/PrivateMenu";
-import PublicMenu from "./components/PublicMenu";
+import Menu from "./components/Menu";
 import RecipeDetails from "./components/RecipeDetails";
 import ForgotPassword from "./components/ForgotPassword";
 import About from "./components/About";
@@ -49,6 +48,7 @@ function App() {
     <AuthContextProvider>
       <div className="App overflow-y-scroll h-[100vh]" onScroll={handleScroll}>
         <Header />
+        <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <Routes>
           <Route
             exact
@@ -56,7 +56,6 @@ function App() {
             element={
               <PublicRoute>
                 <Feed posts={posts} />
-                <PublicMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                 <Footer setMenuOpen={setMenuOpen} />
               </PublicRoute>
             }
@@ -105,7 +104,6 @@ function App() {
             element={
               <ProtectedRoute>
                 <Feed posts={posts} />
-                <PrivateMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                 <Footer setMenuOpen={setMenuOpen} />
               </ProtectedRoute>
             }
