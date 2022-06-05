@@ -4,10 +4,13 @@ import {
   signInWithEmailAndPassword,
   /* signOut, */
   onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
 const UserContext = createContext();
+const provider = new GoogleAuthProvider();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
@@ -18,6 +21,10 @@ export const AuthContextProvider = ({ children }) => {
 
   const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const googleSignIn = (provider) => {
+    return signInWithPopup(auth, provider);
   };
 
   // cannot get this to work in context
@@ -36,7 +43,15 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ createUser, user, /* logOut, */ signIn }}>
+    <UserContext.Provider
+      value={{
+        createUser,
+        googleSignIn,
+        provider,
+        user,
+        /* logOut, */ signIn,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

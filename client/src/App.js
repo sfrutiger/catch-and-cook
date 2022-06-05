@@ -38,7 +38,6 @@ function App() {
 
   const handleScroll = (e) => {
     const { offsetHeight, scrollTop, scrollHeight } = e.target;
-
     if (offsetHeight + scrollTop === scrollHeight) {
       setSkip(posts.length);
     }

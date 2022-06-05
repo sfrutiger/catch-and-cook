@@ -8,6 +8,9 @@ const SignInForm = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { signIn } = UserAuth();
+  const { createUser } = UserAuth();
+  const { googleSignIn } = UserAuth();
+  const { provider } = UserAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +36,7 @@ const SignInForm = () => {
         </p>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col py-2">
+        <div className="flex flex-col mb-2">
           <label className="py-2">Email Address</label>
           <input
             onChange={(e) => setEmail(e.target.value)}
@@ -41,7 +44,7 @@ const SignInForm = () => {
             type="email"
           />
         </div>
-        <div className="flex flex-col py-2">
+        <div className="flex flex-col mb-2">
           <label className="py-2">Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
@@ -52,7 +55,7 @@ const SignInForm = () => {
         <Link to="/forgotpassword">
           <p>Forgot password?</p>
         </Link>
-        <div className="flex flex-row">
+        <div className="flex flex-row mt-2">
           <Link to="/" className="w-full mr-1">
             <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2">
               Cancel
@@ -63,6 +66,13 @@ const SignInForm = () => {
           </button>
         </div>
       </form>
+      <p className="ml-0">or</p>
+      <button
+        className="sign-up-with-google p-0 m-0"
+        onClick={() => googleSignIn(provider)}
+      >
+        {""}
+      </button>
       <div className="text-red-400">{error}</div>
     </div>
   );
