@@ -14,7 +14,14 @@ router.get("/", async (req, res) => {
         ? Number(req.query.skip)
         : 0;
 
-    const posts = await Post.find({}, undefined, { skip, limit: 3 }).sort({
+    const userID = req.query.userid ? req.query.userid : { $exists: true };
+
+    console.log(req.query.userid);
+
+    const posts = await Post.find({ "author.uid": userID }, undefined, {
+      skip,
+      limit: 9,
+    }).sort({
       _id: -1,
     });
 

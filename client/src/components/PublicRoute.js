@@ -5,7 +5,7 @@ const PublicRoute = ({ children }) => {
   const { user } = UserAuth();
 
   if (user) {
-    return <Navigate to="signedin" />;
+    return <Navigate to="/signedin" />;
   }
 
   return children;

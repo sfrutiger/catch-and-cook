@@ -15,6 +15,7 @@ import Menu from "./components/Menu";
 import RecipeDetails from "./components/RecipeDetails";
 import ForgotPassword from "./components/ForgotPassword";
 import About from "./components/About";
+import UserFeed from "./components/UserFeed";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -57,15 +58,11 @@ function App() {
   useEffect(() => {
     if (routePath.pathname === "/signedin" || routePath.pathname === "/") {
       returnFeedToSamePosition();
-      console.log(routePath.pathname);
     }
   }, [routePath]);
 
   const returnFeedToSamePosition = () => {
-    console.log("return feed to same position ");
     document.getElementById("App").scrollTo(0, feedPosition);
-    console.log(feedPosition);
-    /* setFeedPosition(0); */
   };
 
   return (
@@ -75,7 +72,6 @@ function App() {
         id="App"
         onScroll={handleScroll}
       >
-        <Header />
         <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <Routes>
           <Route
@@ -83,11 +79,9 @@ function App() {
             path="/"
             element={
               <PublicRoute>
+                <Header />
                 <Feed posts={posts} />
-                <Footer
-                  setMenuOpen={setMenuOpen}
-                  returnFeedToSamePosition={returnFeedToSamePosition}
-                />
+                <Footer setMenuOpen={setMenuOpen} />
               </PublicRoute>
             }
           />
@@ -96,6 +90,7 @@ function App() {
             path="signup"
             element={
               <PublicRoute>
+                <Header />
                 <SignUpForm />
               </PublicRoute>
             }
@@ -105,6 +100,7 @@ function App() {
             path="signin"
             element={
               <PublicRoute>
+                <Header />
                 <SignInForm />
               </PublicRoute>
             }
@@ -114,9 +110,8 @@ function App() {
             path="recipedetails/:id"
             element={
               <>
-                <RecipeDetails
-                  returnFeedToSamePosition={returnFeedToSamePosition}
-                />
+                <Header />
+                <RecipeDetails />
                 <Footer setMenuOpen={setMenuOpen} />
               </>
             }
@@ -136,15 +131,19 @@ function App() {
             path="signedin"
             element={
               <ProtectedRoute>
-                <Feed
-                  posts={posts}
-                  feedPosition={feedPosition}
-                  returnFeedToSamePosition={returnFeedToSamePosition}
-                />
-                <Footer
-                  setMenuOpen={setMenuOpen}
-                  returnFeedToSamePosition={returnFeedToSamePosition}
-                />
+                <Header />
+                <Feed posts={posts} feedPosition={feedPosition} />
+                <Footer setMenuOpen={setMenuOpen} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="userfeed/:id"
+            element={
+              <ProtectedRoute>
+                <UserFeed />
+                <Footer setMenuOpen={setMenuOpen} />
               </ProtectedRoute>
             }
           />

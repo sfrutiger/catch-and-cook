@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
-const RecipeDetails = ({ returnFeedToSamePosition }) => {
+const RecipeDetails = () => {
   const location = useLocation();
   const data = location.state;
   const navigate = useNavigate();

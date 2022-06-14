@@ -53,7 +53,15 @@ const Post = ({ post, feedPosition }) => {
         <div className="shadow-3xl w-full max-w-[700px] mb-4 p-4">
           <div className="flex justify-between mb-2">
             <div className="flex flex-col items-start">
-              <p>{post.author.email}</p>
+              <Link
+                to={`/userfeed/${post.author.uid}`}
+                state={post}
+                onClick={() =>
+                  sessionStorage.setItem("scrollPosition", feedPosition)
+                }
+              >
+                <p className="curser-pointer">{post.author.email}</p>
+              </Link>
               {post.conditions ? (
                 <>
                   <p>{post.conditions.data.currentConditions.conditions}</p>
