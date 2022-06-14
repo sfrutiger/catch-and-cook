@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FaBars, FaHome } from "react-icons/fa";
 import { UserAuth } from "../context/AuthContext";
 
-const Footer = ({ setMenuOpen }) => {
+const Footer = ({ setMenuOpen, returnFeedToSamePosition }) => {
   const { user } = UserAuth();
 
   return (
@@ -16,6 +16,7 @@ const Footer = ({ setMenuOpen }) => {
         >
           <FaHome className="text-2xl cursor-pointer m-0" />
         </Link>
+        <button onClick={() => returnFeedToSamePosition()}>test</button>
         {user ? (
           <Link to="/createpost" className="w-[50%] max-w-[700px]">
             <button className="w-full h-[2.6rem] bg-white text-slate-500 rounded">

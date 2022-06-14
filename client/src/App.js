@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
 import axios from "axios";
 import Header from "./components/Header";
@@ -20,6 +20,8 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [feedPosition, setFeedPosition] = useState("");
+  const routePath = useLocation();
 
   const getPosts = async () => {
     try {
@@ -38,14 +40,38 @@ function App() {
 
   const handleScroll = (e) => {
     const { offsetHeight, scrollTop, scrollHeight } = e.target;
+    setFeedPosition(scrollTop);
     if (offsetHeight + scrollTop === scrollHeight) {
       setSkip(posts.length);
     }
   };
 
+  useEffect(() => {
+    if (feedPosition === 0 || feedPosition == NaN) {
+      const scrollPosition = sessionStorage.getItem("scrollPosition");
+      setFeedPosition(parseInt(scrollPosition));
+      sessionStorage.removeItem("scrollPosition");
+    }
+  }, [feedPosition]);
+
+  useEffect(() => {
+    returnFeedToSamePosition();
+  }, [routePath]);
+
+  const returnFeedToSamePosition = () => {
+    console.log("return feed to same position ");
+    document.getElementById("App").scrollTo(0, feedPosition);
+    console.log(feedPosition);
+    /* setFeedPosition(0); */
+  };
+
   return (
     <AuthContextProvider>
-      <div className="App overflow-y-scroll h-[100vh]" onScroll={handleScroll}>
+      <div
+        className="App overflow-y-scroll h-[100vh]"
+        id="App"
+        onScroll={handleScroll}
+      >
         <Header />
         <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <Routes>
@@ -55,7 +81,10 @@ function App() {
             element={
               <PublicRoute>
                 <Feed posts={posts} />
-                <Footer setMenuOpen={setMenuOpen} />
+                <Footer
+                  setMenuOpen={setMenuOpen}
+                  returnFeedToSamePosition={returnFeedToSamePosition}
+                />
               </PublicRoute>
             }
           />
@@ -82,7 +111,9 @@ function App() {
             path="recipedetails/:id"
             element={
               <>
-                <RecipeDetails />
+                <RecipeDetails
+                  returnFeedToSamePosition={returnFeedToSamePosition}
+                />
                 <Footer setMenuOpen={setMenuOpen} />
               </>
             }
@@ -102,8 +133,15 @@ function App() {
             path="signedin"
             element={
               <ProtectedRoute>
-                <Feed posts={posts} />
-                <Footer setMenuOpen={setMenuOpen} />
+                <Feed
+                  posts={posts}
+                  feedPosition={feedPosition}
+                  returnFeedToSamePosition={returnFeedToSamePosition}
+                />
+                <Footer
+                  setMenuOpen={setMenuOpen}
+                  returnFeedToSamePosition={returnFeedToSamePosition}
+                />
               </ProtectedRoute>
             }
           />

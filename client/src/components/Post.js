@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const Post = ({ post }) => {
+const Post = ({ post, feedPosition }) => {
   const [postRecipes, setPostRecipes] = useState([]);
   const [skip, setSkip] = useState(0);
 
@@ -92,6 +92,9 @@ const Post = ({ post }) => {
                     to={`/recipedetails/${recipe._id}`}
                     state={recipe}
                     key={recipe._id}
+                    onClick={() =>
+                      sessionStorage.setItem("scrollPosition", feedPosition)
+                    }
                     className="shadow-3xl w-[200px] text-center p-4 cursor-pointer mr-4"
                   >
                     <div className="cursor-pointer">{recipe.name}</div>
