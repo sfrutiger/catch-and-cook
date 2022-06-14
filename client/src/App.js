@@ -55,7 +55,10 @@ function App() {
   }, [feedPosition]);
 
   useEffect(() => {
-    returnFeedToSamePosition();
+    if (routePath.pathname === "/signedin" || routePath.pathname === "/") {
+      returnFeedToSamePosition();
+      console.log(routePath.pathname);
+    }
   }, [routePath]);
 
   const returnFeedToSamePosition = () => {
