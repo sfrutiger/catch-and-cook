@@ -19,7 +19,10 @@ import UserFeed from "./components/UserFeed";
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
   const [skip, setSkip] = useState(0);
+  const [userFeedSkip, setUserFeedSkip] = useState(0);
+  const [userFeedId, setUserFeedId] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [feedPosition, setFeedPosition] = useState("");
   const routePath = useLocation();
@@ -43,21 +46,31 @@ function App() {
     const { offsetHeight, scrollTop, scrollHeight } = e.target;
     setFeedPosition(scrollTop);
     if (offsetHeight + scrollTop === scrollHeight) {
-      setSkip(posts.length);
+      switch (routePath.pathname) {
+        case `/userfeed/${userFeedId}`:
+          setUserFeedSkip(userPosts.length);
+          break;
+        default:
+          setSkip(posts.length);
+      }
     }
   };
 
+  // get scroll position from session storage for scroll restoration
   useEffect(() => {
-    if (feedPosition === 0 || feedPosition == NaN) {
+    if (feedPosition === 0 || feedPosition === NaN) {
       const scrollPosition = sessionStorage.getItem("scrollPosition");
       setFeedPosition(parseInt(scrollPosition));
       sessionStorage.removeItem("scrollPosition");
     }
   }, [feedPosition]);
 
+  // handle state on route changes to facillitate infinite scroll and scroll restoration
   useEffect(() => {
     if (routePath.pathname === "/signedin" || routePath.pathname === "/") {
-      returnFeedToSamePosition();
+      returnFeedToSamePosition(); // restore scroll position
+      setUserFeedSkip(0); // reset skip for infinite scroll in user feed
+      setUserPosts([]);
     }
   }, [routePath]);
 
@@ -80,7 +93,11 @@ function App() {
             element={
               <PublicRoute>
                 <Header />
-                <Feed posts={posts} />
+                <Feed
+                  posts={posts}
+                  feedPosition={feedPosition}
+                  setUserFeedId={setUserFeedId}
+                />
                 <Footer setMenuOpen={setMenuOpen} />
               </PublicRoute>
             }
@@ -132,7 +149,11 @@ function App() {
             element={
               <ProtectedRoute>
                 <Header />
-                <Feed posts={posts} feedPosition={feedPosition} />
+                <Feed
+                  posts={posts}
+                  feedPosition={feedPosition}
+                  setUserFeedId={setUserFeedId}
+                />
                 <Footer setMenuOpen={setMenuOpen} />
               </ProtectedRoute>
             }
@@ -142,7 +163,12 @@ function App() {
             path="userfeed/:id"
             element={
               <ProtectedRoute>
-                <UserFeed />
+                <UserFeed
+                  userFeedSkip={userFeedSkip}
+                  setUserFeedSkip={setUserFeedSkip}
+                  userPosts={userPosts}
+                  setUserPosts={setUserPosts}
+                />
                 <Footer setMenuOpen={setMenuOpen} />
               </ProtectedRoute>
             }

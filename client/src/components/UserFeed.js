@@ -4,9 +4,13 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
-const UserFeed = () => {
-  const [posts, setPosts] = useState([]);
-  const [skip, setSkip] = useState(0);
+const UserFeed = ({
+  userFeedSkip,
+  setUserFeedSkip,
+  userPosts,
+  setUserPosts,
+}) => {
+  /* const [posts, setPosts] = useState([]); */
   const location = useLocation();
   const data = location.state;
   const navigate = useNavigate();
@@ -15,19 +19,19 @@ const UserFeed = () => {
     const userID = data.author.uid;
     try {
       const response = await axios.get(
-        `/api/posts?skip=${skip}&userid=${userID}`
+        `/api/posts?skip=${userFeedSkip}&userid=${userID}`
       );
-      if (posts.length > 0) {
-        setPosts([...posts, ...response.data]);
+      if (userPosts.length > 0) {
+        setUserPosts([...userPosts, ...response.data]);
       } else {
-        setPosts(response.data);
+        setUserPosts(response.data);
       }
     } catch (e) {}
   };
 
   useEffect(() => {
     getPosts();
-  }, [skip]);
+  }, [userFeedSkip]);
 
   const handleClick = () => {
     navigate(-1);
@@ -47,13 +51,10 @@ const UserFeed = () => {
           <div className="w-[0px]"></div>
         </div>
       </div>
-      {posts.length ? (
+      {userPosts.length ? (
         <div className="w-full my-8 mb-16 flex flex-col items-center">
-          {posts.map((post) => (
-            <Post
-              key={post._id}
-              post={post} /* feedPosition={feedPosition} */
-            />
+          {userPosts.map((post) => (
+            <Post key={post._id} post={post} />
           ))}
         </div>
       ) : (

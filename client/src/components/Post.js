@@ -2,7 +2,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const Post = ({ post, feedPosition }) => {
+const Post = ({
+  post,
+  feedPosition,
+  userFeedId,
+  setUserFeedId,
+  generalFeed,
+}) => {
   const [postRecipes, setPostRecipes] = useState([]);
   const [skip, setSkip] = useState(0);
 
@@ -47,21 +53,30 @@ const Post = ({ post, feedPosition }) => {
     getRecipes();
   }, [skip]);
 
+  const handleClick = () => {
+    sessionStorage.setItem("scrollPosition", feedPosition);
+    setUserFeedId(post.author.uid);
+  };
+
   return (
     <>
       {post._id ? (
         <div className="shadow-3xl w-full max-w-[700px] mb-4 p-4">
           <div className="flex justify-between mb-2">
             <div className="flex flex-col items-start">
-              <Link
-                to={`/userfeed/${post.author.uid}`}
-                state={post}
-                onClick={() =>
-                  sessionStorage.setItem("scrollPosition", feedPosition)
-                }
-              >
-                <p className="curser-pointer">{post.author.email}</p>
-              </Link>
+              {generalFeed ? (
+                <Link
+                  to={`/userfeed/${post.author.uid}`}
+                  state={post}
+                  onClick={() => {
+                    handleClick();
+                  }}
+                >
+                  <p className="curser-pointer">{post.author.email}</p>
+                </Link>
+              ) : (
+                ""
+              )}
               {post.conditions ? (
                 <>
                   <p>{post.conditions.data.currentConditions.conditions}</p>
