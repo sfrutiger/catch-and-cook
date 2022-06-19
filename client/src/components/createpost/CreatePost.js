@@ -41,6 +41,8 @@ const CreatePost = ({ posts, setPosts }) => {
   const auth = getAuth();
   const user = auth.currentUser;
 
+  console.log(auth.currentUser);
+
   const createPost = (recipeIDs) => {
     auth.currentUser.getIdToken(true).then(function (idToken) {
       axios

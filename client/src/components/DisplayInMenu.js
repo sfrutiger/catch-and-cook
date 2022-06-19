@@ -29,7 +29,7 @@ const DisplayInMenu = ({ setMenuOpen }) => {
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
           <FaArrowLeft
-            className="absolute left-3 top-3 cursor-pointer"
+            className="absolute left-3 top-3 cursor-pointer text-2xl"
             onClick={() => setDisplayCase("")}
           />
           <About />

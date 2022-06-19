@@ -13,7 +13,7 @@ const Menu = ({ menuOpen, setMenuOpen }) => {
           <div className="w-full h-[60%] flex items-center bg-slate-600 absolute bottom-0">
             <FaTimes
               onClick={() => setMenuOpen(false)}
-              className="absolute right-3 top-3 cursor-pointer"
+              className="absolute right-3 top-3 cursor-pointer text-2xl"
             />
             <DisplayInMenu setMenuOpen={setMenuOpen} />
           </div>

@@ -162,7 +162,7 @@ function App() {
             exact
             path="userfeed/:id"
             element={
-              <ProtectedRoute>
+              <>
                 <UserFeed
                   userFeedSkip={userFeedSkip}
                   setUserFeedSkip={setUserFeedSkip}
@@ -170,7 +170,7 @@ function App() {
                   setUserPosts={setUserPosts}
                 />
                 <Footer setMenuOpen={setMenuOpen} />
-              </ProtectedRoute>
+              </>
             }
           />
           <Route

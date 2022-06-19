@@ -72,7 +72,9 @@ const Post = ({
                     handleClick();
                   }}
                 >
-                  <p className="curser-pointer">{post.author.email}</p>
+                  <p className="curser-pointer">
+                    {post.author.displayName || "User"}
+                  </p>
                 </Link>
               ) : (
                 ""

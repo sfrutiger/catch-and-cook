@@ -5,6 +5,7 @@ import { UserAuth } from "../context/AuthContext";
 const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const { createUser } = UserAuth();
   const { googleSignIn } = UserAuth();
@@ -15,7 +16,7 @@ const SignUpForm = () => {
     e.preventDefault();
     setError("");
     try {
-      await createUser(email, password);
+      await createUser(email, password, username);
       navigate("/");
     } catch (e) {
       setError(e.message);
@@ -35,6 +36,14 @@ const SignUpForm = () => {
         </p>
       </div>
       <form onSubmit={handleSubmit}>
+        <div className="flex flex-col mb-2">
+          <label className="py-2">Username</label>
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            className="border p-3"
+            type="text"
+          />
+        </div>
         <div className="flex flex-col mb-2">
           <label className="py-2">Email Address</label>
           <input

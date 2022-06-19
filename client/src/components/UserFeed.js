@@ -46,7 +46,7 @@ const UserFeed = ({
             className="text-2xl cursor-pointer"
           />
           <h1 className="text-xl w-[50%] max-w-[700px] text-center">
-            {data.author.email}
+            {data.author.displayName}
           </h1>
           <div className="w-[0px]"></div>
         </div>
