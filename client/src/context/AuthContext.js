@@ -9,6 +9,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import axios from "axios";
 
 const UserContext = createContext();
 const provider = new GoogleAuthProvider();
@@ -21,6 +22,24 @@ export const AuthContextProvider = ({ children }) => {
       .then(function () {
         return updateProfile(auth.currentUser, {
           displayName: username,
+        });
+      })
+      .then(function () {
+        auth.currentUser.getIdToken(true).then(function (idToken) {
+          console.log(auth.currentUser);
+          axios.post(
+            "/api/users",
+            {
+              uid: auth.currentUser.uid,
+              email: auth.currentUser.email,
+              displayName: auth.currentUser.displayName,
+            },
+            {
+              headers: {
+                authtoken: idToken,
+              },
+            }
+          );
         });
       })
       .catch(function (error) {
@@ -43,7 +62,6 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      /* console.log(currentUser); */
       setUser(currentUser);
     });
     return () => {

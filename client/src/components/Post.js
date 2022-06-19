@@ -66,7 +66,7 @@ const Post = ({
             <div className="flex flex-col items-start">
               {generalFeed ? (
                 <Link
-                  to={`/userfeed/${post.author.uid}`}
+                  to={`/userfeed/${post.author}`}
                   state={post}
                   onClick={() => {
                     handleClick();

@@ -41,15 +41,13 @@ const CreatePost = ({ posts, setPosts }) => {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  console.log(auth.currentUser);
-
   const createPost = (recipeIDs) => {
     auth.currentUser.getIdToken(true).then(function (idToken) {
       axios
         .post(
           "/api/posts",
           {
-            author: user,
+            author: user.uid,
             pictureDownloadURL: downloadURL,
             species: species,
             date: date,

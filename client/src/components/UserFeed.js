@@ -1,16 +1,10 @@
 import Post from "./Post";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
-const UserFeed = ({
-  userFeedSkip,
-  setUserFeedSkip,
-  userPosts,
-  setUserPosts,
-}) => {
-  /* const [posts, setPosts] = useState([]); */
+const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
   const location = useLocation();
   const data = location.state;
   const navigate = useNavigate();
