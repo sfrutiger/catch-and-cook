@@ -64,8 +64,9 @@ const Post = ({
       console.log(error);
     }
   };
-
-  getAuthorUsername();
+  useEffect(() => {
+    getAuthorUsername();
+  }, []);
 
   useEffect(() => {
     getRecipes();

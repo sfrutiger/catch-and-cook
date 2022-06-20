@@ -66,7 +66,6 @@ const CreatePost = ({ posts, setPosts }) => {
         .then(function (response) {
           setPosts((posts) => [response.data, ...posts]);
         })
-        .then(() => console.log(recipeIDs))
         .catch(function (error) {
           console.log(error);
         });
