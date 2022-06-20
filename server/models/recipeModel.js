@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const recipeSchema = mongoose.Schema({
-  author: {
-    type: Object,
+  authorUID: {
+    type: String,
   },
   pictureDownloadURL: {
     type: String,

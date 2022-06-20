@@ -47,7 +47,7 @@ const CreatePost = ({ posts, setPosts }) => {
         .post(
           "/api/posts",
           {
-            author: user.uid,
+            authorUID: user.uid,
             pictureDownloadURL: downloadURL,
             species: species,
             date: date,

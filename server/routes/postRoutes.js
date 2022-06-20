@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
 // @access Private
 router.post("/", auth, (req, res) => {
   const post = Post.create({
-    author: req.body.author,
+    authorUID: req.body.authorUID,
     pictureDownloadURL: req.body.pictureDownloadURL,
     species: req.body.species,
     date: req.body.date,

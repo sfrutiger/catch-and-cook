@@ -10,7 +10,7 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
   const navigate = useNavigate();
 
   const getPosts = async () => {
-    const userID = data.author.uid;
+    const userID = data[0].authorUID;
     try {
       const response = await axios.get(
         `/api/posts?skip=${userFeedSkip}&userid=${userID}`
@@ -40,7 +40,7 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
             className="text-2xl cursor-pointer"
           />
           <h1 className="text-xl w-[50%] max-w-[700px] text-center">
-            {data.author.displayName}
+            {data[1]}
           </h1>
           <div className="w-[0px]"></div>
         </div>

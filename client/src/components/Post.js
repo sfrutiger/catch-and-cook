@@ -11,6 +11,7 @@ const Post = ({
 }) => {
   const [postRecipes, setPostRecipes] = useState([]);
   const [skip, setSkip] = useState(0);
+  const [authorUsername, setAuthorUsername] = useState("");
 
   let latitude = post.location[1];
   latitude = Math.round(latitude * 1000) / 1000;
@@ -46,8 +47,25 @@ const Post = ({
         },
       });
       setPostRecipes(response.data);
-    } catch (e) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const getAuthorUsername = async () => {
+    try {
+      const response = await axios.get("/api/users", {
+        params: {
+          authorUID: post.authorUID,
+        },
+      });
+      setAuthorUsername(response.data[0].displayName);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getAuthorUsername();
 
   useEffect(() => {
     getRecipes();
@@ -55,7 +73,7 @@ const Post = ({
 
   const handleClick = () => {
     sessionStorage.setItem("scrollPosition", feedPosition);
-    setUserFeedId(post.author.uid);
+    setUserFeedId(post.authorUID);
   };
 
   return (
@@ -66,15 +84,13 @@ const Post = ({
             <div className="flex flex-col items-start">
               {generalFeed ? (
                 <Link
-                  to={`/userfeed/${post.author}`}
-                  state={post}
+                  to={`/userfeed/${post.authorUID}`}
+                  state={[post, authorUsername]}
                   onClick={() => {
                     handleClick();
                   }}
                 >
-                  <p className="curser-pointer">
-                    {post.author.displayName || "User"}
-                  </p>
+                  <p className="curser-pointer">{authorUsername || "User"}</p>
                 </Link>
               ) : (
                 ""
