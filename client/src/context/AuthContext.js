@@ -26,6 +26,7 @@ export const AuthContextProvider = ({ children }) => {
       })
       .then(function () {
         auth.currentUser.getIdToken(true).then(function (idToken) {
+          // this is not getting the token for some reason
           console.log(auth.currentUser);
           axios.post(
             "/api/users",

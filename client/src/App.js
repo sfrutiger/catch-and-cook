@@ -14,7 +14,6 @@ import Footer from "./components/Footer";
 import Menu from "./components/Menu";
 import RecipeDetails from "./components/RecipeDetails";
 import ForgotPassword from "./components/ForgotPassword";
-import About from "./components/About";
 import UserFeed from "./components/UserFeed";
 
 function App() {
@@ -142,7 +141,6 @@ function App() {
               </PublicRoute>
             }
           />
-          <Route exact path="about" element={<About />} />
           <Route
             exact
             path="signedin"

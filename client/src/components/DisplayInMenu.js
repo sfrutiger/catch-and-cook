@@ -3,8 +3,9 @@ import { auth } from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import About from "./About";
 import { UserAuth } from "../context/AuthContext";
+import About from "./About";
+import Settings from "./Settings";
 
 const DisplayInMenu = ({ setMenuOpen }) => {
   const { user } = UserAuth();
@@ -36,10 +37,30 @@ const DisplayInMenu = ({ setMenuOpen }) => {
         </div>
       );
 
+    case "settings":
+      return (
+        <div className="w-full h-[30%] flex flex-col items-center justify-around">
+          <FaArrowLeft
+            className="absolute left-3 top-3 cursor-pointer text-2xl"
+            onClick={() => setDisplayCase("")}
+          />
+          <Settings />
+        </div>
+      );
+
     default:
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
-          {user ? <p className="menu-items">Settings</p> : ""}
+          {user ? (
+            <p
+              className="menu-items"
+              onClick={() => setDisplayCase("settings")}
+            >
+              Settings
+            </p>
+          ) : (
+            ""
+          )}
           <p className="menu-items" onClick={() => setDisplayCase("about")}>
             About
           </p>
