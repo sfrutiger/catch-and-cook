@@ -52,12 +52,17 @@ const DisplayInMenu = ({ setMenuOpen }) => {
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
           {user ? (
-            <p
-              className="menu-items"
-              onClick={() => setDisplayCase("settings")}
-            >
-              Settings
-            </p>
+            <>
+              <Link to="/myposts" onClick={() => setMenuOpen(false)}>
+                <p className="menu-items">My Posts</p>
+              </Link>
+              <p
+                className="menu-items"
+                onClick={() => setDisplayCase("settings")}
+              >
+                Settings
+              </p>
+            </>
           ) : (
             ""
           )}

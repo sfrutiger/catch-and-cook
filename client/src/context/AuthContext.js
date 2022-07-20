@@ -18,13 +18,15 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
   const createUser = (email, password, username) => {
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then(function () {
-        return updateProfile(auth.currentUser, {
-          displayName: username,
-        });
-      })
-      .then(function () {
+    return (
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(function () {
+          return updateProfile(auth.currentUser, {
+            displayName: username,
+          });
+        })
+        /* I am going to try user database in firestore instead
+        .then(function () {
         auth.currentUser.getIdToken(true).then(function (idToken) {
           // this is not getting the token for some reason
           console.log(auth.currentUser);
@@ -42,10 +44,11 @@ export const AuthContextProvider = ({ children }) => {
             }
           );
         });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      }) */
+        .catch(function (error) {
+          console.log(error);
+        })
+    );
   };
 
   const signIn = (email, password) => {

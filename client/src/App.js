@@ -15,6 +15,7 @@ import Menu from "./components/Menu";
 import RecipeDetails from "./components/RecipeDetails";
 import ForgotPassword from "./components/ForgotPassword";
 import UserFeed from "./components/UserFeed";
+import MyPosts from "./components/MyPosts";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -169,6 +170,16 @@ function App() {
                 />
                 <Footer setMenuOpen={setMenuOpen} />
               </>
+            }
+          />
+          <Route
+            exact
+            path="myposts"
+            element={
+              <ProtectedRoute>
+                <MyPosts />
+                <Footer setMenuOpen={setMenuOpen} />
+              </ProtectedRoute>
             }
           />
           <Route

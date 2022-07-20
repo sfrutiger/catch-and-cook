@@ -1,31 +1,35 @@
 import Post from "./Post";
 import axios from "axios";
-import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { UserAuth } from "../context/AuthContext";
 
-const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
-  const location = useLocation();
-  const data = location.state;
+const MyPosts = () => {
   const navigate = useNavigate();
+  const { user } = UserAuth();
+  const [myPosts, setMyPosts] = useState([]);
+  const [skip, setSkip] = useState(0);
+
+  console.log(myPosts);
 
   const getPosts = async () => {
-    const userID = data[0].authorUID;
+    const userID = user.uid;
     try {
       const response = await axios.get(
-        `/api/posts?skip=${userFeedSkip}&userid=${userID}`
+        `/api/posts?skip=${skip}&userid=${userID}`
       );
-      if (userPosts.length > 0) {
-        setUserPosts([...userPosts, ...response.data]);
+      if (myPosts.length > 0) {
+        setMyPosts([...myPosts, ...response.data]);
       } else {
-        setUserPosts(response.data);
+        setMyPosts(response.data);
       }
     } catch (e) {}
   };
 
   useEffect(() => {
     getPosts();
-  }, [userFeedSkip]);
+  }, [skip]);
 
   const handleClick = () => {
     navigate(-1);
@@ -40,14 +44,14 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
             className="text-2xl cursor-pointer"
           />
           <h1 className="text-xl w-[50%] max-w-[700px] text-center">
-            {data[0].authorUID}
+            {user.displayName}
           </h1>
           <div className="w-[0px]"></div>
         </div>
       </div>
-      {userPosts.length ? (
+      {myPosts.length ? (
         <div className="w-full my-8 mb-16 flex flex-col items-center">
-          {userPosts.map((post) => (
+          {myPosts.map((post) => (
             <Post key={post._id} post={post} />
           ))}
         </div>
@@ -58,4 +62,4 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
   );
 };
 
-export default UserFeed;
+export default MyPosts;

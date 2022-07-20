@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
 
 const Post = ({
   post,
@@ -12,6 +13,7 @@ const Post = ({
   const [postRecipes, setPostRecipes] = useState([]);
   const [skip, setSkip] = useState(0);
   const [authorUsername, setAuthorUsername] = useState("");
+  const [loading, setLoading] = useState(true);
 
   let latitude = post.location[1];
   latitude = Math.round(latitude * 1000) / 1000;
@@ -52,7 +54,7 @@ const Post = ({
     }
   };
 
-  const getAuthorUsername = async () => {
+  /*   const getAuthorUsername = async () => {
     try {
       const response = await axios.get("/api/users", {
         params: {
@@ -64,9 +66,10 @@ const Post = ({
       console.log(error);
     }
   };
+
   useEffect(() => {
     getAuthorUsername();
-  }, []);
+  }, []); */
 
   useEffect(() => {
     getRecipes();
@@ -124,7 +127,22 @@ const Post = ({
               <p>Method: {post.method}</p>
             </div>
           </div>
-          <img src={post.pictureDownloadURL} alt="catch" />
+          <div
+            className="flex items-center"
+            style={{ display: loading ? "block" : "none" }}
+          >
+            <FaSpinner
+              icon="spinner"
+              className="text-5xl animate-spin w-full"
+            />
+          </div>
+          <div style={{ display: loading ? "none" : "block" }}>
+            <img
+              src={post.pictureDownloadURL}
+              onLoad={() => setLoading(false)}
+            />
+          </div>
+          {/* <img src={post.pictureDownloadURL} alt="catch" /> */}
           {recipeIDs ? (
             <div className="mt-4">
               <p>Recipes:</p>

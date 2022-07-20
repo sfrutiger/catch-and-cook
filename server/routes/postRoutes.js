@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 
     const userID = req.query.userid ? req.query.userid : { $exists: true };
 
-    const posts = await Post.find({ "author.uid": userID }, undefined, {
+    const posts = await Post.find({ authorUID: userID }, undefined, {
       skip,
       limit: 3,
     }).sort({
