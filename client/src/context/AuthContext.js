@@ -4,32 +4,33 @@ import {
   signInWithEmailAndPassword,
   /* signOut, */
   onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup,
+  /* GoogleAuthProvider, */
+  /* signInWithPopup, */
   updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
 import { auth } from "../firebase";
 import axios from "axios";
 
 const UserContext = createContext();
-const provider = new GoogleAuthProvider();
+/* const provider = new GoogleAuthProvider(); */
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
   const createUser = (email, password, username) => {
-    return (
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(function () {
-          return updateProfile(auth.currentUser, {
-            displayName: username,
-          });
-        })
-        /* I am going to try user database in firestore instead
-        .then(function () {
+    return createUserWithEmailAndPassword(auth, email, password)
+      .then(function () {
+        return updateProfile(auth.currentUser, {
+          displayName: username,
+        });
+      })
+      .then(function () {
+        return sendEmailVerification(auth.currentUser);
+      })
+      .then(function () {
         auth.currentUser.getIdToken(true).then(function (idToken) {
-          // this is not getting the token for some reason
-          console.log(auth.currentUser);
+          // this is not getting the token for some reason **8/7/22 I don't know what this comment means
           axios.post(
             "/api/users",
             {
@@ -44,20 +45,20 @@ export const AuthContextProvider = ({ children }) => {
             }
           );
         });
-      }) */
-        .catch(function (error) {
-          console.log(error);
-        })
-    );
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const googleSignIn = (provider) => {
+  // google sign in causing issue with user names, will re-implement later
+  /*  const googleSignIn = (provider) => {
     return signInWithPopup(auth, provider);
-  };
+  }; */
 
   // cannot get this to work in context
   /* const logOut = () => {
@@ -77,8 +78,8 @@ export const AuthContextProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         createUser,
-        googleSignIn,
-        provider,
+        /* googleSignIn, */
+        /* provider, */
         user,
         /* logOut, */ signIn,
       }}

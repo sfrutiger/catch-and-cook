@@ -20,7 +20,7 @@ router.post("/", auth, (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const response = await User.find({
-      uid: /* req.body.authorUID */ "bJyuB3lvFIXAZrqBSkS65C1idS23",
+      uid: req.query.authorUID,
     });
     res.send(response);
   } catch (e) {

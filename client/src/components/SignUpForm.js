@@ -8,8 +8,8 @@ const SignUpForm = () => {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const { createUser } = UserAuth();
-  const { googleSignIn } = UserAuth();
-  const { provider } = UserAuth();
+  /* const { googleSignIn } = UserAuth(); */
+  /* const { provider } = UserAuth(); */
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -71,13 +71,13 @@ const SignUpForm = () => {
           </button>
         </div>
       </form>
-      <p className="ml-0">or</p>
+      {/* <p className="ml-0">or</p>
       <button
         className="sign-up-with-google p-0 m-0"
         onClick={() => googleSignIn(provider)}
       >
         {""}
-      </button>
+      </button> */}
       <div className="text-red-400">{error}</div>
     </div>
   );

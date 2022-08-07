@@ -54,7 +54,8 @@ const Post = ({
     }
   };
 
-  /*   const getAuthorUsername = async () => {
+  const getAuthorUsername = async () => {
+    console.log(post.authorUID);
     try {
       const response = await axios.get("/api/users", {
         params: {
@@ -69,7 +70,7 @@ const Post = ({
 
   useEffect(() => {
     getAuthorUsername();
-  }, []); */
+  }, []);
 
   useEffect(() => {
     getRecipes();

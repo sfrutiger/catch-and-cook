@@ -8,9 +8,9 @@ const SignInForm = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { signIn } = UserAuth();
-  const { createUser } = UserAuth();
-  const { googleSignIn } = UserAuth();
-  const { provider } = UserAuth();
+  /* const { createUser } = UserAuth(); */
+  /* const { googleSignIn } = UserAuth(); */
+  /* const { provider } = UserAuth(); */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,13 +66,13 @@ const SignInForm = () => {
           </button>
         </div>
       </form>
-      <p className="ml-0">or</p>
+      {/* <p className="ml-0">or</p>
       <button
         className="sign-up-with-google p-0 m-0"
         onClick={() => googleSignIn(provider)}
       >
         {""}
-      </button>
+      </button> */}
       <div className="text-red-400">{error}</div>
     </div>
   );
