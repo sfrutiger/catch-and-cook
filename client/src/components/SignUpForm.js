@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import axios from "axios";
 
 const SignUpForm = () => {
   const [email, setEmail] = useState("");
@@ -12,16 +13,34 @@ const SignUpForm = () => {
   /* const { provider } = UserAuth(); */
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const checkUsernameAvailability = async (username) => {
+    try {
+      const response = await axios.get("/api/users", {
+        params: {
+          criteria: "username",
+          displayName: username,
+        },
+      });
+      if (response.data.length === 0) {
+        createUser(email, password, username).then(function (error) {
+          if (error) {
+            setError(error.message);
+          } else {
+            navigate("/");
+          }
+        });
+      } else {
+        setError("Username unavailable");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    try {
-      await createUser(email, password, username);
-      navigate("/");
-    } catch (e) {
-      setError(e.message);
-      console.log(e.message);
-    }
+    checkUsernameAvailability(username);
   };
 
   return (

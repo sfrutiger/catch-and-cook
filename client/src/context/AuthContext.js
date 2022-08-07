@@ -47,12 +47,16 @@ export const AuthContextProvider = ({ children }) => {
         });
       })
       .catch(function (error) {
-        console.log(error);
+        return error;
       });
   };
 
   const signIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password).catch(function (
+      error
+    ) {
+      return error;
+    });
   };
 
   // google sign in causing issue with user names, will re-implement later

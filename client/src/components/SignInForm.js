@@ -12,16 +12,16 @@ const SignInForm = () => {
   /* const { googleSignIn } = UserAuth(); */
   /* const { provider } = UserAuth(); */
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    try {
-      await signIn(email, password);
-      navigate("/signedin");
-    } catch (e) {
-      setError(e.message);
-      console.log(e.message);
-    }
+    signIn(email, password).then(function (error) {
+      if (error) {
+        setError(error.message);
+      } else {
+        navigate("/");
+      }
+    });
   };
 
   return (

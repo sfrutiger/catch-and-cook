@@ -19,10 +19,20 @@ router.post("/", auth, (req, res) => {
 // @access Public
 router.get("/", async (req, res) => {
   try {
-    const response = await User.find({
-      uid: req.query.authorUID,
-    });
-    res.send(response);
+    switch (req.query.criteria) {
+      case "authorUID": {
+        const response = await User.find({
+          uid: req.query.authorUID,
+        });
+        res.send(response);
+      }
+      case "username": {
+        const response = await User.find({
+          displayName: req.query.displayName,
+        });
+        res.send(response);
+      }
+    }
   } catch (e) {
     res.status(500).send();
   }

@@ -59,6 +59,7 @@ const Post = ({
     try {
       const response = await axios.get("/api/users", {
         params: {
+          criteria: "authorUID",
           authorUID: post.authorUID,
         },
       });
