@@ -10,11 +10,9 @@ const MyPosts = () => {
   const { user } = UserAuth();
   const [myPosts, setMyPosts] = useState([]);
   const [skip, setSkip] = useState(0);
-
-  console.log(myPosts);
+  const userID = user.uid;
 
   const getPosts = async () => {
-    const userID = user.uid;
     try {
       const response = await axios.get(
         `/api/posts?skip=${skip}&userid=${userID}`
@@ -29,7 +27,7 @@ const MyPosts = () => {
 
   useEffect(() => {
     getPosts();
-  }, [skip]);
+  }, [userID]);
 
   const handleClick = () => {
     navigate(-1);

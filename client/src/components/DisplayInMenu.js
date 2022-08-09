@@ -69,7 +69,6 @@ const DisplayInMenu = ({ setMenuOpen }) => {
           <p className="menu-items" onClick={() => setDisplayCase("about")}>
             About
           </p>
-          <p className="menu-items">Invite friends</p>
           {user ? (
             <p className="menu-items" onClick={handleLogout}>
               Sign Out

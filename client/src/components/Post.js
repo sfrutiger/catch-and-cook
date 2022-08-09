@@ -55,7 +55,6 @@ const Post = ({
   };
 
   const getAuthorUsername = async () => {
-    console.log(post.authorUID);
     try {
       const response = await axios.get("/api/users", {
         params: {
