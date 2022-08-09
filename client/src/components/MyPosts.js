@@ -11,6 +11,7 @@ const MyPosts = () => {
   const [myPosts, setMyPosts] = useState([]);
   const [skip, setSkip] = useState(0);
   const userID = user.uid;
+  const myFeed = "my feed, not general or user feed"; //this is to clarify Post component is generated from myPosts
 
   const getPosts = async () => {
     try {
@@ -50,7 +51,13 @@ const MyPosts = () => {
       {myPosts.length ? (
         <div className="w-full my-8 mb-16 flex flex-col items-center">
           {myPosts.map((post) => (
-            <Post key={post._id} post={post} />
+            <Post
+              key={post._id}
+              post={post}
+              myFeed={myFeed}
+              setMyPosts={setMyPosts}
+              myPosts={myPosts}
+            />
           ))}
         </div>
       ) : (

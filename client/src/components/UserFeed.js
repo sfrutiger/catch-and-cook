@@ -40,7 +40,7 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
             className="text-2xl cursor-pointer"
           />
           <h1 className="text-xl w-[50%] max-w-[700px] text-center">
-            {data[0].authorUID}
+            {data[1]}
           </h1>
           <div className="w-[0px]"></div>
         </div>

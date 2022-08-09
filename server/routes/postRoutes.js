@@ -45,4 +45,14 @@ router.post("/", auth, (req, res) => {
   }).then((post) => res.status(200).json(post));
 });
 
+// @desc Delete post
+// @route DELETE /api/posts
+// @access Private
+router.delete("/:id", auth, (req, res) => {
+  console.log(req.params.id);
+  Post.findById(req.params.id)
+    .then((post) => post.remove().then(() => res.json({ success: true })))
+    .catch((err) => res.status(404).json({ success: false }));
+});
+
 module.exports = router;

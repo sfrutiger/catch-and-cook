@@ -1,19 +1,24 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner, FaTimes, FaEdit } from "react-icons/fa";
+import { getAuth } from "firebase/auth";
 
 const Post = ({
   post,
   feedPosition,
-  userFeedId,
   setUserFeedId,
   generalFeed,
+  myFeed,
+  myPosts,
+  setMyPosts,
 }) => {
   const [postRecipes, setPostRecipes] = useState([]);
   const [skip, setSkip] = useState(0);
   const [authorUsername, setAuthorUsername] = useState("");
   const [loading, setLoading] = useState(true);
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   let latitude = post.location[1];
   latitude = Math.round(latitude * 1000) / 1000;
@@ -81,10 +86,43 @@ const Post = ({
     setUserFeedId(post.authorUID);
   };
 
+  const deletePost = () => {
+    const id = post._id;
+    auth.currentUser.getIdToken(true).then(function (idToken) {
+      axios
+        .delete(`/api/posts/${id}`, {
+          headers: {
+            authtoken: idToken,
+          },
+        })
+        .then(function () {
+          setMyPosts(myPosts.filter((post) => post._id !== id));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
+  };
+
   return (
     <>
       {post._id ? (
         <div className="shadow-3xl w-full max-w-[700px] mb-4 p-4">
+          <div className="flex w-full justify-end">
+            {myFeed ? (
+              <FaEdit className="text-2xl mr-6 mb-2 cursor-pointer" />
+            ) : (
+              ""
+            )}
+            {myFeed ? (
+              <FaTimes
+                className="text-2xl cursor-pointer"
+                onClick={deletePost}
+              />
+            ) : (
+              ""
+            )}
+          </div>
           <div className="flex justify-between mb-2">
             <div className="flex flex-col items-start">
               {generalFeed ? (
