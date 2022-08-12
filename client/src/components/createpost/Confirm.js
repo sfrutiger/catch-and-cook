@@ -9,9 +9,13 @@ const Confirm = ({
   recipes,
   picturePreviewURL,
 }) => {
+  //to prevent multiple submissions of post
+  const disableButton = (e) => {
+    e.currentTarget.disabled = true;
+  };
+
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
-      {/* <p>{post.author.email}</p> */}
       <img src={picturePreviewURL} alt="Catch" />
       <p>{species}</p>
       <p>{date}</p>
@@ -40,7 +44,11 @@ const Confirm = ({
           Back
         </button>
         <button
-          onClick={(e) => handleSubmit(e)}
+          disabled={false}
+          onClick={(e) => {
+            handleSubmit(e);
+            disableButton(e);
+          }}
           className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
         >
           Post

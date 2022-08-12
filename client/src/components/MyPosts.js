@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { UserAuth } from "../context/AuthContext";
 
-const MyPosts = () => {
+const MyPosts = ({ posts, setPosts }) => {
   const navigate = useNavigate();
   const { user } = UserAuth();
   const [myPosts, setMyPosts] = useState([]);
@@ -57,6 +57,8 @@ const MyPosts = () => {
               myFeed={myFeed}
               setMyPosts={setMyPosts}
               myPosts={myPosts}
+              posts={posts}
+              setPosts={setPosts}
             />
           ))}
         </div>

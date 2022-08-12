@@ -177,7 +177,7 @@ function App() {
             path="myposts"
             element={
               <ProtectedRoute>
-                <MyPosts />
+                <MyPosts setPosts={setPosts} posts={posts} />
                 <Footer setMenuOpen={setMenuOpen} />
               </ProtectedRoute>
             }

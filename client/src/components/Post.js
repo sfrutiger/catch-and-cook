@@ -12,6 +12,8 @@ const Post = ({
   myFeed,
   myPosts,
   setMyPosts,
+  posts,
+  setPosts,
 }) => {
   const [postRecipes, setPostRecipes] = useState([]);
   const [skip, setSkip] = useState(0);
@@ -88,20 +90,25 @@ const Post = ({
 
   const deletePost = () => {
     const id = post._id;
-    auth.currentUser.getIdToken(true).then(function (idToken) {
-      axios
-        .delete(`/api/posts/${id}`, {
-          headers: {
-            authtoken: idToken,
-          },
-        })
-        .then(function () {
-          setMyPosts(myPosts.filter((post) => post._id !== id));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    });
+    if (auth.currentUser.uid === post.authorUID) {
+      auth.currentUser.getIdToken(true).then(function (idToken) {
+        axios
+          .delete(`/api/posts/${id}`, {
+            headers: {
+              authtoken: idToken,
+            },
+          })
+          .then(function () {
+            setMyPosts(myPosts.filter((post) => post._id !== id));
+            setPosts(posts.filter((post) => post._id !== id));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+    } else {
+      console.log("Access denied. Only post auther can delete post");
+    }
   };
 
   return (
