@@ -49,12 +49,32 @@ const LocationAndConditions = ({
     setConditions(response);
   };
 
+  let latitude = location[1];
+  latitude = Math.round(latitude * 1000) / 1000;
+  if (latitude > 0) {
+    latitude = latitude + "° N";
+  } else if (latitude < 0) {
+    latitude = Math.abs(latitude) + "° S";
+  } else {
+    latitude = latitude + "°";
+  }
+
+  let longitude = location[0];
+  longitude = Math.round(longitude * 1000) / 1000;
+  if (longitude > 0) {
+    longitude = longitude + "° E";
+  } else if (longitude < 0) {
+    longitude = Math.abs(longitude) + "° W";
+  } else {
+    longitude = longitude + "°";
+  }
+
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
       <Map setLocation={setLocation}></Map>
       {location ? (
         <div>
-          {location[1]}, {location[0]}
+          {latitude}, {longitude}
         </div>
       ) : (
         <></>
