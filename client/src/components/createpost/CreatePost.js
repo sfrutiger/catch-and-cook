@@ -81,7 +81,7 @@ const CreatePost = ({ posts, setPosts }) => {
           .post(
             "/api/recipes",
             {
-              author: user,
+              author: user.uid,
               name: recipeName,
               ingredients: recipeIngredients,
               instructions: recipeInstructions,

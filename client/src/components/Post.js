@@ -117,15 +117,13 @@ const Post = ({
         <div className="shadow-3xl w-full max-w-[700px] mb-4 p-4">
           <div className="flex w-full justify-end">
             {myFeed ? (
-              <FaEdit className="text-2xl mr-6 mb-2 cursor-pointer" />
-            ) : (
-              ""
-            )}
-            {myFeed ? (
-              <FaTimes
-                className="text-2xl cursor-pointer"
-                onClick={deletePost}
-              />
+              <>
+                <FaEdit className="text-2xl mr-6 mb-2 cursor-pointer" />
+                <FaTimes
+                  className="text-2xl cursor-pointer"
+                  onClick={deletePost}
+                />
+              </>
             ) : (
               ""
             )}
@@ -188,7 +186,6 @@ const Post = ({
               onLoad={() => setLoading(false)}
             />
           </div>
-          {/* <img src={post.pictureDownloadURL} alt="catch" /> */}
           {recipeIDs ? (
             <div className="mt-4">
               <p>Recipes:</p>
@@ -207,6 +204,15 @@ const Post = ({
                   </Link>
                 ))}
               </div>
+              {myFeed ? (
+                <Link to="/addrecipe">
+                  <button className="buttons max-w-[200px] mt-4 h-[40px]">
+                    Add recipe
+                  </button>
+                </Link>
+              ) : (
+                ""
+              )}
             </div>
           ) : (
             ""

@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
 // @access Private
 router.post("/", auth, (req, res) => {
   const recipe = Recipe.create({
-    author: req.body.author,
+    authorUID: req.body.author,
     /* pictureDownloadURL: req.body.pictureDownloadURL, */
     name: req.body.name,
     ingredients: req.body.ingredients,

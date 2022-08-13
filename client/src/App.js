@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import NotFound from "./components/NotFound";
 import CreatePost from "./components/createpost/CreatePost";
+import AddRecipe from "./components/AddRecipe";
 import Footer from "./components/Footer";
 import Menu from "./components/Menu";
 import RecipeDetails from "./components/RecipeDetails";
@@ -188,6 +189,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <CreatePost setPosts={setPosts} posts={posts} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="addrecipe"
+            element={
+              <ProtectedRoute>
+                <AddRecipe />
               </ProtectedRoute>
             }
           />
