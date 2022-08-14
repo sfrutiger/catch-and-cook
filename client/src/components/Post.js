@@ -204,16 +204,16 @@ const Post = ({
                   </Link>
                 ))}
               </div>
-              {myFeed ? (
-                <Link to="/addrecipe">
-                  <button className="buttons max-w-[200px] mt-4 h-[40px]">
-                    Add recipe
-                  </button>
-                </Link>
-              ) : (
-                ""
-              )}
             </div>
+          ) : (
+            ""
+          )}
+          {myFeed ? (
+            <Link to="/addrecipe" state={post}>
+              <button className="buttons max-w-[200px] mt-4 h-[40px]">
+                Add recipe
+              </button>
+            </Link>
           ) : (
             ""
           )}

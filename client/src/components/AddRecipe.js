@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
@@ -7,17 +7,21 @@ const AddRecipe = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
+  const location = useLocation();
+  const post = location.state;
   const [recipeName, setRecipeName] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
+  const [newRecipeID, setNewRecipeID] = useState("");
 
-  const updatePost = (recipeIDs) => {
+  const updatePost = (response) => {
+    const updatedRecipes = [...post.recipes, response.data._id];
     auth.currentUser.getIdToken(true).then(function (idToken) {
       axios
-        .post(
-          "/api/posts",
+        .patch(
+          `/api/posts/${post._id}`,
           {
-            recipes: recipeIDs,
+            recipes: updatedRecipes,
           },
           {
             headers: {
@@ -50,8 +54,8 @@ const AddRecipe = () => {
               },
             }
           )
-          .then(function () {
-            return updatePost();
+          .then(function (response) {
+            return updatePost(response);
           });
       } catch (error) {
         console.log(error);

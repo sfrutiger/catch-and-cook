@@ -57,15 +57,14 @@ router.delete("/:id", auth, (req, res) => {
 // @desc update post
 // @route PATCH /api/posts
 // @access Private
-/* router.patch("/:_id", auth, (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
+  const updates = req.body;
   try {
-    const id = req.params.id;
-    const updates = req.body;
-    const result = await Post.findByIdAndUpdate(id, updates);
+    const result = await Post.findByIdAndUpdate(req.params.id, req.body);
     res.send(result);
   } catch (error) {
     res.json({ success: false });
   }
 });
- */
+
 module.exports = router;
