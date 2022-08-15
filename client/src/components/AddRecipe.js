@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
-const AddRecipe = () => {
+const AddRecipe = ({ posts, setPosts, postEdited, setPostEdited, setSkip }) => {
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
@@ -12,7 +12,6 @@ const AddRecipe = () => {
   const [recipeName, setRecipeName] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
-  const [newRecipeID, setNewRecipeID] = useState("");
 
   const updatePost = (response) => {
     const updatedRecipes = [...post.recipes, response.data._id];
@@ -29,6 +28,10 @@ const AddRecipe = () => {
             },
           }
         )
+        .then(function () {
+          setPostEdited(postEdited + 1);
+          setSkip(0);
+        })
         .catch(function (error) {
           console.log(error);
         });

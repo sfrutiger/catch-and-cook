@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { UserAuth } from "../context/AuthContext";
 
-const MyPosts = ({ posts, setPosts }) => {
+const MyPosts = ({ posts, setPosts, postEdited }) => {
   const navigate = useNavigate();
   const { user } = UserAuth();
   const [myPosts, setMyPosts] = useState([]);
@@ -13,22 +13,23 @@ const MyPosts = ({ posts, setPosts }) => {
   const userID = user.uid;
   const myFeed = "my feed, not general or user feed"; //this is to clarify Post component is generated from myPosts
 
-  const getPosts = async () => {
+  const getMyPosts = async () => {
     try {
       const response = await axios.get(
         `/api/posts?skip=${skip}&userid=${userID}`
       );
-      if (myPosts.length > 0) {
-        setMyPosts([...myPosts, ...response.data]);
-      } else {
-        setMyPosts(response.data);
-      }
+      setMyPosts(response.data);
     } catch (e) {}
   };
 
   useEffect(() => {
-    getPosts();
+    getMyPosts();
   }, [userID]);
+
+  useEffect(() => {
+    setMyPosts("");
+    getMyPosts();
+  }, [postEdited]);
 
   const handleClick = () => {
     navigate(-1);

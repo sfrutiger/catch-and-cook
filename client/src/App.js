@@ -27,11 +27,12 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [feedPosition, setFeedPosition] = useState("");
   const routePath = useLocation();
+  const [postEdited, setPostEdited] = useState();
 
   const getPosts = async () => {
     try {
       const response = await axios.get(`/api/posts?skip=${skip}`);
-      if (posts.length > 0) {
+      if (posts.length > 0 && skip !== 0) {
         setPosts([...posts, ...response.data]);
       } else {
         setPosts(response.data);
@@ -42,6 +43,11 @@ function App() {
   useEffect(() => {
     getPosts();
   }, [skip]);
+
+  useEffect(() => {
+    setSkip(0);
+    getPosts();
+  }, [postEdited]);
 
   const handleScroll = (e) => {
     const { offsetHeight, scrollTop, scrollHeight } = e.target;
@@ -178,7 +184,12 @@ function App() {
             path="myposts"
             element={
               <ProtectedRoute>
-                <MyPosts setPosts={setPosts} posts={posts} />
+                <MyPosts
+                  setPosts={setPosts}
+                  posts={posts}
+                  postEdited={postEdited}
+                  setPostEdited={setPostEdited}
+                />
                 <Footer setMenuOpen={setMenuOpen} />
               </ProtectedRoute>
             }
@@ -197,7 +208,14 @@ function App() {
             path="addrecipe"
             element={
               <ProtectedRoute>
-                <AddRecipe />
+                <AddRecipe
+                  setPosts={setPosts}
+                  posts={posts}
+                  postEdited={postEdited}
+                  setPostEdited={setPostEdited}
+                  skip={skip}
+                  setSkip={setSkip}
+                />
               </ProtectedRoute>
             }
           />

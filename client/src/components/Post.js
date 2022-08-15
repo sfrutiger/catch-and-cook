@@ -189,7 +189,7 @@ const Post = ({
           {recipeIDs ? (
             <div className="mt-4">
               <p>Recipes:</p>
-              <div className="flex mt-2">
+              <div className="flex mt-2 flex-wrap">
                 {postRecipes.map((recipe) => (
                   <Link
                     to={`/recipedetails/${recipe._id}`}
@@ -198,7 +198,7 @@ const Post = ({
                     onClick={() =>
                       sessionStorage.setItem("scrollPosition", feedPosition)
                     }
-                    className="shadow-3xl w-[200px] text-center p-4 cursor-pointer mr-4"
+                    className="shadow-3xl w-[200px] text-center p-4 cursor-pointer mr-4 mb-4"
                   >
                     <div className="cursor-pointer">{recipe.name}</div>
                   </Link>
@@ -210,7 +210,7 @@ const Post = ({
           )}
           {myFeed ? (
             <Link to="/addrecipe" state={post}>
-              <button className="buttons max-w-[200px] mt-4 h-[40px]">
+              <button className="buttons max-w-[200px] h-[40px]">
                 Add recipe
               </button>
             </Link>
