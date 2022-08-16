@@ -58,7 +58,6 @@ router.delete("/:id", auth, (req, res) => {
 // @route PATCH /api/posts
 // @access Private
 router.patch("/:id", auth, async (req, res) => {
-  const updates = req.body;
   try {
     const result = await Post.findByIdAndUpdate(req.params.id, req.body);
     res.send(result);

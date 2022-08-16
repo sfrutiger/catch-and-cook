@@ -8,10 +8,15 @@ const AddRecipe = ({ posts, setPosts, postEdited, setPostEdited, setSkip }) => {
   const auth = getAuth();
   const user = auth.currentUser;
   const location = useLocation();
-  const post = location.state;
-  const [recipeName, setRecipeName] = useState("");
-  const [recipeIngredients, setRecipeIngredients] = useState("");
-  const [recipeInstructions, setRecipeInstructions] = useState("");
+  const post = location.state[0];
+  const recipe = location.state[1];
+  const [recipeName, setRecipeName] = useState(recipe ? recipe.name : "");
+  const [recipeIngredients, setRecipeIngredients] = useState(
+    recipe ? recipe.ingredients : ""
+  );
+  const [recipeInstructions, setRecipeInstructions] = useState(
+    recipe ? recipe.instructions : ""
+  );
 
   const updatePost = (response) => {
     const updatedRecipes = [...post.recipes, response.data._id];
@@ -65,9 +70,40 @@ const AddRecipe = ({ posts, setPosts, postEdited, setPostEdited, setSkip }) => {
     });
   };
 
+  const editRecipe = () => {
+    auth.currentUser.getIdToken(true).then(function (idToken) {
+      try {
+        axios
+          .patch(
+            `/api/recipes/${recipe._id}`,
+            {
+              author: user.uid,
+              name: recipeName,
+              ingredients: recipeIngredients,
+              instructions: recipeInstructions,
+            },
+            {
+              headers: {
+                authtoken: idToken,
+              },
+            }
+          )
+          .then(function (response) {
+            return updatePost(response);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  };
+
   const handleSubmit = (e) => {
     try {
-      addRecipe();
+      if (recipe) {
+        editRecipe();
+      } else {
+        addRecipe();
+      }
       navigate("/myposts");
     } catch (error) {
       console.log(error.message);
@@ -115,7 +151,7 @@ const AddRecipe = ({ posts, setPosts, postEdited, setPostEdited, setSkip }) => {
           onClick={() => handleSubmit()}
           className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
         >
-          Add recipe
+          Save recipe
         </button>
       </div>
     </div>

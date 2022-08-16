@@ -137,7 +137,7 @@ const Post = ({
     <>
       {post._id ? (
         <div className="shadow-3xl w-full max-w-[700px] mb-4 p-4">
-          <div className="flex w-full justify-end">
+          <div className="flex w-full justify-between mb-2">
             {myFeed ? (
               <>
                 <FaEdit className="text-2xl mr-6 mb-2 cursor-pointer" />
@@ -217,7 +217,10 @@ const Post = ({
                     <div className="shadow-3xl w-[200px] text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
                       {myFeed ? (
                         <div className="text-xl cursor-pointer p-2 flex w-full  justify-between">
-                          <FaEdit />
+                          <Link to="/addrecipe" state={[post, recipe]}>
+                            <FaEdit />
+                          </Link>
+
                           <FaTimes
                             onClick={() => {
                               deleteRecipe(recipe);

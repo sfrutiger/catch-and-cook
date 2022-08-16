@@ -44,4 +44,16 @@ router.delete("/:id", auth, (req, res) => {
     .catch((err) => res.status(404).json({ success: false }));
 });
 
+// @desc update redipce
+// @route PATCH /api/recipes
+// @access Private
+router.patch("/:id", auth, async (req, res) => {
+  try {
+    const result = await Recipe.findByIdAndUpdate(req.params.id, req.body);
+    res.send(result);
+  } catch (error) {
+    res.json({ success: false });
+  }
+});
+
 module.exports = router;
