@@ -14,6 +14,7 @@ const Post = ({
   setMyPosts,
   posts,
   setPosts,
+  postEdited,
 }) => {
   const [postRecipes, setPostRecipes] = useState([]);
   const [skip, setSkip] = useState(0);
@@ -81,7 +82,7 @@ const Post = ({
 
   useEffect(() => {
     getRecipes();
-  }, [skip]);
+  }, [postEdited]);
 
   const handleClick = () => {
     sessionStorage.setItem("scrollPosition", feedPosition);
@@ -251,7 +252,7 @@ const Post = ({
             <p className="my-4">No recipes yet</p>
           )}
           {myFeed ? (
-            <Link to="/addrecipe" state={post}>
+            <Link to="/addrecipe" state={[post]}>
               <button className="buttons max-w-[200px] h-[40px]">
                 Add recipe
               </button>

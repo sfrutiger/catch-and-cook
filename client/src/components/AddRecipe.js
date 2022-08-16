@@ -35,7 +35,6 @@ const AddRecipe = ({ posts, setPosts, postEdited, setPostEdited, setSkip }) => {
         )
         .then(function () {
           setPostEdited(postEdited + 1);
-          setSkip(0);
         })
         .catch(function (error) {
           console.log(error);

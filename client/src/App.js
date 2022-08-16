@@ -27,7 +27,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [feedPosition, setFeedPosition] = useState("");
   const routePath = useLocation();
-  const [postEdited, setPostEdited] = useState();
+  const [postEdited, setPostEdited] = useState(0);
 
   const getPosts = async () => {
     try {
