@@ -1,5 +1,6 @@
 import axios from "axios";
 import Map from "./Map";
+import Switch from "../Switch";
 
 const LocationAndConditions = ({
   nextStep,
@@ -12,6 +13,8 @@ const LocationAndConditions = ({
   location,
   time,
   conditions,
+  shareCoordinates,
+  setShareCoordinates,
 }) => {
   const weatherAPIKey = process.env.REACT_APP_WEATHER_API_KEY;
 
@@ -79,6 +82,21 @@ const LocationAndConditions = ({
       ) : (
         <></>
       )}
+      <div className="flex flex-row py-2">
+        <label
+          htmlFor="location-secret"
+          className={`mr-2 ${
+            shareCoordinates ? "text-white" : "text-slate-400"
+          }`}
+        >
+          Share coordinates:
+        </label>
+        <Switch
+          name="location-secret"
+          value={shareCoordinates}
+          setValue={setShareCoordinates}
+        />
+      </div>
       <h1 className=" py-2">
         Input the location, date, and time of your catch. Tide and weather
         conditions will be retrieved if date is within the past week.

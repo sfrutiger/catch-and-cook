@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 
 const EditPost = () => {
   const location = useLocation();
-  console.log(location.state);
+  const post = location.state;
   return <div>EditPost</div>;
 };
 

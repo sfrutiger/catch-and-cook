@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { getAuth } from "firebase/auth";
@@ -19,12 +19,14 @@ const CreatePost = ({ posts, setPosts }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
+  const [shareCoordinates, setShareCoordinates] = useState(true);
   const [conditions, setConditions] = useState([""]);
   const [method, setMethod] = useState("");
   /* const [recipeIDs, setRecipeIDs] = useState([]); */
   const [recipeName, setRecipeName] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
+  const postToEdit = useLocation().state;
 
   // Proceed to next step
   const nextStep = () => {
@@ -53,6 +55,7 @@ const CreatePost = ({ posts, setPosts }) => {
             date: date,
             time: time,
             location: location,
+            shareCoordinates: shareCoordinates,
             conditions: conditions,
             method: method,
             recipes: recipeIDs,
@@ -163,6 +166,8 @@ const CreatePost = ({ posts, setPosts }) => {
           date={date}
           location={location}
           conditions={conditions}
+          shareCoordinates={shareCoordinates}
+          setShareCoordinates={setShareCoordinates}
         />
       );
     case 4:

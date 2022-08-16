@@ -22,6 +22,7 @@ const Post = ({
   const [loading, setLoading] = useState(true);
   const auth = getAuth();
   const user = auth.currentUser;
+  const shareCoordinates = post.shareCoordinates;
 
   let latitude = post.location[1];
   latitude = Math.round(latitude * 1000) / 1000;
@@ -141,7 +142,7 @@ const Post = ({
           <div className="flex w-full justify-between mb-2">
             {myFeed ? (
               <>
-                <Link to="/editpost" state={post}>
+                <Link to="/createpost" state={post}>
                   <FaEdit className="text-2xl mr-6 mb-2 cursor-pointer" />
                 </Link>
 
@@ -190,9 +191,13 @@ const Post = ({
             </div>
             <div className="flex flex-col items-end">
               <p>{post.date}</p>
-              <p>
-                Location: {latitude}, {longitude}
-              </p>
+              {shareCoordinates ? (
+                <p>
+                  Coordinates: {latitude}, {longitude}
+                </p>
+              ) : (
+                ""
+              )}
               <p>Species: {post.species}</p>
               <p>Method: {post.method}</p>
             </div>
