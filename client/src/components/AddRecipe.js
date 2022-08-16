@@ -40,7 +40,6 @@ const AddRecipe = ({ posts, setPosts, postEdited, setPostEdited, setSkip }) => {
 
   const addRecipe = () => {
     auth.currentUser.getIdToken(true).then(function (idToken) {
-      console.log(user.uid);
       try {
         axios
           .post(

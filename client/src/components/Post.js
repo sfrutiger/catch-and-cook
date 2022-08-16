@@ -111,6 +111,28 @@ const Post = ({
     }
   };
 
+  const deleteRecipe = (recipe) => {
+    const id = recipe._id;
+    if (auth.currentUser.uid === recipe.authorUID) {
+      auth.currentUser.getIdToken(true).then(function (idToken) {
+        axios
+          .delete(`/api/recipes/${id}`, {
+            headers: {
+              authtoken: idToken,
+            },
+          })
+          .then(function () {
+            getRecipes();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+    } else {
+      console.log("Access denied. Only post auther can delete recipe");
+    }
+  };
+
   return (
     <>
       {post._id ? (
@@ -186,27 +208,44 @@ const Post = ({
               onLoad={() => setLoading(false)}
             />
           </div>
-          {recipeIDs ? (
+          {postRecipes.length ? (
             <div className="mt-4">
               <p>Recipes:</p>
               <div className="flex mt-2 flex-wrap">
                 {postRecipes.map((recipe) => (
-                  <Link
-                    to={`/recipedetails/${recipe._id}`}
-                    state={recipe}
-                    key={recipe._id}
-                    onClick={() =>
-                      sessionStorage.setItem("scrollPosition", feedPosition)
-                    }
-                    className="shadow-3xl w-[200px] text-center p-4 cursor-pointer mr-4 mb-4"
-                  >
-                    <div className="cursor-pointer">{recipe.name}</div>
-                  </Link>
+                  <div key={recipe._id}>
+                    <div className="shadow-3xl w-[200px] text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
+                      {myFeed ? (
+                        <div className="text-xl cursor-pointer p-2 flex w-full  justify-between">
+                          <FaEdit />
+                          <FaTimes
+                            onClick={() => {
+                              deleteRecipe(recipe);
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      <Link
+                        to={`/recipedetails/${recipe._id}`}
+                        state={recipe}
+                        key={recipe._id}
+                        onClick={() =>
+                          sessionStorage.setItem("scrollPosition", feedPosition)
+                        }
+                      >
+                        <div className="cursor-pointer flex items-center justify-center h-12">
+                          {recipe.name}
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
           ) : (
-            ""
+            <p className="my-4">No recipes yet</p>
           )}
           {myFeed ? (
             <Link to="/addrecipe" state={post}>
