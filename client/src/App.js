@@ -11,6 +11,7 @@ import PublicRoute from "./components/PublicRoute";
 import NotFound from "./components/NotFound";
 import CreatePost from "./components/createpost/CreatePost";
 import AddRecipe from "./components/AddRecipe";
+import EditPost from "./components/EditPost";
 import Footer from "./components/Footer";
 import Menu from "./components/Menu";
 import RecipeDetails from "./components/RecipeDetails";
@@ -209,6 +210,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <AddRecipe
+                  setPosts={setPosts}
+                  posts={posts}
+                  postEdited={postEdited}
+                  setPostEdited={setPostEdited}
+                  skip={skip}
+                  setSkip={setSkip}
+                />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="editpost"
+            element={
+              <ProtectedRoute>
+                <EditPost
                   setPosts={setPosts}
                   posts={posts}
                   postEdited={postEdited}

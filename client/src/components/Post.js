@@ -141,7 +141,10 @@ const Post = ({
           <div className="flex w-full justify-between mb-2">
             {myFeed ? (
               <>
-                <FaEdit className="text-2xl mr-6 mb-2 cursor-pointer" />
+                <Link to="/editpost" state={post}>
+                  <FaEdit className="text-2xl mr-6 mb-2 cursor-pointer" />
+                </Link>
+
                 <FaTimes
                   className="text-2xl cursor-pointer"
                   onClick={deletePost}
@@ -210,18 +213,17 @@ const Post = ({
             />
           </div>
           {postRecipes.length ? (
-            <div className="mt-4">
+            <div className="mt-4 w-full">
               <p>Recipes:</p>
-              <div className="flex mt-2 flex-wrap">
+              <div className="mt-2 grid sm:grid-cols-2 gap-x-4">
                 {postRecipes.map((recipe) => (
                   <div key={recipe._id}>
-                    <div className="shadow-3xl w-[200px] text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
+                    <div className="shadow-3xl min-w-[150px] w-full text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
                       {myFeed ? (
                         <div className="text-xl cursor-pointer p-2 flex w-full  justify-between">
                           <Link to="/addrecipe" state={[post, recipe]}>
                             <FaEdit />
                           </Link>
-
                           <FaTimes
                             onClick={() => {
                               deleteRecipe(recipe);
