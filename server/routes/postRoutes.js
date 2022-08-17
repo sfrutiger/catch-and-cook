@@ -39,6 +39,7 @@ router.post("/", auth, (req, res) => {
     species: req.body.species,
     date: req.body.date,
     location: req.body.location,
+    coordinates: req.body.coordinates,
     shareCoordinates: req.body.shareCoordinates,
     conditions: req.body.conditions,
     method: req.body.method,

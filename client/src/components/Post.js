@@ -24,7 +24,12 @@ const Post = ({
   const user = auth.currentUser;
   const shareCoordinates = post.shareCoordinates;
 
-  let latitude = post.location[1];
+  let address;
+  if (post.location.length) {
+    address = post.location[0].formatted_address;
+  }
+
+  let latitude = post.coordinates[1];
   latitude = Math.round(latitude * 1000) / 1000;
   if (latitude > 0) {
     latitude = latitude + "° N";
@@ -34,7 +39,7 @@ const Post = ({
     latitude = latitude + "°";
   }
 
-  let longitude = post.location[0];
+  let longitude = post.coordinates[0];
   longitude = Math.round(longitude * 1000) / 1000;
   if (longitude > 0) {
     longitude = longitude + "° E";
@@ -191,6 +196,8 @@ const Post = ({
             </div>
             <div className="flex flex-col items-end">
               <p>{post.date}</p>
+              {address ? <p>{address}</p> : ""}
+              <p></p>
               {shareCoordinates ? (
                 <p>
                   Coordinates: {latitude}, {longitude}
@@ -225,7 +232,7 @@ const Post = ({
                   <div key={recipe._id}>
                     <div className="shadow-3xl min-w-[150px] w-full text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
                       {myFeed ? (
-                        <div className="text-xl cursor-pointer p-2 flex w-full  justify-between">
+                        <div className="text-xl cursor-pointer p-2 pb-0 flex w-full  justify-between">
                           <Link to="/addrecipe" state={[post, recipe]}>
                             <FaEdit />
                           </Link>
@@ -246,7 +253,7 @@ const Post = ({
                           sessionStorage.setItem("scrollPosition", feedPosition)
                         }
                       >
-                        <div className="cursor-pointer flex items-center justify-center h-12">
+                        <div className="cursor-pointer flex items-center justify-center h-12 my-4 whitespace-pre-wrap">
                           {recipe.name}
                         </div>
                       </Link>

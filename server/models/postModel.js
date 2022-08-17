@@ -15,6 +15,9 @@ const postSchema = mongoose.Schema({
     type: String,
   },
   location: {
+    type: Object,
+  },
+  coordinates: {
     type: Array,
   },
   shareCoordinates: {

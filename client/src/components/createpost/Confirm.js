@@ -4,6 +4,7 @@ const Confirm = ({
   species,
   date,
   location,
+  coordinates,
   conditions,
   method,
   recipes,
@@ -14,7 +15,7 @@ const Confirm = ({
     e.currentTarget.disabled = true;
   };
 
-  let latitude = location[1];
+  let latitude = coordinates[1];
   latitude = Math.round(latitude * 1000) / 1000;
   if (latitude > 0) {
     latitude = latitude + "° N";
@@ -24,7 +25,7 @@ const Confirm = ({
     latitude = latitude + "°";
   }
 
-  let longitude = location[0];
+  let longitude = coordinates[0];
   longitude = Math.round(longitude * 1000) / 1000;
   if (longitude > 0) {
     longitude = longitude + "° E";
@@ -39,6 +40,7 @@ const Confirm = ({
       <img src={picturePreviewURL} alt="Catch" />
       <p>{species}</p>
       <p>{date}</p>
+      {location[0] ? <p>{location[0].formatted_address}</p> : ""}
       <p>
         {latitude}, {longitude}
       </p>

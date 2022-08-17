@@ -19,10 +19,10 @@ const CreatePost = ({ posts, setPosts }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
+  const [coordinates, setCoordinates] = useState("");
   const [shareCoordinates, setShareCoordinates] = useState(true);
   const [conditions, setConditions] = useState([""]);
   const [method, setMethod] = useState("");
-  /* const [recipeIDs, setRecipeIDs] = useState([]); */
   const [recipeName, setRecipeName] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
@@ -55,6 +55,7 @@ const CreatePost = ({ posts, setPosts }) => {
             date: date,
             time: time,
             location: location,
+            coordinates: coordinates,
             shareCoordinates: shareCoordinates,
             conditions: conditions,
             method: method,
@@ -161,13 +162,15 @@ const CreatePost = ({ posts, setPosts }) => {
           setDate={setDate}
           setTime={setTime}
           setLocation={setLocation}
+          setCoordinates={setCoordinates}
           setConditions={setConditions}
+          setShareCoordinates={setShareCoordinates}
           time={time}
           date={date}
           location={location}
+          coordinates={coordinates}
           conditions={conditions}
           shareCoordinates={shareCoordinates}
-          setShareCoordinates={setShareCoordinates}
         />
       );
     case 4:
@@ -191,6 +194,7 @@ const CreatePost = ({ posts, setPosts }) => {
           date={date}
           time={time}
           location={location}
+          coordinates={coordinates}
           conditions={conditions}
           recipeName={recipeName}
           handleSubmit={handleSubmit}

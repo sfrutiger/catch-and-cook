@@ -9,14 +9,17 @@ const LocationAndConditions = ({
   setTime,
   setLocation,
   setConditions,
+  setCoordinates,
+  setShareCoordinates,
   date,
   location,
+  coordinates,
   time,
   conditions,
   shareCoordinates,
-  setShareCoordinates,
 }) => {
   const weatherAPIKey = process.env.REACT_APP_WEATHER_API_KEY;
+  const googleMapsAPIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
   let nearestHour;
   let nearestDate = date;
@@ -47,12 +50,19 @@ const LocationAndConditions = ({
   const retrieveWeather = async () => {
     const response = await axios.get(
       // there is a bug with this API that won't return current conditions for exactly 00:00:00, so by default the minutes are set to :01.
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location[1]}%2C%20${location[0]}/${nearestDate}T${nearestHour[0]}:01:00?key=${weatherAPIKey}&include=current`
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${coordinates[1]}%2C%20${coordinates[0]}/${nearestDate}T${nearestHour[0]}:01:00?key=${weatherAPIKey}&include=current`
     );
     setConditions(response);
   };
 
-  let latitude = location[1];
+  const reverseGeocode = async () => {
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates[1]},${coordinates[0]}&key=${googleMapsAPIKey}&result_type=locality`
+    );
+    setLocation(response.data.results);
+  };
+
+  let latitude = coordinates[1];
   latitude = Math.round(latitude * 1000) / 1000;
   if (latitude > 0) {
     latitude = latitude + "° N";
@@ -62,7 +72,7 @@ const LocationAndConditions = ({
     latitude = latitude + "°";
   }
 
-  let longitude = location[0];
+  let longitude = coordinates[0];
   longitude = Math.round(longitude * 1000) / 1000;
   if (longitude > 0) {
     longitude = longitude + "° E";
@@ -74,8 +84,8 @@ const LocationAndConditions = ({
 
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
-      <Map setLocation={setLocation}></Map>
-      {location ? (
+      <Map setCoordinates={setCoordinates}></Map>
+      {coordinates ? (
         <div>
           {latitude}, {longitude}
         </div>
@@ -130,6 +140,7 @@ const LocationAndConditions = ({
           onClick={() => {
             setConditions([""]); // this is so it resets if you come back and change inputs after weather has been retrieved
             retrieveWeather();
+            reverseGeocode();
             nextStep();
           }}
           className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
