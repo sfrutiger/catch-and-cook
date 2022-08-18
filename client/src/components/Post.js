@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaSpinner, FaTimes, FaEdit } from "react-icons/fa";
+import Switch from "./Switch";
 import { getAuth } from "firebase/auth";
 
 const Post = ({
@@ -22,7 +23,9 @@ const Post = ({
   const [loading, setLoading] = useState(true);
   const auth = getAuth();
   const user = auth.currentUser;
-  const shareCoordinates = post.shareCoordinates;
+  const [shareCoordinates, setShareCoordinates] = useState(
+    post.shareCoordinates
+  );
 
   let address;
   if (post.location.length) {
@@ -48,6 +51,8 @@ const Post = ({
   } else {
     longitude = longitude + "°";
   }
+
+  const coordinates = latitude + ", " + longitude;
 
   // handle retrieving linked recipes from database
   let recipeIDs;
@@ -96,6 +101,7 @@ const Post = ({
   };
 
   const deletePost = () => {
+    //move to protected route
     const id = post._id;
     if (auth.currentUser.uid === post.authorUID) {
       auth.currentUser.getIdToken(true).then(function (idToken) {
@@ -119,6 +125,7 @@ const Post = ({
   };
 
   const deleteRecipe = (recipe) => {
+    //move to protected route
     const id = recipe._id;
     if (auth.currentUser.uid === recipe.authorUID) {
       auth.currentUser.getIdToken(true).then(function (idToken) {
@@ -175,6 +182,26 @@ const Post = ({
               ) : (
                 ""
               )}
+              <p>{post.date}</p>
+              {address ? <p>{address}</p> : ""}
+              {myFeed ? (
+                <Switch
+                  variable={coordinates}
+                  value={shareCoordinates}
+                  setValue={setShareCoordinates}
+                />
+              ) : (
+                ""
+              )}
+              {shareCoordinates ? (
+                <p className={`${myFeed ? "hidden" : ""}`}>{coordinates}</p>
+              ) : (
+                ""
+              )}
+              <p>Species: {post.species}</p>
+              <p>Method: {post.method}</p>
+            </div>
+            <div className="flex flex-col items-end">
               {post.conditions ? (
                 <>
                   <p>{post.conditions.data.currentConditions.conditions}</p>
@@ -193,20 +220,6 @@ const Post = ({
               ) : (
                 ""
               )}
-            </div>
-            <div className="flex flex-col items-end">
-              <p>{post.date}</p>
-              {address ? <p>{address}</p> : ""}
-              <p></p>
-              {shareCoordinates ? (
-                <p>
-                  Coordinates: {latitude}, {longitude}
-                </p>
-              ) : (
-                ""
-              )}
-              <p>Species: {post.species}</p>
-              <p>Method: {post.method}</p>
             </div>
           </div>
           <div

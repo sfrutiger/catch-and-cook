@@ -85,27 +85,20 @@ const LocationAndConditions = ({
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
       <Map setCoordinates={setCoordinates}></Map>
-      {coordinates ? (
-        <div>
-          {latitude}, {longitude}
-        </div>
-      ) : (
-        <></>
-      )}
-      <div className="flex flex-row py-2">
-        <label
-          htmlFor="location-secret"
-          className={`mr-2 ${
-            shareCoordinates ? "text-white" : "text-slate-400"
-          }`}
-        >
-          Share coordinates:
-        </label>
+      <div className="flex flex-row justify-between py-2">
         <Switch
           name="location-secret"
+          variable={"Share coordinates"}
           value={shareCoordinates}
           setValue={setShareCoordinates}
         />
+        {coordinates ? (
+          <div className={`${shareCoordinates ? "" : "opacity-50"}`}>
+            {latitude}, {longitude}
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       <h1 className=" py-2">
         Input the location, date, and time of your catch. Tide and weather
