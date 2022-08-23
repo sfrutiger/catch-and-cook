@@ -177,7 +177,9 @@ const Post = ({
                     handleClick();
                   }}
                 >
-                  <p className="curser-pointer">{authorUsername || "User"}</p>
+                  <p className="curser-pointer hover:underline">
+                    {authorUsername || "User"}
+                  </p>
                 </Link>
               ) : (
                 ""

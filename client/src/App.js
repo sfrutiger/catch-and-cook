@@ -27,8 +27,10 @@ import EditPost from "./components/EditPost";
 function App() {
   const [posts, setPosts] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
+  const [myPosts, setMyPosts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [userFeedSkip, setUserFeedSkip] = useState(0);
+  const [myFeedSkip, setMyFeedSkip] = useState(0);
   const [userFeedId, setUserFeedId] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [feedPosition, setFeedPosition] = useState("");
@@ -62,6 +64,9 @@ function App() {
       switch (routePath.pathname) {
         case `/userfeed/${userFeedId}`:
           setUserFeedSkip(userPosts.length);
+          break;
+        case "/myposts":
+          setMyFeedSkip(myPosts.length);
           break;
         default:
           setSkip(posts.length);
@@ -195,6 +200,10 @@ function App() {
                   posts={posts}
                   postEdited={postEdited}
                   setPostEdited={setPostEdited}
+                  myPosts={myPosts}
+                  setMyPosts={setMyPosts}
+                  myFeedSkip={myFeedSkip}
+                  setMyFeedSkip={setMyFeedSkip}
                 />
                 <Footer setMenuOpen={setMenuOpen} />
               </ProtectedRoute>

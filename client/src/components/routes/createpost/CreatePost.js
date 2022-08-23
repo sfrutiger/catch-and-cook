@@ -15,13 +15,13 @@ const CreatePost = ({ posts, setPosts }) => {
   const [step, setStep] = useState(1);
   const [picture, setPicture] = useState(null);
   const [picturePreviewURL, setPicturePreviewURL] = useState("");
-  const [species, setSpecies] = useState("");
+  const [shareCoordinates, setShareCoordinates] = useState(true);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [location, setLocation] = useState("");
-  const [coordinates, setCoordinates] = useState("");
-  const [shareCoordinates, setShareCoordinates] = useState(true);
   const [conditions, setConditions] = useState([""]);
+  const [location, setLocation] = useState("");
+  const [species, setSpecies] = useState("");
+  const [coordinates, setCoordinates] = useState("");
   const [method, setMethod] = useState("");
   const [recipeName, setRecipeName] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");

@@ -101,8 +101,8 @@ const LocationAndConditions = ({
         )}
       </div>
       <h1 className=" py-2">
-        Input the location, date, and time of your catch. Tide and weather
-        conditions will be retrieved if date is within the past week.
+        Input the location, date, and time of your catch. Weather conditions at
+        the time of catch with be retrieved automatically.
       </h1>
       <form>
         <div className="flex flex-col py-2">
@@ -131,10 +131,14 @@ const LocationAndConditions = ({
         </button>
         <button
           onClick={() => {
-            setConditions([""]); // this is so it resets if you come back and change inputs after weather has been retrieved
-            retrieveWeather();
-            reverseGeocode();
-            nextStep();
+            if (coordinates.length && date && time) {
+              setConditions([""]); // this is so it resets if you come back and change inputs after weather has been retrieved
+              retrieveWeather();
+              reverseGeocode();
+              nextStep();
+            } else {
+              console.log("select catch location, date, and time of catch");
+            }
           }}
           className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
         >

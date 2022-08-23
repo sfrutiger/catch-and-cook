@@ -20,7 +20,9 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
       } else {
         setUserPosts(response.data);
       }
-    } catch (e) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
