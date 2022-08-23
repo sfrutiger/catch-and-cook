@@ -1,6 +1,6 @@
 import axios from "axios";
 import Map from "./Map";
-import Switch from "../Switch";
+import Switch from "../../Switch";
 
 const LocationAndConditions = ({
   nextStep,

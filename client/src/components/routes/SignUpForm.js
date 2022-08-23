@@ -1,41 +1,68 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserAuth } from "../context/AuthContext";
+import { UserAuth } from "../../context/AuthContext";
+import axios from "axios";
 
-const SignInForm = () => {
+const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const { signIn } = UserAuth();
-  /* const { createUser } = UserAuth(); */
+  const { createUser } = UserAuth();
   /* const { googleSignIn } = UserAuth(); */
   /* const { provider } = UserAuth(); */
+  const navigate = useNavigate();
+
+  const checkUsernameAvailability = async (username) => {
+    try {
+      const response = await axios.get("/api/users", {
+        params: {
+          criteria: "username",
+          displayName: username,
+        },
+      });
+      if (response.data.length === 0) {
+        createUser(email, password, username).then(function (error) {
+          if (error) {
+            setError(error.message);
+          } else {
+            navigate("/");
+          }
+        });
+      } else {
+        setError("Username unavailable");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    signIn(email, password).then(function (error) {
-      if (error) {
-        setError(error.message);
-      } else {
-        navigate("/");
-      }
-    });
+    checkUsernameAvailability(username);
   };
 
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
       <div>
-        <h1 className="text-2xl py-2">Sign in to your account</h1>
+        <h1 className="text-2xl py-2">Sign up for a free account</h1>
         <p className="py-2">
-          Don't have an account yet?{" "}
-          <Link to="/signup" className="underline">
-            Sign up.
+          Already have an account?{" "}
+          <Link to="/signin" className="underline">
+            Sign in.
           </Link>
         </p>
       </div>
       <form onSubmit={handleSubmit}>
+        <div className="flex flex-col mb-2">
+          <label className="py-2">Username</label>
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            className="border p-3"
+            type="text"
+          />
+        </div>
         <div className="flex flex-col mb-2">
           <label className="py-2">Email Address</label>
           <input
@@ -52,17 +79,14 @@ const SignInForm = () => {
             type="password"
           />
         </div>
-        <Link to="/forgotpassword">
-          <p>Forgot password?</p>
-        </Link>
-        <div className="flex flex-row mt-2">
+        <div className="flex flex-row">
           <Link to="/" className="w-full mr-1">
             <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2">
               Cancel
             </button>
           </Link>
           <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1">
-            Sign in
+            Sign Up
           </button>
         </div>
       </form>
@@ -78,4 +102,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default SignUpForm;

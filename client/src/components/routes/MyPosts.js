@@ -1,9 +1,9 @@
-import Post from "./Post";
+import Post from "../Post";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 /* import { FaArrowLeft } from "react-icons/fa"; */
-import { UserAuth } from "../context/AuthContext";
+import { UserAuth } from "../../context/AuthContext";
 
 const MyPosts = ({ posts, setPosts, postEdited }) => {
   const navigate = useNavigate();

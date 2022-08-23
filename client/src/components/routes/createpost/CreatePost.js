@@ -8,7 +8,7 @@ import SpeciesAndMethod from "./SpeciesAndMethods";
 import LocationAndConditions from "./LocationAndConditions";
 import Recipes from "./Recipes";
 import Confirm from "./Confirm";
-import { storage } from "../../firebase";
+import { storage } from "../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const CreatePost = ({ posts, setPosts }) => {

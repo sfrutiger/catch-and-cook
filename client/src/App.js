@@ -2,22 +2,27 @@ import { useState, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
 import axios from "axios";
+
+//import components
 import Header from "./components/Header";
 import Feed from "./components/Feed";
-import SignInForm from "./components/SignInForm";
-import SignUpForm from "./components/SignUpForm";
-import ProtectedRoute from "./components/ProtectedRoute";
-import PublicRoute from "./components/PublicRoute";
-import NotFound from "./components/NotFound";
-import CreatePost from "./components/createpost/CreatePost";
-import AddRecipe from "./components/AddRecipe";
-import EditPost from "./components/EditPost";
 import Footer from "./components/Footer";
-import Menu from "./components/Menu";
-import RecipeDetails from "./components/RecipeDetails";
-import ForgotPassword from "./components/ForgotPassword";
-import UserFeed from "./components/UserFeed";
-import MyPosts from "./components/MyPosts";
+import Menu from "./components/menu/Menu";
+
+//import routes
+import ProtectedRoute from "./components/routes/ProtectedRoute";
+import PublicRoute from "./components/routes/PublicRoute";
+import NotFound from "./components/routes/NotFound";
+import UserFeed from "./components/routes/UserFeed";
+import MyPosts from "./components/routes/MyPosts";
+import RecipeDetails from "./components/routes/RecipeDetails";
+import SignInForm from "./components/routes/SignInForm";
+import SignUpForm from "./components/routes/SignUpForm";
+import CreatePost from "./components/routes/createpost/CreatePost";
+import AddRecipe from "./components/routes/AddRecipe";
+import ForgotPassword from "./components/routes/ForgotPassword";
+
+import EditPost from "./components/EditPost";
 
 function App() {
   const [posts, setPosts] = useState([]);
