@@ -88,7 +88,9 @@ function App() {
     if (routePath.pathname === "/signedin" || routePath.pathname === "/") {
       returnFeedToSamePosition(); // restore scroll position
       setUserFeedSkip(0); // reset skip for infinite scroll in user feed
+      setMyFeedSkip(0);
       setUserPosts([]);
+      setMyPosts([]);
     }
   }, [routePath]);
 
