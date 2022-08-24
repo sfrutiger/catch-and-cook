@@ -6,6 +6,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { UserAuth } from "../../context/AuthContext";
 import About from "./About";
 import Settings from "./Settings";
+import ChangeUsername from "./ChangeUsername";
 
 const DisplayInMenu = ({ setMenuOpen }) => {
   const { user } = UserAuth();
@@ -44,7 +45,18 @@ const DisplayInMenu = ({ setMenuOpen }) => {
             className="absolute left-3 top-3 cursor-pointer text-2xl"
             onClick={() => setDisplayCase("")}
           />
-          <Settings />
+          <Settings setDisplayCase={setDisplayCase} />
+        </div>
+      );
+
+    case "changeusername":
+      return (
+        <div className="w-full h-[30%] flex flex-col items-center justify-around">
+          <FaArrowLeft
+            className="absolute left-3 top-3 cursor-pointer text-2xl"
+            onClick={() => setDisplayCase("")}
+          />
+          <ChangeUsername setDisplayCase={setDisplayCase} />
         </div>
       );
 

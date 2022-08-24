@@ -77,8 +77,8 @@ const Post = ({
     try {
       const response = await axios.get("/api/users", {
         params: {
-          criteria: "authorUID",
-          authorUID: post.authorUID,
+          criteria: "uid",
+          uid: post.authorUID,
         },
       });
       setAuthorUsername(response.data[0].displayName);

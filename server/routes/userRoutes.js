@@ -14,19 +14,19 @@ router.post("/", auth, (req, res) => {
   }).then((post) => res.status(200).json(post));
 });
 
-// @desc Get user from uid
+// @desc Get user from criteria
 // @route GET /api/users
 // @access Public
 router.get("/", async (req, res) => {
   try {
     switch (req.query.criteria) {
-      case "authorUID": {
+      case "uid": {
         const response = await User.find({
-          uid: req.query.authorUID,
+          uid: req.query.uid,
         });
         res.send(response);
       }
-      case "username": {
+      case "displayName": {
         const response = await User.find({
           displayName: req.query.displayName,
         });
@@ -35,6 +35,18 @@ router.get("/", async (req, res) => {
     }
   } catch (e) {
     res.status(500).send();
+  }
+});
+
+// @desc update user
+// @route PATCH /api/users
+// @access Private
+router.patch("/:id", auth, async (req, res) => {
+  try {
+    const result = await User.findByIdAndUpdate(req.params.id, req.body);
+    res.send(result);
+  } catch (error) {
+    res.json({ success: false });
   }
 });
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 import axios from "axios";
@@ -9,9 +9,14 @@ const SignUpForm = () => {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const { createUser } = UserAuth();
-  /* const { googleSignIn } = UserAuth(); */
-  /* const { provider } = UserAuth(); */
   const navigate = useNavigate();
+
+  //reset error
+  useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 5000);
+  }, [error]);
 
   const checkUsernameAvailability = async (username) => {
     try {

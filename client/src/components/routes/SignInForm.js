@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 
@@ -11,6 +11,13 @@ const SignInForm = () => {
   /* const { createUser } = UserAuth(); */
   /* const { googleSignIn } = UserAuth(); */
   /* const { provider } = UserAuth(); */
+
+  //reset error
+  useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 5000);
+  }, [error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
