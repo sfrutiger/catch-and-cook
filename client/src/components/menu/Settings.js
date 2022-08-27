@@ -14,7 +14,14 @@ const Settings = ({ setDisplayCase }) => {
       >
         Change username
       </button>
-      <button className="buttons w-[200px]">Change password</button>
+      <button
+        className="buttons w-[200px]"
+        onClick={() => {
+          setDisplayCase("changepassword");
+        }}
+      >
+        Change password
+      </button>
     </div>
   );
 };

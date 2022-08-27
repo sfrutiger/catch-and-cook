@@ -5,6 +5,9 @@ import {
   onAuthStateChanged,
   updateProfile,
   sendEmailVerification,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from "firebase/auth";
 import { auth } from "../firebase";
 import axios from "axios";
@@ -55,6 +58,22 @@ export const AuthContextProvider = ({ children }) => {
     });
   };
 
+  const reauthenticateUser = (user, password) => {
+    const credential = EmailAuthProvider.credential(user.email, password);
+    return reauthenticateWithCredential(user, credential).catch(function (
+      error
+    ) {
+      return error;
+    });
+  };
+
+  const changePassword = (user, newPassword) => {
+    console.log("try to change password");
+    return updatePassword(user, newPassword).catch((error) => {
+      console.log(error);
+    });
+  };
+
   // google sign in causing issue with user names, will re-implement later
   /*  const googleSignIn = (provider) => {
     return signInWithPopup(auth, provider);
@@ -78,6 +97,8 @@ export const AuthContextProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         createUser,
+        changePassword,
+        reauthenticateUser,
         /* googleSignIn, */
         /* provider, */
         user,
