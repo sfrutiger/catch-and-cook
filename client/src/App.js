@@ -21,7 +21,6 @@ import SignUpForm from "./components/routes/SignUpForm";
 import CreatePost from "./components/routes/createpost/CreatePost";
 import AddRecipe from "./components/routes/AddRecipe";
 import ForgotPassword from "./components/routes/ForgotPassword";
-
 import EditPost from "./components/EditPost";
 
 function App() {
@@ -118,7 +117,7 @@ function App() {
                   feedPosition={feedPosition}
                   setUserFeedId={setUserFeedId}
                 />
-                <Footer setMenuOpen={setMenuOpen} />
+                <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
               </PublicRoute>
             }
           />
@@ -173,7 +172,7 @@ function App() {
                   feedPosition={feedPosition}
                   setUserFeedId={setUserFeedId}
                 />
-                <Footer setMenuOpen={setMenuOpen} />
+                <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
               </ProtectedRoute>
             }
           />
@@ -188,7 +187,7 @@ function App() {
                   userPosts={userPosts}
                   setUserPosts={setUserPosts}
                 />
-                <Footer setMenuOpen={setMenuOpen} />
+                <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
               </>
             }
           />
@@ -207,7 +206,7 @@ function App() {
                   myFeedSkip={myFeedSkip}
                   setMyFeedSkip={setMyFeedSkip}
                 />
-                <Footer setMenuOpen={setMenuOpen} />
+                <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
               </ProtectedRoute>
             }
           />
@@ -217,6 +216,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <CreatePost setPosts={setPosts} posts={posts} />
+                <Footer setMenuOpen={setMenuOpen} createPostVisible={false} />
               </ProtectedRoute>
             }
           />
@@ -227,28 +227,32 @@ function App() {
               <ProtectedRoute>
                 <AddRecipe
                   setPosts={setPosts}
+                  setMyPosts={setMyPosts}
                   posts={posts}
                   postEdited={postEdited}
                   setPostEdited={setPostEdited}
                   skip={skip}
                   setSkip={setSkip}
                 />
+                <Footer setMenuOpen={setMenuOpen} createPostVisible={false} />
               </ProtectedRoute>
             }
           />
           <Route
             exact
-            path="editpost"
+            path="editpost/:id"
             element={
               <ProtectedRoute>
                 <EditPost
                   setPosts={setPosts}
+                  setMyPosts={setMyPosts}
                   posts={posts}
                   postEdited={postEdited}
                   setPostEdited={setPostEdited}
                   skip={skip}
                   setSkip={setSkip}
                 />
+                <Footer setMenuOpen={setMenuOpen} createPostVisible={false} />
               </ProtectedRoute>
             }
           />

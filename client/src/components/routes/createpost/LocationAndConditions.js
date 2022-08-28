@@ -84,7 +84,12 @@ const LocationAndConditions = ({
 
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
-      <Map setCoordinates={setCoordinates}></Map>
+      <Map
+        setCoordinates={setCoordinates}
+        defaultLat={41.5}
+        defaultLong={-71.5}
+        mapHeight={"400px"}
+      ></Map>
       <div className="flex flex-row justify-between py-2">
         <Switch
           name="location-secret"

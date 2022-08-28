@@ -1,9 +1,298 @@
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import {
+  FaSpinner,
+  FaTimes,
+  FaEdit,
+  FaArrowLeft,
+  FaTrashAlt,
+  FaCheck,
+} from "react-icons/fa";
+import Switch from "./Switch";
+import Map from "./routes/createpost/Map";
+import { getAuth } from "firebase/auth";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const EditPost = () => {
+const EditPost = ({
+  feedPosition,
+  generalFeed,
+  myFeed,
+  myPosts,
+  setMyPosts,
+  posts,
+  setPosts,
+  postEdited,
+}) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const post = location.state;
-  return <div>EditPost</div>;
+  const [postRecipes, setPostRecipes] = useState([]);
+  const [skip, setSkip] = useState(0);
+  const [authorUsername, setAuthorUsername] = useState("");
+  const [loading, setLoading] = useState(true);
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const [shareCoordinates, setShareCoordinates] = useState(
+    post.shareCoordinates
+  );
+  const [date, setDate] = useState(post.date);
+  const [time, setTime] = useState(post.time);
+  const [species, setSpecies] = useState(post.species);
+  const [method, setMethod] = useState(post.method);
+  const [coordinates, setCoordinates] = useState(post.coordinates);
+
+  let address;
+  if (post.location.length) {
+    address = post.location[0].formatted_address;
+  }
+
+  let latitude = coordinates[1];
+  latitude = Math.round(latitude * 1000) / 1000;
+  if (latitude > 0) {
+    latitude = latitude + "° N";
+  } else if (latitude < 0) {
+    latitude = Math.abs(latitude) + "° S";
+  } else {
+    latitude = latitude + "°";
+  }
+
+  let longitude = coordinates[0];
+  longitude = Math.round(longitude * 1000) / 1000;
+  if (longitude > 0) {
+    longitude = longitude + "° E";
+  } else if (longitude < 0) {
+    longitude = Math.abs(longitude) + "° W";
+  } else {
+    longitude = longitude + "°";
+  }
+
+  const coordinatesFormatted = latitude + ", " + longitude;
+
+  // handle retrieving linked recipes from database
+  let recipeIDs;
+  if (post.recipes.length) {
+    recipeIDs = post.recipes;
+  } else recipeIDs = null;
+
+  const getRecipes = async () => {
+    try {
+      const response = await axios.get(`/api/recipes`, {
+        params: {
+          recipes: recipeIDs.reduce((x, y) => `${x},${y}`),
+        },
+      });
+      setPostRecipes(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getRecipes();
+  }, [postEdited]);
+
+  const deletePost = () => {
+    const id = post._id;
+    if (auth.currentUser.uid === post.authorUID) {
+      auth.currentUser.getIdToken(true).then(function (idToken) {
+        axios
+          .delete(`/api/posts/${id}`, {
+            headers: {
+              authtoken: idToken,
+            },
+          })
+          .then(function () {
+            setMyPosts(myPosts.filter((post) => post._id !== id));
+            setPosts(posts.filter((post) => post._id !== id));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+    } else {
+      console.log("Access denied. Only post auther can delete post");
+    }
+  };
+
+  const deleteRecipe = (recipe) => {
+    //move to protected route
+    const id = recipe._id;
+    if (auth.currentUser.uid === recipe.authorUID) {
+      auth.currentUser.getIdToken(true).then(function (idToken) {
+        axios
+          .delete(`/api/recipes/${id}`, {
+            headers: {
+              authtoken: idToken,
+            },
+          })
+          .then(function () {
+            getRecipes();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+    } else {
+      console.log("Access denied. Only post auther can delete recipe");
+    }
+  };
+
+  const handleClick = () => {
+    setMyPosts([]);
+    navigate("/myposts");
+  };
+
+  return (
+    <>
+      <div className="sticky top-0 w-full h-[60px] bg-slate-700 flex justify-center">
+        <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
+          <FaTimes
+            onClick={() => handleClick()}
+            className="text-2xl cursor-pointer text-red-500"
+          />
+          <h1 className="text-xl w-[50%] max-w-[700px] text-center">
+            Edit post
+          </h1>
+          <FaCheck className="text-2xl cursor-pointer text-green-500" />
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <div className="shadow-3xl w-full max-w-[700px] mt-4 mb-20 p-4">
+          <div className="flex w-full justify-between mb-2">
+            <div
+              className="w-[300px]"
+              style={{ display: loading ? "none" : "block" }}
+            >
+              <img
+                src={post.pictureDownloadURL}
+                onLoad={() => setLoading(false)}
+              />
+            </div>
+            <div
+              className="flex items-center"
+              style={{ display: loading ? "block" : "none" }}
+            >
+              <FaSpinner
+                icon="spinner"
+                className="text-5xl animate-spin w-full"
+              />
+            </div>
+            <FaTrashAlt
+              className="text-2xl cursor-pointer"
+              onClick={deletePost}
+            />
+          </div>
+
+          <form className="flex w-full justify-between mb-4">
+            <div className="w-full max-w-[250px] mr-2">
+              <div className="flex flex-col mb-2">
+                <label className="">Date</label>
+                <input
+                  onChange={(e) => setDate(e.target.value)}
+                  className="border py-1"
+                  type="date"
+                  value={date}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="">Time</label>
+                <input
+                  onChange={(e) => setTime(e.target.value)}
+                  className="border py-1"
+                  type="time"
+                  value={time}
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <div className="flex flex-col mb-2">
+                <label className="">Species</label>
+                <input
+                  onChange={(e) => setSpecies(e.target.value)}
+                  className="border py-1"
+                  type="text"
+                  value={species}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="">Method</label>
+                <input
+                  onChange={(e) => setMethod(e.target.value)}
+                  className="border py-1"
+                  type="text"
+                  value={method}
+                />
+              </div>
+            </div>
+          </form>
+          <Map
+            defaultLat={coordinates[1]}
+            defaultLong={coordinates[0]}
+            setCoordinates={setCoordinates}
+            mapHeight={"250px"}
+          ></Map>
+          <div className="flex flex-row justify-between py-2">
+            <Switch
+              name="location-secret"
+              variable={"Share coordinates"}
+              value={shareCoordinates}
+              setValue={setShareCoordinates}
+            />
+            {coordinates ? (
+              <div className={`${shareCoordinates ? "" : "opacity-50"}`}>
+                {latitude}, {longitude}
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+          {postRecipes.length ? (
+            <div className="mt-4 w-full">
+              <p>Recipes:</p>
+              <div className="mt-2 grid sm:grid-cols-2 gap-x-4">
+                {postRecipes.map((recipe) => (
+                  <div key={recipe._id}>
+                    <div className="shadow-3xl min-w-[150px] w-full text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
+                      <div className="text-xl cursor-pointer p-2 pb-0 flex w-full  justify-between">
+                        <Link to="/addrecipe" state={[post, recipe]}>
+                          <FaEdit />
+                        </Link>
+                        <FaTrashAlt
+                          onClick={() => {
+                            deleteRecipe(recipe);
+                          }}
+                        />
+                      </div>
+                      <Link
+                        to={`/recipedetails/${recipe._id}`}
+                        state={recipe}
+                        key={recipe._id}
+                        onClick={() =>
+                          sessionStorage.setItem("scrollPosition", feedPosition)
+                        }
+                      >
+                        <div className="cursor-pointer flex items-center justify-center h-12 my-4 whitespace-pre-wrap">
+                          {recipe.name}
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p className="my-4">No recipes yet</p>
+          )}
+          <Link to="/addrecipe" state={[post]}>
+            <button className="buttons max-w-[200px] h-[40px]">
+              Add recipe
+            </button>
+          </Link>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default EditPost;

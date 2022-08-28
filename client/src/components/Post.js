@@ -100,68 +100,16 @@ const Post = ({
     setUserFeedId(post.authorUID);
   };
 
-  const deletePost = () => {
-    //move to protected route
-    const id = post._id;
-    if (auth.currentUser.uid === post.authorUID) {
-      auth.currentUser.getIdToken(true).then(function (idToken) {
-        axios
-          .delete(`/api/posts/${id}`, {
-            headers: {
-              authtoken: idToken,
-            },
-          })
-          .then(function () {
-            setMyPosts(myPosts.filter((post) => post._id !== id));
-            setPosts(posts.filter((post) => post._id !== id));
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      });
-    } else {
-      console.log("Access denied. Only post auther can delete post");
-    }
-  };
-
-  const deleteRecipe = (recipe) => {
-    //move to protected route
-    const id = recipe._id;
-    if (auth.currentUser.uid === recipe.authorUID) {
-      auth.currentUser.getIdToken(true).then(function (idToken) {
-        axios
-          .delete(`/api/recipes/${id}`, {
-            headers: {
-              authtoken: idToken,
-            },
-          })
-          .then(function () {
-            getRecipes();
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      });
-    } else {
-      console.log("Access denied. Only post auther can delete recipe");
-    }
-  };
-
   return (
     <>
       {post._id ? (
         <div className="shadow-3xl w-full max-w-[700px] mb-4 p-4">
-          <div className="flex w-full justify-between mb-2">
+          <div className="flex w-full justify-end mb-2">
             {myFeed ? (
               <>
-                <Link to="/createpost" state={post}>
-                  <FaEdit className="text-2xl mr-6 mb-2 cursor-pointer" />
+                <Link to={`/editpost/${post._id}`} state={post}>
+                  <FaEdit className="text-2xl mb-2 cursor-pointer" />
                 </Link>
-
-                <FaTimes
-                  className="text-2xl cursor-pointer"
-                  onClick={deletePost}
-                />
               </>
             ) : (
               ""
@@ -185,16 +133,8 @@ const Post = ({
                 ""
               )}
               <p>{post.date}</p>
+              <p>{post.time}</p>
               {address ? <p>{address}</p> : ""}
-              {myFeed ? (
-                <Switch
-                  variable={coordinates}
-                  value={shareCoordinates}
-                  setValue={setShareCoordinates}
-                />
-              ) : (
-                ""
-              )}
               {shareCoordinates ? (
                 <p className={`${myFeed ? "hidden" : ""}`}>{coordinates}</p>
               ) : (
@@ -246,20 +186,6 @@ const Post = ({
                 {postRecipes.map((recipe) => (
                   <div key={recipe._id}>
                     <div className="shadow-3xl min-w-[150px] w-full text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
-                      {myFeed ? (
-                        <div className="text-xl cursor-pointer p-2 pb-0 flex w-full  justify-between">
-                          <Link to="/addrecipe" state={[post, recipe]}>
-                            <FaEdit />
-                          </Link>
-                          <FaTimes
-                            onClick={() => {
-                              deleteRecipe(recipe);
-                            }}
-                          />
-                        </div>
-                      ) : (
-                        ""
-                      )}
                       <Link
                         to={`/recipedetails/${recipe._id}`}
                         state={recipe}
@@ -279,15 +205,6 @@ const Post = ({
             </div>
           ) : (
             <p className="my-4">No recipes yet</p>
-          )}
-          {myFeed ? (
-            <Link to="/addrecipe" state={[post]}>
-              <button className="buttons max-w-[200px] h-[40px]">
-                Add recipe
-              </button>
-            </Link>
-          ) : (
-            ""
           )}
         </div>
       ) : (

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
-const Map = ({ setCoordinates }) => {
-  const [latitude, setLatitude] = useState(41.5);
-  const [longitude, setLongitude] = useState(-71.3); //I need to change this to default to user location
+const Map = ({ setCoordinates, defaultLat, defaultLong, mapHeight }) => {
+  const [latitude, setLatitude] = useState(defaultLat);
+  const [longitude, setLongitude] = useState(defaultLong); //I need to change this to default to user location
 
   const mapCenter = {
     lat: latitude,
@@ -24,7 +24,7 @@ const Map = ({ setCoordinates }) => {
           addCatchLocation(e);
         }}
         mapContainerStyle={{
-          height: "400px",
+          height: mapHeight,
           width: "100%",
         }}
         zoom={9}

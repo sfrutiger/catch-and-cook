@@ -3,6 +3,7 @@ const Confirm = ({
   previousStep,
   species,
   date,
+  time,
   location,
   coordinates,
   conditions,
@@ -40,6 +41,7 @@ const Confirm = ({
       <img src={picturePreviewURL} alt="Catch" />
       <p>{species}</p>
       <p>{date}</p>
+      <p>{time}</p>
       {location[0] ? <p>{location[0].formatted_address}</p> : ""}
       <p>
         {latitude}, {longitude}

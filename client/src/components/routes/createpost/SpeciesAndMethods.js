@@ -11,7 +11,7 @@ const SpeciesAndMethods = ({
       <form>
         <div className="flex flex-col py-2">
           <label className="py-2">Species</label>
-          <textarea
+          <input
             onChange={(e) => setSpecies(e.target.value)}
             className="border py-1"
             type="text"

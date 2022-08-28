@@ -38,6 +38,7 @@ router.post("/", auth, (req, res) => {
     pictureDownloadURL: req.body.pictureDownloadURL,
     species: req.body.species,
     date: req.body.date,
+    time: req.body.time,
     location: req.body.location,
     coordinates: req.body.coordinates,
     shareCoordinates: req.body.shareCoordinates,

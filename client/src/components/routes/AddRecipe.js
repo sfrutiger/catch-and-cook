@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
-const AddRecipe = ({ posts, setPosts, postEdited, setPostEdited, setSkip }) => {
+const AddRecipe = ({ setMyPosts, postEdited, setPostEdited }) => {
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
@@ -96,17 +96,19 @@ const AddRecipe = ({ posts, setPosts, postEdited, setPostEdited, setSkip }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       if (recipe) {
         editRecipe();
       } else {
         addRecipe();
       }
-      navigate("/myposts");
     } catch (error) {
       console.log(error.message);
     }
+    setMyPosts([]);
+    navigate("/myposts");
   };
 
   return (
@@ -147,7 +149,7 @@ const AddRecipe = ({ posts, setPosts, postEdited, setPostEdited, setSkip }) => {
           </button>
         </Link>
         <button
-          onClick={() => handleSubmit()}
+          onClick={(e) => handleSubmit(e)}
           className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
         >
           Save recipe
