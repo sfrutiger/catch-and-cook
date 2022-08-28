@@ -35,11 +35,12 @@ const LocationAndConditions = ({
   };
 
   const roundHour = () => {
+    console.log(nearestHour);
     nearestHour = time.split(":").map(Number);
     if (nearestHour[1] >= 30 && nearestHour[0] === 23) {
       nearestHour[0] = 0;
       roundDate();
-    } else if (nearestHour[1] > +30 && nearestHour[0] !== 23) {
+    } else if (nearestHour[1] >= +30 && nearestHour[0] !== 23) {
       nearestHour[0] = nearestHour[0] + 1;
     }
     return nearestHour;

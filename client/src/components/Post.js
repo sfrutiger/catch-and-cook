@@ -135,11 +135,7 @@ const Post = ({
               <p>{post.date}</p>
               <p>{post.time}</p>
               {address ? <p>{address}</p> : ""}
-              {shareCoordinates ? (
-                <p className={`${myFeed ? "hidden" : ""}`}>{coordinates}</p>
-              ) : (
-                ""
-              )}
+              {shareCoordinates ? <p>{coordinates}</p> : ""}
               <p>Species: {post.species}</p>
               <p>Method: {post.method}</p>
             </div>

@@ -13,6 +13,7 @@ import Switch from "./Switch";
 import Map from "./routes/createpost/Map";
 import { getAuth } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
+import { reverseGeocode } from "../functions";
 
 const EditPost = ({
   feedPosition,
@@ -24,9 +25,9 @@ const EditPost = ({
   setPosts,
   postEdited,
 }) => {
-  const location = useLocation();
+  const locationState = useLocation();
   const navigate = useNavigate();
-  const post = location.state;
+  const post = locationState.state;
   const [postRecipes, setPostRecipes] = useState([]);
   const [skip, setSkip] = useState(0);
   const [authorUsername, setAuthorUsername] = useState("");
@@ -41,10 +42,11 @@ const EditPost = ({
   const [species, setSpecies] = useState(post.species);
   const [method, setMethod] = useState(post.method);
   const [coordinates, setCoordinates] = useState(post.coordinates);
+  const [location, setLocation] = useState(post.location);
 
   let address;
-  if (post.location.length) {
-    address = post.location[0].formatted_address;
+  if (location.length) {
+    address = location[0].formatted_address;
   }
 
   let latitude = coordinates[1];
@@ -111,7 +113,7 @@ const EditPost = ({
           });
       });
     } else {
-      console.log("Access denied. Only post auther can delete post");
+      console.log("Access denied. Only post author can delete post");
     }
   };
 
@@ -134,12 +136,61 @@ const EditPost = ({
           });
       });
     } else {
-      console.log("Access denied. Only post auther can delete recipe");
+      console.log("Access denied. Only post author can delete recipe");
     }
   };
 
-  const handleClick = () => {
+  const editPost = () => {
+    if (auth.currentUser.uid === post.authorUID) {
+      auth.currentUser.getIdToken(true).then(function (idToken) {
+        try {
+          axios
+            .patch(
+              `/api/posts/${post._id}`,
+              {
+                species: species,
+                date: date,
+                time: time,
+                location: location,
+                coordinates: coordinates,
+                shareCoordinates: shareCoordinates,
+                /* conditions: conditions, */
+                method: method,
+              },
+              {
+                headers: {
+                  authtoken: idToken,
+                },
+              }
+            )
+            .then(function (response) {
+              console.log(response);
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    } else {
+      console.log("Access denied. Only post author can delete recipe");
+    }
+  };
+
+  const updateLocation = async () => {
+    const response = await reverseGeocode(coordinates);
+    setLocation(response.data.results);
+  };
+
+  useEffect(() => {
+    updateLocation();
+  }, [coordinates]);
+
+  const discardChanges = () => {
     setMyPosts([]);
+    navigate("/myposts");
+  };
+
+  const saveChanges = () => {
+    editPost();
     navigate("/myposts");
   };
 
@@ -148,13 +199,16 @@ const EditPost = ({
       <div className="sticky top-0 w-full h-[60px] bg-slate-700 flex justify-center">
         <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
           <FaTimes
-            onClick={() => handleClick()}
+            onClick={() => discardChanges()}
             className="text-2xl cursor-pointer text-red-500"
           />
           <h1 className="text-xl w-[50%] max-w-[700px] text-center">
             Edit post
           </h1>
-          <FaCheck className="text-2xl cursor-pointer text-green-500" />
+          <FaCheck
+            onClick={() => saveChanges()}
+            className="text-2xl cursor-pointer text-green-500"
+          />
         </div>
       </div>
       <div className="flex justify-center">
