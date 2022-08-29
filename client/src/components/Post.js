@@ -142,16 +142,13 @@ const Post = ({
             <div className="flex flex-col items-end">
               {post.conditions ? (
                 <>
-                  <p>{post.conditions.data.currentConditions.conditions}</p>
+                  <p>{post.conditions.currentConditions.conditions}</p>
                   <p>
-                    Temperature: {post.conditions.data.currentConditions.temp}{" "}
-                    °F
+                    Temperature: {post.conditions.currentConditions.temp} °F
                   </p>
+                  <p>Wind: {post.conditions.currentConditions.windspeed} mph</p>
                   <p>
-                    Wind: {post.conditions.data.currentConditions.windspeed} mph
-                  </p>
-                  <p>
-                    Pressure: {post.conditions.data.currentConditions.pressure}{" "}
+                    Pressure: {post.conditions.currentConditions.pressure}{" "}
                     millibars
                   </p>
                 </>

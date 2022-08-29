@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import {
@@ -13,7 +13,12 @@ import Switch from "./Switch";
 import Map from "./routes/createpost/Map";
 import { getAuth } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
-import { reverseGeocode } from "../functions";
+import {
+  reverseGeocode,
+  retrieveWeather,
+  roundHour,
+  roundDate,
+} from "../functions";
 
 const EditPost = ({
   feedPosition,
@@ -43,11 +48,9 @@ const EditPost = ({
   const [method, setMethod] = useState(post.method);
   const [coordinates, setCoordinates] = useState(post.coordinates);
   const [location, setLocation] = useState(post.location);
-
-  let address;
-  if (location.length) {
-    address = location[0].formatted_address;
-  }
+  const [conditions, setConditions] = useState(post.conditions);
+  const [refetchConditions, setRefetchConditions] = useState(false);
+  const isMounted = useRef(false);
 
   let latitude = coordinates[1];
   latitude = Math.round(latitude * 1000) / 1000;
@@ -144,28 +147,24 @@ const EditPost = ({
     if (auth.currentUser.uid === post.authorUID) {
       auth.currentUser.getIdToken(true).then(function (idToken) {
         try {
-          axios
-            .patch(
-              `/api/posts/${post._id}`,
-              {
-                species: species,
-                date: date,
-                time: time,
-                location: location,
-                coordinates: coordinates,
-                shareCoordinates: shareCoordinates,
-                /* conditions: conditions, */
-                method: method,
+          axios.patch(
+            `/api/posts/${post._id}`,
+            {
+              species: species,
+              date: date,
+              time: time,
+              location: location,
+              coordinates: coordinates,
+              shareCoordinates: shareCoordinates,
+              conditions: conditions,
+              method: method,
+            },
+            {
+              headers: {
+                authtoken: idToken,
               },
-              {
-                headers: {
-                  authtoken: idToken,
-                },
-              }
-            )
-            .then(function (response) {
-              console.log(response);
-            });
+            }
+          );
         } catch (error) {
           console.log(error);
         }
@@ -184,14 +183,44 @@ const EditPost = ({
     updateLocation();
   }, [coordinates]);
 
+  let nearestDate = date;
+
+  const [nearestHour, setNearestHour] = useState("");
+
+  useEffect(() => {
+    const response = roundHour(nearestDate, time);
+    setNearestHour(response);
+  }, [time]);
+
+  // check if variables that effect conditions have been changed before sending API request
+  useEffect(() => {
+    if (isMounted.current) {
+      setRefetchConditions(true);
+    } else {
+      isMounted.current = true;
+    }
+  }, [coordinates, date, time]);
+
+  const updateWeather = async (nearestHour, coordinates, nearestDate) => {
+    const response = await retrieveWeather(
+      nearestHour,
+      coordinates,
+      nearestDate
+    );
+    setConditions(response);
+  };
+
   const discardChanges = () => {
     setMyPosts([]);
     navigate("/myposts");
   };
 
-  const saveChanges = () => {
-    editPost();
-    navigate("/myposts");
+  const saveChanges = async () => {
+    if (refetchConditions) {
+      await updateWeather(nearestHour, coordinates, nearestDate);
+      console.log(conditions); //this is running before update weather!!
+    }
+    /* navigate("/myposts"); */
   };
 
   return (
@@ -232,6 +261,19 @@ const EditPost = ({
                 className="text-5xl animate-spin w-full"
               />
             </div>
+            {post.conditions ? (
+              <div>
+                <p>{post.conditions.currentConditions.conditions}</p>
+                <p>Temperature: {post.conditions.currentConditions.temp} °F</p>
+                <p>Wind: {post.conditions.currentConditions.windspeed} mph</p>
+                <p>
+                  Pressure: {post.conditions.currentConditions.pressure}{" "}
+                  millibars
+                </p>
+              </div>
+            ) : (
+              ""
+            )}
             <FaTrashAlt
               className="text-2xl cursor-pointer"
               onClick={deletePost}
@@ -299,6 +341,11 @@ const EditPost = ({
               </div>
             ) : (
               <></>
+            )}
+            {location[0] ? (
+              <div>{location[0].formatted_address}</div>
+            ) : (
+              <div></div>
             )}
           </div>
           {postRecipes.length ? (

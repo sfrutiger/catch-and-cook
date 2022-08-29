@@ -46,14 +46,12 @@ const Confirm = ({
       <p>
         {latitude}, {longitude}
       </p>
-      {conditions.data.currentConditions ? (
+      {conditions.currentConditions ? (
         <>
-          <p>{conditions.data.currentConditions.conditions}</p>
-          <p>Temperature: {conditions.data.currentConditions.temp} °F</p>
-          <p>Wind: {conditions.data.currentConditions.windspeed} mph</p>
-          <p>
-            Pressure: {conditions.data.currentConditions.pressure} millibars
-          </p>
+          <p>{conditions.currentConditions.conditions}</p>
+          <p>Temperature: {conditions.currentConditions.temp} °F</p>
+          <p>Wind: {conditions.currentConditions.windspeed} mph</p>
+          <p>Pressure: {conditions.currentConditions.pressure} millibars</p>
         </>
       ) : (
         ""

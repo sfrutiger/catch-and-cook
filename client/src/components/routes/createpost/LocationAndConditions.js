@@ -35,7 +35,6 @@ const LocationAndConditions = ({
   };
 
   const roundHour = () => {
-    console.log(nearestHour);
     nearestHour = time.split(":").map(Number);
     if (nearestHour[1] >= 30 && nearestHour[0] === 23) {
       nearestHour[0] = 0;
@@ -53,7 +52,7 @@ const LocationAndConditions = ({
       // there is a bug with this API that won't return current conditions for exactly 00:00:00, so by default the minutes are set to :01.
       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${coordinates[1]}%2C%20${coordinates[0]}/${nearestDate}T${nearestHour[0]}:01:00?key=${weatherAPIKey}&include=current`
     );
-    setConditions(response);
+    setConditions(response.data);
   };
 
   const reverseGeocode = async () => {

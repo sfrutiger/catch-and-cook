@@ -13,31 +13,30 @@ export const roundDate = (nearestDate) => {
   return nearestDate;
 };
 
-export const roundHour = (nearestHour, time) => {
-  console.log(nearestHour);
-  nearestHour = time.split(":").map(Number);
-  if (nearestHour[1] >= 30 && nearestHour[0] === 23) {
-    nearestHour[0] = 0;
-    roundDate();
-  } else if (nearestHour[1] >= +30 && nearestHour[0] !== 23) {
-    nearestHour[0] = nearestHour[0] + 1;
+export const roundHour = (nearestDate, time) => {
+  let timeArray = time.split(":").map(Number);
+  if (timeArray[1] >= 30 && timeArray[0] === 23) {
+    timeArray[0] = 0;
+    roundDate(nearestDate);
+  } else if (timeArray[1] >= +30 && timeArray[0] !== 23) {
+    timeArray[0] = timeArray[0] + 1;
   }
-  return nearestHour;
+  return timeArray[0];
 };
 
 export const retrieveWeather = async (
-  setConditions,
+  nearestHour,
   coordinates,
-  nearestDate,
-  nearestHour
+  nearestDate
 ) => {
   const response = await axios.get(
     // there is a bug with this API that won't return current conditions for exactly 00:00:00, so by default the minutes are set to :01.
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${coordinates[1]}%2C%20${coordinates[0]}/${nearestDate}T${nearestHour[0]}:01:00?key=${weatherAPIKey}&include=current`
+    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${coordinates[1]}%2C%20${coordinates[0]}/${nearestDate}T${nearestHour}:01:00?key=${weatherAPIKey}&include=current`
   );
-  setConditions(response);
+  return response.data;
 };
 
+//get general location from geographic coordinates
 export const reverseGeocode = (coordinates) => {
   const response = axios.get(
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates[1]},${coordinates[0]}&key=${googleMapsAPIKey}&result_type=locality`
