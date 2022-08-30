@@ -5,7 +5,6 @@ import {
   FaSpinner,
   FaTimes,
   FaEdit,
-  FaArrowLeft,
   FaTrashAlt,
   FaCheck,
 } from "react-icons/fa";
@@ -13,17 +12,10 @@ import Switch from "./Switch";
 import Map from "./routes/createpost/Map";
 import { getAuth } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  reverseGeocode,
-  retrieveWeather,
-  roundHour,
-  roundDate,
-} from "../functions";
+import { reverseGeocode, retrieveWeather, roundHour } from "../functions";
 
 const EditPost = ({
   feedPosition,
-  generalFeed,
-  myFeed,
   myPosts,
   setMyPosts,
   posts,
@@ -34,11 +26,8 @@ const EditPost = ({
   const navigate = useNavigate();
   const post = locationState.state;
   const [postRecipes, setPostRecipes] = useState([]);
-  const [skip, setSkip] = useState(0);
-  const [authorUsername, setAuthorUsername] = useState("");
   const [loading, setLoading] = useState(true);
   const auth = getAuth();
-  const user = auth.currentUser;
   const [shareCoordinates, setShareCoordinates] = useState(
     post.shareCoordinates
   );
@@ -48,7 +37,7 @@ const EditPost = ({
   const [method, setMethod] = useState(post.method);
   const [coordinates, setCoordinates] = useState(post.coordinates);
   const [location, setLocation] = useState(post.location);
-  const [conditions, setConditions] = useState(post.conditions);
+  /*   const [conditions, setConditions] = useState(post.conditions); */
   const [refetchConditions, setRefetchConditions] = useState(false);
   const isMounted = useRef(false);
 
@@ -71,8 +60,6 @@ const EditPost = ({
   } else {
     longitude = longitude + "°";
   }
-
-  const coordinatesFormatted = latitude + ", " + longitude;
 
   // handle retrieving linked recipes from database
   let recipeIDs;
@@ -143,7 +130,7 @@ const EditPost = ({
     }
   };
 
-  const editPost = () => {
+  const editPost = (conditions) => {
     if (auth.currentUser.uid === post.authorUID) {
       auth.currentUser.getIdToken(true).then(function (idToken) {
         try {
@@ -207,7 +194,7 @@ const EditPost = ({
       coordinates,
       nearestDate
     );
-    setConditions(response);
+    return response;
   };
 
   const discardChanges = () => {
@@ -217,10 +204,17 @@ const EditPost = ({
 
   const saveChanges = async () => {
     if (refetchConditions) {
-      await updateWeather(nearestHour, coordinates, nearestDate);
-      console.log(conditions); //this is running before update weather!!
+      const conditions = await updateWeather(
+        nearestHour,
+        coordinates,
+        nearestDate
+      );
+      editPost(conditions);
+      navigate("/myposts");
+    } else {
+      editPost();
+      navigate("/myposts");
     }
-    /* navigate("/myposts"); */
   };
 
   return (
