@@ -13,6 +13,7 @@ import Map from "./routes/createpost/Map";
 import { getAuth } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { reverseGeocode, retrieveWeather, roundHour } from "../functions";
+import DeletePostConfirmation from "./DeletePostConfirmation";
 
 const EditPost = ({
   feedPosition,
@@ -21,6 +22,7 @@ const EditPost = ({
   posts,
   setPosts,
   postEdited,
+  setPostEdited,
 }) => {
   const locationState = useLocation();
   const navigate = useNavigate();
@@ -37,9 +39,11 @@ const EditPost = ({
   const [method, setMethod] = useState(post.method);
   const [coordinates, setCoordinates] = useState(post.coordinates);
   const [location, setLocation] = useState(post.location);
-  /*   const [conditions, setConditions] = useState(post.conditions); */
   const [refetchConditions, setRefetchConditions] = useState(false);
   const isMounted = useRef(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [typeOfDeletion, setTypeOfDeletion] = useState("");
+  const [recipeToDelete, setRecipeToDelete] = useState("");
 
   let latitude = coordinates[1];
   latitude = Math.round(latitude * 1000) / 1000;
@@ -108,7 +112,6 @@ const EditPost = ({
   };
 
   const deleteRecipe = (recipe) => {
-    //move to protected route
     const id = recipe._id;
     if (auth.currentUser.uid === recipe.authorUID) {
       auth.currentUser.getIdToken(true).then(function (idToken) {
@@ -130,35 +133,42 @@ const EditPost = ({
     }
   };
 
-  const editPost = (conditions) => {
+  const editPost = async (conditions) => {
     if (auth.currentUser.uid === post.authorUID) {
-      auth.currentUser.getIdToken(true).then(function (idToken) {
-        try {
-          axios.patch(
-            `/api/posts/${post._id}`,
-            {
-              species: species,
-              date: date,
-              time: time,
-              location: location,
-              coordinates: coordinates,
-              shareCoordinates: shareCoordinates,
-              conditions: conditions,
-              method: method,
-            },
-            {
-              headers: {
-                authtoken: idToken,
+      const response = await auth.currentUser
+        .getIdToken(true)
+        .then(function (idToken) {
+          try {
+            axios.patch(
+              `/api/posts/${post._id}`,
+              {
+                species: species,
+                date: date,
+                time: time,
+                location: location,
+                coordinates: coordinates,
+                shareCoordinates: shareCoordinates,
+                conditions: conditions,
+                method: method,
               },
-            }
-          );
-        } catch (error) {
-          console.log(error);
-        }
-      });
+              {
+                headers: {
+                  authtoken: idToken,
+                },
+              }
+            );
+          } catch (error) {
+            console.log(error);
+          }
+        });
     } else {
       console.log("Access denied. Only post author can delete recipe");
     }
+  };
+
+  const pleaseEditPost = async (conditions) => {
+    const response = await editPost(conditions);
+    return response;
   };
 
   const updateLocation = async () => {
@@ -209,16 +219,26 @@ const EditPost = ({
         coordinates,
         nearestDate
       );
-      editPost(conditions);
-      navigate("/myposts");
+      pleaseEditPost(conditions)
+        .then(setMyPosts([]))
+        .then(navigate("/myposts"));
     } else {
-      editPost();
+      await pleaseEditPost();
       navigate("/myposts");
     }
   };
 
   return (
     <>
+      <DeletePostConfirmation
+        deletePost={() => deletePost(post)}
+        deleteRecipe={() => deleteRecipe(recipeToDelete)}
+        myPosts={myPosts}
+        setMyPosts={setMyPosts}
+        typeOfDeletion={typeOfDeletion}
+        deleteConfirmation={deleteConfirmation}
+        setDeleteConfirmation={setDeleteConfirmation}
+      ></DeletePostConfirmation>
       <div className="sticky top-0 w-full h-[60px] bg-slate-700 flex justify-center">
         <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
           <FaTimes
@@ -270,7 +290,10 @@ const EditPost = ({
             )}
             <FaTrashAlt
               className="text-2xl cursor-pointer"
-              onClick={deletePost}
+              onClick={() => {
+                setTypeOfDeletion("post");
+                setDeleteConfirmation(true);
+              }}
             />
           </div>
 
@@ -355,7 +378,9 @@ const EditPost = ({
                         </Link>
                         <FaTrashAlt
                           onClick={() => {
-                            deleteRecipe(recipe);
+                            setTypeOfDeletion("recipe");
+                            setRecipeToDelete(recipe);
+                            setDeleteConfirmation(true);
                           }}
                         />
                       </div>

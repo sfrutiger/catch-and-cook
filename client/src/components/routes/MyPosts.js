@@ -35,11 +35,6 @@ const MyPosts = ({
     getMyPosts();
   }, [userID, myFeedSkip]);
 
-  useEffect(() => {
-    setMyPosts("");
-    getMyPosts();
-  }, [postEdited]);
-
   return (
     <>
       <div className="sticky top-0 w-full h-[60px] bg-slate-700 flex justify-center">
