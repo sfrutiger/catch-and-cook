@@ -8,6 +8,7 @@ import About from "./About";
 import Settings from "./Settings";
 import ChangeUsername from "./ChangeUsername";
 import ChangePassword from "./ChangePassword";
+import ContactSupport from "./ContactSupport";
 
 const DisplayInMenu = ({ setMenuOpen }) => {
   const { user } = UserAuth();
@@ -69,6 +70,17 @@ const DisplayInMenu = ({ setMenuOpen }) => {
             onClick={() => setDisplayCase("")}
           />
           <ChangePassword setDisplayCase={setDisplayCase} />
+        </div>
+      );
+
+    case "requestsupport":
+      return (
+        <div className="w-full h-[30%] flex flex-col items-center justify-around">
+          <FaArrowLeft
+            className="absolute left-3 top-3 cursor-pointer text-2xl"
+            onClick={() => setDisplayCase("")}
+          />
+          <ContactSupport setDisplayCase={setDisplayCase} />
         </div>
       );
 

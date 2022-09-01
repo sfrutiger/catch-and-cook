@@ -12,6 +12,15 @@ const About = () => {
           automatically retrieve the weather and tide conditions so you can have
           an accurate log. Share your spots or keep them secret!
         </p>
+        <div className="w-full flex flex-col items-center mt-12">
+          <p>Version {process.env.REACT_APP_VERSION}</p>
+          <p>
+            © 2022{" "}
+            <a href="https://www.frutiger.tech" className="underline">
+              frutiger.tech
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
