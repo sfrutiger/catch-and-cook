@@ -9,8 +9,8 @@ const About = () => {
         </p>
         <p className="mb-4 indent-4">
           After you enter the location, date, and time, Catch and Cook will
-          automatically retrieve the weather and tide conditions so you can have
-          an accurate log. Share your spots or keep them secret!
+          automatically retrieve the weather conditions so you can have an
+          accurate log. Share your spots or keep them secret!
         </p>
         <div className="w-full flex flex-col items-center mt-12">
           <p>Version {process.env.REACT_APP_VERSION}</p>
