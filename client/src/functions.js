@@ -1,8 +1,3 @@
-import axios from "axios";
-
-const weatherAPIKey = process.env.REACT_APP_WEATHER_API_KEY;
-const googleMapsAPIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-
 export const roundDate = (nearestDate) => {
   nearestDate = Date.parse(nearestDate);
   nearestDate = nearestDate + 86400000;
@@ -22,12 +17,4 @@ export const roundHour = (nearestDate, time) => {
     timeArray[0] = timeArray[0] + 1;
   }
   return timeArray[0];
-};
-
-//get general location from geographic coordinates
-export const reverseGeocode = (coordinates) => {
-  const response = axios.get(
-    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates[1]},${coordinates[0]}&key=${googleMapsAPIKey}&result_type=locality`
-  );
-  return response;
 };

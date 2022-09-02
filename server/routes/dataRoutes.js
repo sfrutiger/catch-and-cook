@@ -6,7 +6,7 @@ const axios = require("axios");
 // @desc Get weather data
 // @route GET /api/data/weather
 // @access Private
-router.get("/weather", async (req, res) => {
+router.get("/weather", auth, async (req, res) => {
   try {
     const weatherAPIKey = process.env.REACT_APP_WEATHER_API_KEY;
     const latitude = req.query.latitude;
@@ -22,5 +22,28 @@ router.get("/weather", async (req, res) => {
     res.json({ success: false });
   }
 });
+
+// @desc Get weather data
+// @route GET /api/data/weather
+// @access Private
+router.get("/reversegeocode", auth, async (req, res) => {
+  try {
+    const googleMapsAPIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+    const latitude = req.query.latitude;
+    const longitude = req.query.longitude;
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleMapsAPIKey}&result_type=locality`
+    );
+    res.json({ response: response.data });
+  } catch (error) {
+    res.json({ success: false });
+  }
+});
+
+//get general location from geographic coordinates
+/* export const reverseGeocode = (coordinates) => {
+  
+  return response;
+}; */
 
 module.exports = router;

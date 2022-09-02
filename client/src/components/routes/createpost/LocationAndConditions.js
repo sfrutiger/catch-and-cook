@@ -48,7 +48,51 @@ const LocationAndConditions = ({
 
   roundHour();
 
-  const retrieveWeather = () => {
+  let latitude = coordinates[1];
+  latitude = Math.round(latitude * 1000) / 1000;
+  if (latitude > 0) {
+    latitude = latitude + "° N";
+  } else if (latitude < 0) {
+    latitude = Math.abs(latitude) + "° S";
+  } else {
+    latitude = latitude + "°";
+  }
+
+  let longitude = coordinates[0];
+  longitude = Math.round(longitude * 1000) / 1000;
+  if (longitude > 0) {
+    longitude = longitude + "° E";
+  } else if (longitude < 0) {
+    longitude = Math.abs(longitude) + "° W";
+  } else {
+    longitude = longitude + "°";
+  }
+
+  const reverseGeocode = (coordinates) => {
+    try {
+      auth.currentUser.getIdToken(true).then(function (idToken) {
+        axios
+          .get(
+            `/api/data/reversegeocode?latitude=${coordinates[1]}&longitude=${coordinates[0]}`,
+            {
+              headers: {
+                authtoken: idToken,
+              },
+            }
+          )
+          .then(function (response) {
+            setLocation(response.data.response.results);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const retrieveWeather = (nearestHour, nearestDate, coordinates) => {
     try {
       auth.currentUser.getIdToken(true).then(function (idToken) {
         axios
@@ -72,32 +116,16 @@ const LocationAndConditions = ({
     }
   };
 
-  const reverseGeocode = async () => {
-    const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates[1]},${coordinates[0]}&key=${googleMapsAPIKey}&result_type=locality`
-    );
-    setLocation(response.data.results);
+  const handleClick = () => {
+    if (coordinates.length && date && time) {
+      setConditions([""]); // this is so it resets if you come back and change inputs after weather has been retrieved
+      retrieveWeather(nearestHour, nearestDate, coordinates);
+      reverseGeocode(coordinates);
+      nextStep();
+    } else {
+      console.log("select catch location, date, and time of catch");
+    }
   };
-
-  let latitude = coordinates[1];
-  latitude = Math.round(latitude * 1000) / 1000;
-  if (latitude > 0) {
-    latitude = latitude + "° N";
-  } else if (latitude < 0) {
-    latitude = Math.abs(latitude) + "° S";
-  } else {
-    latitude = latitude + "°";
-  }
-
-  let longitude = coordinates[0];
-  longitude = Math.round(longitude * 1000) / 1000;
-  if (longitude > 0) {
-    longitude = longitude + "° E";
-  } else if (longitude < 0) {
-    longitude = Math.abs(longitude) + "° W";
-  } else {
-    longitude = longitude + "°";
-  }
 
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
@@ -153,14 +181,7 @@ const LocationAndConditions = ({
         </button>
         <button
           onClick={() => {
-            if (coordinates.length && date && time) {
-              setConditions([""]); // this is so it resets if you come back and change inputs after weather has been retrieved
-              retrieveWeather();
-              reverseGeocode();
-              nextStep();
-            } else {
-              console.log("select catch location, date, and time of catch");
-            }
+            handleClick();
           }}
           className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
         >

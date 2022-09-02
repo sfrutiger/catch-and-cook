@@ -12,7 +12,7 @@ import Switch from "./Switch";
 import Map from "./routes/createpost/Map";
 import { getAuth } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
-import { reverseGeocode, roundHour } from "../functions";
+import { roundHour } from "../functions";
 import DeletePostConfirmation from "./DeletePostConfirmation";
 
 const EditPost = ({
@@ -172,8 +172,8 @@ const EditPost = ({
   };
 
   const updateLocation = async () => {
-    const response = await reverseGeocode(coordinates);
-    setLocation(response.data.results);
+    /* const response = await reverseGeocode(coordinates);
+    setLocation(response.data.results); */
   };
 
   useEffect(() => {
