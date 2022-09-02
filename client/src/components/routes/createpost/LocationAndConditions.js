@@ -1,6 +1,7 @@
 import axios from "axios";
 import Map from "./Map";
 import Switch from "../../Switch";
+import { getAuth } from "firebase/auth";
 
 const LocationAndConditions = ({
   nextStep,
@@ -18,8 +19,8 @@ const LocationAndConditions = ({
   conditions,
   shareCoordinates,
 }) => {
-  const weatherAPIKey = process.env.REACT_APP_WEATHER_API_KEY;
   const googleMapsAPIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+  const auth = getAuth();
 
   let nearestHour;
   let nearestDate = date;
@@ -47,12 +48,28 @@ const LocationAndConditions = ({
 
   roundHour();
 
-  const retrieveWeather = async () => {
-    const response = await axios.get(
-      // there is a bug with this API that won't return current conditions for exactly 00:00:00, so by default the minutes are set to :01.
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${coordinates[1]}%2C%20${coordinates[0]}/${nearestDate}T${nearestHour[0]}:01:00?key=${weatherAPIKey}&include=current`
-    );
-    setConditions(response.data);
+  const retrieveWeather = () => {
+    try {
+      auth.currentUser.getIdToken(true).then(function (idToken) {
+        axios
+          .get(
+            `/api/data/weather?nearestHour=${nearestHour[0]}&nearestDate=${nearestDate}&latitude=${coordinates[1]}&longitude=${coordinates[0]}`,
+            {
+              headers: {
+                authtoken: idToken,
+              },
+            }
+          )
+          .then(function (response) {
+            setConditions(response.data.response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const reverseGeocode = async () => {

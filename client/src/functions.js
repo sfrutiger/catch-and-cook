@@ -24,18 +24,6 @@ export const roundHour = (nearestDate, time) => {
   return timeArray[0];
 };
 
-export const retrieveWeather = async (
-  nearestHour,
-  coordinates,
-  nearestDate
-) => {
-  const response = await axios.get(
-    // there is a bug with this API that won't return current conditions for exactly 00:00:00, so by default the minutes are set to :01.
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${coordinates[1]}%2C%20${coordinates[0]}/${nearestDate}T${nearestHour}:01:00?key=${weatherAPIKey}&include=current`
-  );
-  return response.data;
-};
-
 //get general location from geographic coordinates
 export const reverseGeocode = (coordinates) => {
   const response = axios.get(

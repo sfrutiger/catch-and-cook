@@ -17,7 +17,9 @@ const Map = ({ setCoordinates, defaultLat, defaultLong, mapHeight }) => {
   };
 
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+    <LoadScript
+      googleMapsApiKey={process.env.REACT_APP_CLIENT_GOOGLE_MAPS_API_KEY}
+    >
       <GoogleMap
         id="map"
         onClick={(e) => {

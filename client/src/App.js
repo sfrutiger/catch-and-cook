@@ -44,7 +44,9 @@ function App() {
       } else {
         setPosts(response.data);
       }
-    } catch (e) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

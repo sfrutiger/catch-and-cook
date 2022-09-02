@@ -140,7 +140,7 @@ const Post = ({
               <p>Method: {post.method}</p>
             </div>
             <div className="flex flex-col items-end">
-              {post.conditions ? (
+              {post.conditions.currentConditions ? (
                 <>
                   <p>{post.conditions.currentConditions.conditions}</p>
                   <p>

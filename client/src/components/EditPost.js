@@ -12,7 +12,7 @@ import Switch from "./Switch";
 import Map from "./routes/createpost/Map";
 import { getAuth } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
-import { reverseGeocode, retrieveWeather, roundHour } from "../functions";
+import { reverseGeocode, roundHour } from "../functions";
 import DeletePostConfirmation from "./DeletePostConfirmation";
 
 const EditPost = ({
@@ -199,12 +199,12 @@ const EditPost = ({
   }, [coordinates, date, time]);
 
   const updateWeather = async (nearestHour, coordinates, nearestDate) => {
-    const response = await retrieveWeather(
+    /*     const response = await retrieveWeather(
       nearestHour,
       coordinates,
       nearestDate
     );
-    return response;
+    return response; */
   };
 
   const discardChanges = () => {
