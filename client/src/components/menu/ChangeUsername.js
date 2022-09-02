@@ -100,7 +100,7 @@ const ChangeUsername = ({ setDisplayCase }) => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         ></input>
-        <button className="buttons my-4">Save change</button>
+        <button className="buttons my-2">Save change</button>
       </form>
       <button
         className="buttons"

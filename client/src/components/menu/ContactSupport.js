@@ -48,7 +48,7 @@ const ContactSupport = ({ setDisplayCase }) => {
         </h1>
         <div className="w-full flex flex-col items-center">
           <form
-            className="flex flex-col py-4 w-full md:w-[75%]"
+            className="flex flex-col py-2 w-full md:w-[75%]"
             onSubmit={(e) => sendEmail(e)}
           >
             <label>Subject</label>
@@ -64,10 +64,10 @@ const ContactSupport = ({ setDisplayCase }) => {
               required
               onChange={(e) => setMessage(e.target.value)}
             />
-            <button className="buttons mt-4">Send request</button>
+            <button className="buttons mt-2">Send request</button>
           </form>
           <button
-            className="buttons"
+            className="buttons mt-0"
             onClick={() => {
               setDisplayCase("settings");
             }}

@@ -7,7 +7,7 @@ const Settings = ({ setDisplayCase }) => {
     <div className="flex flex-col items-center">
       <p>Logged in as {user.displayName}</p>
       <button
-        className="buttons w-[200px] my-4"
+        className="buttons w-[200px] my-2"
         onClick={() => {
           setDisplayCase("changeusername");
         }}
@@ -15,7 +15,7 @@ const Settings = ({ setDisplayCase }) => {
         Change username
       </button>
       <button
-        className="buttons w-[200px] mb-4"
+        className="buttons w-[200px] mb-2"
         onClick={() => {
           setDisplayCase("changepassword");
         }}
@@ -23,7 +23,7 @@ const Settings = ({ setDisplayCase }) => {
         Change password
       </button>
       <button
-        className="buttons w-[200px] mb-4"
+        className="buttons w-[200px] mb-2"
         onClick={() => {
           setDisplayCase("requestsupport");
         }}
