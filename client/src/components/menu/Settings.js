@@ -5,9 +5,9 @@ const Settings = ({ setDisplayCase }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <p>Logged in as {user.displayName}</p>
+      <p className="mb-10 text-xl">Logged in as {user.displayName}</p>
       <button
-        className="buttons w-[200px] my-2"
+        className="menu-items"
         onClick={() => {
           setDisplayCase("changeusername");
         }}
@@ -15,7 +15,7 @@ const Settings = ({ setDisplayCase }) => {
         Change username
       </button>
       <button
-        className="buttons w-[200px] mb-2"
+        className="menu-items"
         onClick={() => {
           setDisplayCase("changepassword");
         }}
@@ -23,7 +23,7 @@ const Settings = ({ setDisplayCase }) => {
         Change password
       </button>
       <button
-        className="buttons w-[200px] mb-2"
+        className="menu-items"
         onClick={() => {
           setDisplayCase("requestsupport");
         }}
@@ -31,9 +31,9 @@ const Settings = ({ setDisplayCase }) => {
         Request support
       </button>
       <button
-        className="buttons w-[200px]"
+        className="menu-items"
         onClick={() => {
-          setDisplayCase("changepassword");
+          setDisplayCase("deleteaccount");
         }}
       >
         Delete account

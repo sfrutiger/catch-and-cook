@@ -81,7 +81,7 @@ const Post = ({
           uid: post.authorUID,
         },
       });
-      setAuthorUsername(response.data[0].displayName);
+      setAuthorUsername(response.data[0].username);
     } catch (error) {
       console.log(error);
     }

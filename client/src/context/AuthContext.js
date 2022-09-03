@@ -8,6 +8,7 @@ import {
   updatePassword,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  deleteUser,
 } from "firebase/auth";
 import { auth } from "../firebase";
 import axios from "axios";
@@ -35,7 +36,7 @@ export const AuthContextProvider = ({ children }) => {
             {
               uid: auth.currentUser.uid,
               email: auth.currentUser.email,
-              displayName: auth.currentUser.displayName,
+              username: auth.currentUser.displayName,
             },
             {
               headers: {
@@ -47,6 +48,16 @@ export const AuthContextProvider = ({ children }) => {
       })
       .catch(function (error) {
         return error;
+      });
+  };
+
+  const deleteAccount = (user) => {
+    return deleteUser(user)
+      .then(() => {
+        console.log("delete user");
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -99,6 +110,7 @@ export const AuthContextProvider = ({ children }) => {
         createUser,
         changePassword,
         reauthenticateUser,
+        deleteAccount,
         /* googleSignIn, */
         /* provider, */
         user,

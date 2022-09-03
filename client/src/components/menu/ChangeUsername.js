@@ -93,17 +93,18 @@ const ChangeUsername = ({ setDisplayCase }) => {
     <div>
       <p className="text-red-400 mb-2">{error}</p>
       <form className="flex flex-col" onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Username:</label>
         <input
+          className="h-[40px] my-2"
           name="username"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         ></input>
-        <button className="buttons my-2">Save change</button>
+        <button className="buttons h-[40px] my-2">Save change</button>
       </form>
       <button
-        className="buttons"
+        className="buttons h-[40px]"
         onClick={() => {
           setDisplayCase("settings");
         }}

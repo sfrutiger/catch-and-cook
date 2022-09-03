@@ -10,7 +10,7 @@ router.post("/", auth, (req, res) => {
   const user = User.create({
     uid: req.body.uid,
     email: req.body.email,
-    displayName: req.body.displayName,
+    username: req.body.username,
   }).then((post) => res.status(200).json(post));
 });
 
@@ -26,9 +26,9 @@ router.get("/", async (req, res) => {
         });
         res.send(response);
       }
-      case "displayName": {
+      case "username": {
         const response = await User.find({
-          displayName: req.query.displayName,
+          username: req.query.username,
         });
         res.send(response);
       }

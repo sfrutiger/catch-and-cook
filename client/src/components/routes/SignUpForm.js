@@ -6,6 +6,7 @@ import axios from "axios";
 const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const { createUser } = UserAuth();
@@ -23,7 +24,7 @@ const SignUpForm = () => {
       const response = await axios.get("/api/users", {
         params: {
           criteria: "username",
-          displayName: username,
+          username: username,
         },
       });
       if (response.data.length === 0) {
@@ -45,7 +46,17 @@ const SignUpForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    checkUsernameAvailability(username);
+    if (!username) {
+      setError("Username is required");
+    } else if (!email) {
+      setError("An email address is required");
+    } else if (!password) {
+      setError("A password is required");
+    } else if (password !== confirmPassword) {
+      setError("Passwords do not match");
+    } else {
+      checkUsernameAvailability(username);
+    }
   };
 
   return (
@@ -80,6 +91,14 @@ const SignUpForm = () => {
           <label className="py-2">Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
+            className="border p-3"
+            type="password"
+          />
+        </div>
+        <div className="flex flex-col mb-2">
+          <label className="py-2">Confirm password</label>
+          <input
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="border p-3"
             type="password"
           />
