@@ -5,7 +5,6 @@ export const roundDate = (nearestDate) => {
   nearestDate = nearestDate.toISOString("en-US", { timeZone: "GMT" });
   nearestDate = nearestDate.split("T");
   nearestDate = nearestDate[0];
-  console.log("nearest date");
   return nearestDate;
 };
 

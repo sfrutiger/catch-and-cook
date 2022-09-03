@@ -38,6 +38,7 @@ const EditPost = ({
   const [species, setSpecies] = useState(post.species);
   const [method, setMethod] = useState(post.method);
   const [coordinates, setCoordinates] = useState(post.coordinates);
+  const [conditions, setConditions] = useState(post.conditions);
   const [location, setLocation] = useState(post.location);
   const [refetchConditions, setRefetchConditions] = useState(false);
   const isMounted = useRef(false);
@@ -45,6 +46,8 @@ const EditPost = ({
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [typeOfDeletion, setTypeOfDeletion] = useState("");
   const [recipeToDelete, setRecipeToDelete] = useState("");
+
+  let newConditions = conditions;
 
   let latitude = coordinates[1];
   latitude = Math.round(latitude * 1000) / 1000;
@@ -134,7 +137,7 @@ const EditPost = ({
     }
   };
 
-  const editPost = async (conditions) => {
+  const editPost = async (newConditions) => {
     if (auth.currentUser.uid === post.authorUID) {
       const response = await auth.currentUser
         .getIdToken(true)
@@ -149,7 +152,7 @@ const EditPost = ({
                 location: location,
                 coordinates: coordinates,
                 shareCoordinates: shareCoordinates,
-                conditions: conditions,
+                conditions: newConditions,
                 method: method,
               },
               {
@@ -167,17 +170,11 @@ const EditPost = ({
     }
   };
 
-  const pleaseEditPost = async (conditions) => {
-    const response = await editPost(conditions);
-    return response;
-  };
-
   const [nearestDate, setNearestDate] = useState(date);
   const [nearestHour, setNearestHour] = useState("");
 
   useEffect(() => {
     const response = roundHour(date, time);
-    console.log(response);
     setNearestHour(response[0]);
     setNearestDate(response[1]);
   }, [time, date]);
@@ -217,37 +214,30 @@ const EditPost = ({
 
   useEffect(() => {
     if (isMountedTwo.current) {
-      console.log("reverse geocode");
       reverseGeocode(coordinates);
     } else {
       isMountedTwo.current = true;
     }
   }, [coordinates]);
 
-  const retrieveWeather = (nearestDate) => {
-    console.log("retrieve weather");
+  const retrieveWeather = async () => {
     try {
-      auth.currentUser.getIdToken(true).then(function (idToken) {
-        axios
-          .get(
-            `/api/data/weather?nearestHour=${nearestHour[0]}&nearestDate=${nearestDate}&latitude=${coordinates[1]}&longitude=${coordinates[0]}`,
-            {
-              headers: {
-                authtoken: idToken,
-              },
-            }
-          )
-          .then(function (response) {
-            console.log(response);
-            return response.data.response;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+      await auth.currentUser.getIdToken(true).then(async function (idToken) {
+        const response = await axios.get(
+          `/api/data/weather?nearestHour=${nearestHour}&nearestDate=${nearestDate}&latitude=${coordinates[1]}&longitude=${coordinates[0]}`,
+          {
+            headers: {
+              authtoken: idToken,
+            },
+          }
+        );
+        newConditions = response.data.response;
+        return newConditions;
       });
     } catch (error) {
       console.log(error);
     }
+    return newConditions;
   };
 
   const discardChanges = () => {
@@ -257,12 +247,10 @@ const EditPost = ({
 
   const saveChanges = async () => {
     if (refetchConditions) {
-      const updatedConditions = await retrieveWeather(nearestDate);
-      pleaseEditPost(updatedConditions).then(setMyPosts([]));
-      /* .then(navigate("/myposts")); */
+      const response = await retrieveWeather();
+      editPost(response).then(navigate("/myposts"));
     } else {
-      await pleaseEditPost();
-      /* navigate("/myposts"); */
+      editPost(newConditions).then(navigate("/myposts")); //figure out how to do this without rewriting conditions
     }
   };
 
@@ -315,12 +303,11 @@ const EditPost = ({
             </div>
             {post.conditions ? (
               <div>
-                <p>{post.conditions.currentConditions.conditions}</p>
-                <p>Temperature: {post.conditions.currentConditions.temp} °F</p>
-                <p>Wind: {post.conditions.currentConditions.windspeed} mph</p>
+                <p>{conditions.currentConditions.conditions}</p>
+                <p>Temperature: {conditions.currentConditions.temp} °F</p>
+                <p>Wind: {conditions.currentConditions.windspeed} mph</p>
                 <p>
-                  Pressure: {post.conditions.currentConditions.pressure}{" "}
-                  millibars
+                  Pressure: {conditions.currentConditions.pressure} millibars
                 </p>
               </div>
             ) : (
