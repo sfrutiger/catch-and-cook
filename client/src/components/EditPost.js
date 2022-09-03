@@ -41,6 +41,7 @@ const EditPost = ({
   const [location, setLocation] = useState(post.location);
   const [refetchConditions, setRefetchConditions] = useState(false);
   const isMounted = useRef(false);
+  const isMountedTwo = useRef(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [typeOfDeletion, setTypeOfDeletion] = useState("");
   const [recipeToDelete, setRecipeToDelete] = useState("");
@@ -171,23 +172,15 @@ const EditPost = ({
     return response;
   };
 
-  const updateLocation = async () => {
-    /* const response = await reverseGeocode(coordinates);
-    setLocation(response.data.results); */
-  };
-
-  useEffect(() => {
-    updateLocation();
-  }, [coordinates]);
-
-  let nearestDate = date;
-
+  const [nearestDate, setNearestDate] = useState(date);
   const [nearestHour, setNearestHour] = useState("");
 
   useEffect(() => {
-    const response = roundHour(nearestDate, time);
-    setNearestHour(response);
-  }, [time]);
+    const response = roundHour(date, time);
+    console.log(response);
+    setNearestHour(response[0]);
+    setNearestDate(response[1]);
+  }, [time, date]);
 
   // check if variables that effect conditions have been changed before sending API request
   useEffect(() => {
@@ -198,13 +191,63 @@ const EditPost = ({
     }
   }, [coordinates, date, time]);
 
-  const updateWeather = async (nearestHour, coordinates, nearestDate) => {
-    /*     const response = await retrieveWeather(
-      nearestHour,
-      coordinates,
-      nearestDate
-    );
-    return response; */
+  const reverseGeocode = (coordinates) => {
+    try {
+      auth.currentUser.getIdToken(true).then(function (idToken) {
+        axios
+          .get(
+            `/api/data/reversegeocode?latitude=${coordinates[1]}&longitude=${coordinates[0]}`,
+            {
+              headers: {
+                authtoken: idToken,
+              },
+            }
+          )
+          .then(function (response) {
+            setLocation(response.data.response.results);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isMountedTwo.current) {
+      console.log("reverse geocode");
+      reverseGeocode(coordinates);
+    } else {
+      isMountedTwo.current = true;
+    }
+  }, [coordinates]);
+
+  const retrieveWeather = (nearestDate) => {
+    console.log("retrieve weather");
+    try {
+      auth.currentUser.getIdToken(true).then(function (idToken) {
+        axios
+          .get(
+            `/api/data/weather?nearestHour=${nearestHour[0]}&nearestDate=${nearestDate}&latitude=${coordinates[1]}&longitude=${coordinates[0]}`,
+            {
+              headers: {
+                authtoken: idToken,
+              },
+            }
+          )
+          .then(function (response) {
+            console.log(response);
+            return response.data.response;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const discardChanges = () => {
@@ -214,17 +257,12 @@ const EditPost = ({
 
   const saveChanges = async () => {
     if (refetchConditions) {
-      const conditions = await updateWeather(
-        nearestHour,
-        coordinates,
-        nearestDate
-      );
-      pleaseEditPost(conditions)
-        .then(setMyPosts([]))
-        .then(navigate("/myposts"));
+      const updatedConditions = await retrieveWeather(nearestDate);
+      pleaseEditPost(updatedConditions).then(setMyPosts([]));
+      /* .then(navigate("/myposts")); */
     } else {
       await pleaseEditPost();
-      navigate("/myposts");
+      /* navigate("/myposts"); */
     }
   };
 
