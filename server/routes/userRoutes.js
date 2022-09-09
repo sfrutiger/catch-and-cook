@@ -11,7 +11,17 @@ router.post("/", auth, (req, res) => {
     uid: req.body.uid,
     email: req.body.email,
     username: req.body.username,
-  }).then((post) => res.status(200).json(post));
+  }).then((user) => res.status(200).json(user));
+});
+
+// @desc Delete user
+// @route DELETE /api/posts
+// @access Private
+router.delete("/:uid", auth, (req, res) => {
+  const userToDelete = req.params.uid;
+  User.findOne({ uid: userToDelete })
+    .then((user) => user.remove().then(() => res.json({ success: true })))
+    .catch((err) => res.status(404).json({ success: false }));
 });
 
 // @desc Get user from criteria

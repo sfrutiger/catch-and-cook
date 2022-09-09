@@ -44,6 +44,20 @@ router.delete("/:id", auth, (req, res) => {
     .catch((err) => res.status(404).json({ success: false }));
 });
 
+// @desc Delete all recipes by author
+// @route DELETE /api/recipes/accountdeletion
+// @access Private
+router.delete("/accountdeletion/:uid", auth, async (req, res) => {
+  const userToDelete = req.params.uid;
+  try {
+    const response = await Recipe.deleteMany({
+      authorUID: userToDelete,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 // @desc update redipce
 // @route PATCH /api/recipes
 // @access Private

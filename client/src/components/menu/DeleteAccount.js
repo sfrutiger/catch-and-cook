@@ -21,6 +21,7 @@ const DeleteAccount = ({ setDisplayCase }) => {
         if (response.user === user) {
           if (confirmDelete === "delete") {
             deleteAccount(user);
+            setDisplayCase("");
           } else {
             setError('You must type "delete" to confirm deletion');
           }
@@ -44,7 +45,7 @@ const DeleteAccount = ({ setDisplayCase }) => {
         <label htmlFor="password">Enter your password</label>
         <input
           className="h-[40px] my-2"
-          name="passworde"
+          name="password"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         ></input>

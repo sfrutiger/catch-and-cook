@@ -19,42 +19,65 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
   const createUser = (email, password, username) => {
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then(function () {
-        return updateProfile(auth.currentUser, {
-          displayName: username,
-        });
-      })
-      .then(function () {
+    return (
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(function () {
+          return updateProfile(auth.currentUser, {
+            displayName: username,
+          });
+        })
+        /* .then(function () {
         return sendEmailVerification(auth.currentUser);
-      })
-      .then(function () {
-        auth.currentUser.getIdToken(true).then(function (idToken) {
-          // this is not getting the token for some reason **8/7/22 I don't know what this comment means
-          axios.post(
-            "/api/users",
-            {
-              uid: auth.currentUser.uid,
-              email: auth.currentUser.email,
-              username: auth.currentUser.displayName,
-            },
-            {
-              headers: {
-                authtoken: idToken,
+      }) */
+        .then(function () {
+          auth.currentUser.getIdToken(true).then(function (idToken) {
+            // this is not getting the token for some reason **8/7/22 I don't know what this comment means
+            axios.post(
+              "/api/users",
+              {
+                uid: auth.currentUser.uid,
+                email: auth.currentUser.email,
+                username: auth.currentUser.displayName,
               },
-            }
-          );
-        });
-      })
-      .catch(function (error) {
-        return error;
-      });
+              {
+                headers: {
+                  authtoken: idToken,
+                },
+              }
+            );
+          });
+        })
+        .catch(function (error) {
+          return error;
+        })
+    );
   };
 
   const deleteAccount = (user) => {
-    return deleteUser(user)
-      .then(() => {
-        console.log("delete user");
+    console.log("try delete from mongo");
+    auth.currentUser
+      .getIdToken(true)
+      .then(function (idToken) {
+        console.log("after getting IdToken");
+        axios.delete(`/api/users/${auth.currentUser.uid}`, {
+          headers: {
+            authtoken: idToken,
+          },
+        });
+        axios.delete(`/api/posts/accountdeletion/${auth.currentUser.uid}`, {
+          headers: {
+            authtoken: idToken,
+          },
+        });
+        axios.delete(`/api/recipes/accountdeletion/${auth.currentUser.uid}`, {
+          headers: {
+            authtoken: idToken,
+          },
+        });
+      })
+      //need to figure out how to delete pictures from firebase
+      .then(function () {
+        return deleteUser(user);
       })
       .catch((error) => {
         console.log(error);
@@ -85,16 +108,6 @@ export const AuthContextProvider = ({ children }) => {
     });
   };
 
-  // google sign in causing issue with user names, will re-implement later
-  /*  const googleSignIn = (provider) => {
-    return signInWithPopup(auth, provider);
-  }; */
-
-  // cannot get this to work in context
-  /* const logOut = () => {
-    return signOut(auth);
-  }; */
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -111,10 +124,8 @@ export const AuthContextProvider = ({ children }) => {
         changePassword,
         reauthenticateUser,
         deleteAccount,
-        /* googleSignIn, */
-        /* provider, */
         user,
-        /* logOut, */ signIn,
+        signIn,
       }}
     >
       {children}
