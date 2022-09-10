@@ -19,38 +19,35 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
   const createUser = (email, password, username) => {
-    return (
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(function () {
-          return updateProfile(auth.currentUser, {
-            displayName: username,
-          });
-        })
-        /* .then(function () {
+    return createUserWithEmailAndPassword(auth, email, password)
+      .then(function () {
+        return updateProfile(auth.currentUser, {
+          displayName: username,
+        });
+      })
+      .then(function () {
         return sendEmailVerification(auth.currentUser);
-      }) */
-        .then(function () {
-          auth.currentUser.getIdToken(true).then(function (idToken) {
-            // this is not getting the token for some reason **8/7/22 I don't know what this comment means
-            axios.post(
-              "/api/users",
-              {
-                uid: auth.currentUser.uid,
-                email: auth.currentUser.email,
-                username: auth.currentUser.displayName,
+      })
+      .then(function () {
+        auth.currentUser.getIdToken(true).then(function (idToken) {
+          axios.post(
+            "/api/users",
+            {
+              uid: auth.currentUser.uid,
+              email: auth.currentUser.email,
+              username: auth.currentUser.displayName,
+            },
+            {
+              headers: {
+                authtoken: idToken,
               },
-              {
-                headers: {
-                  authtoken: idToken,
-                },
-              }
-            );
-          });
-        })
-        .catch(function (error) {
-          return error;
-        })
-    );
+            }
+          );
+        });
+      })
+      .catch(function (error) {
+        return error;
+      });
   };
 
   const deleteAccount = (user) => {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import emailjs, { send } from "emailjs-com";
+import emailjs from "emailjs-com";
 import { UserAuth } from "../../context/AuthContext";
 
 const Contact = ({ setDisplayCase }) => {
@@ -13,6 +13,7 @@ const Contact = ({ setDisplayCase }) => {
     e.preventDefault();
 
     var templateParams = {
+      type: "General inquiry",
       email: email,
       subject: subject,
       message: message,
