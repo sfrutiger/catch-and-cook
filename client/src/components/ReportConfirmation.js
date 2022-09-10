@@ -1,6 +1,6 @@
 import emailjs, { send } from "emailjs-com";
-import { useState } from "react";
-import { getAuth } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { UserAuth } from "../context/AuthContext";
 import { FaTimes } from "react-icons/fa";
 
 const ReportConfirmation = ({
@@ -10,12 +10,10 @@ const ReportConfirmation = ({
   recipe,
   postType,
 }) => {
-  const auth = getAuth();
+  const { user } = UserAuth();
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [message, setMessage] = useState("");
-  const [email, setEmail] = useState(
-    auth ? auth.currentUser.email : "no email"
-  );
+  const [email, setEmail] = useState("");
 
   let id;
   if (postType === "recipe") {
@@ -23,6 +21,12 @@ const ReportConfirmation = ({
   } else if (postType === "post") {
     id = post._id;
   }
+
+  useEffect(() => {
+    if (user) {
+      setEmail(user.email);
+    }
+  });
 
   const sendEmail = () => {
     var templateParams = {
@@ -87,12 +91,12 @@ const ReportConfirmation = ({
                 </div>
               </div>
             ) : (
-              <div className="w-full h-full relative">
+              <div className="w-full h-full flex flex-col items-center">
                 <FaTimes
-                  className="absolute right-0 cursor-pointer"
+                  className="cursor-pointer self-end"
                   onClick={() => setReportConfirmation(false)}
                 />
-                <p className="p-12">Report sent</p>
+                <p className="m-8">Report sent</p>
               </div>
             )}
           </div>

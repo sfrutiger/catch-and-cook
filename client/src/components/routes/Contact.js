@@ -1,9 +1,11 @@
 import { useState } from "react";
 import emailjs from "emailjs-com";
 import { UserAuth } from "../../context/AuthContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Contact = ({ setDisplayCase }) => {
   const { user } = UserAuth();
+  const navigate = useNavigate();
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [subject, setSubject] = useState("Inquiry with no subject");
   const [message, setMessage] = useState("");
@@ -73,6 +75,7 @@ const Contact = ({ setDisplayCase }) => {
             />
             <label>Message</label>
             <textarea
+              className="h-[150px]"
               name="message"
               required
               onChange={(e) => setMessage(e.target.value)}
@@ -82,7 +85,7 @@ const Contact = ({ setDisplayCase }) => {
           <button
             className="buttons mt-0 h-[40px]"
             onClick={() => {
-              setDisplayCase("settings");
+              navigate(-1);
             }}
           >
             Cancel
