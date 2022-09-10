@@ -13,7 +13,13 @@ const About = () => {
           accurate log. Share your spots or keep them secret!
         </p>
         <div className="w-full flex flex-col items-center mt-12">
-          <p>Version {process.env.REACT_APP_VERSION}</p>
+          <p className="mb-2">Version {process.env.REACT_APP_VERSION}</p>
+          <a
+            href="https://www.freeprivacypolicy.com/live/6bb377d1-111c-4534-b55f-f6712329cf52"
+            className="underline mb-2"
+          >
+            Privacy Policy
+          </a>
           <p>
             © 2022{" "}
             <a href="https://www.frutiger.tech" className="underline">

@@ -8,7 +8,6 @@ import About from "./About";
 import Settings from "./Settings";
 import ChangeUsername from "./ChangeUsername";
 import ChangePassword from "./ChangePassword";
-import ContactSupport from "./ContactSupport";
 import DeleteAccount from "./DeleteAccount";
 
 const DisplayInMenu = ({ setMenuOpen }) => {
@@ -74,17 +73,6 @@ const DisplayInMenu = ({ setMenuOpen }) => {
         </div>
       );
 
-    case "requestsupport":
-      return (
-        <div className="w-full h-[30%] flex flex-col items-center justify-around">
-          <FaArrowLeft
-            className="absolute left-3 top-3 cursor-pointer text-2xl"
-            onClick={() => setDisplayCase("")}
-          />
-          <ContactSupport setDisplayCase={setDisplayCase} />
-        </div>
-      );
-
     case "deleteaccount":
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
@@ -118,9 +106,18 @@ const DisplayInMenu = ({ setMenuOpen }) => {
             About
           </p>
           {user ? (
-            <p className="menu-items" onClick={handleLogout}>
-              Sign Out
-            </p>
+            <>
+              <Link
+                className="menu-items"
+                to="/contact"
+                onClick={() => setMenuOpen(false)}
+              >
+                <p>Contact</p>
+              </Link>
+              <p className="menu-items" onClick={handleLogout}>
+                Sign Out
+              </p>
+            </>
           ) : (
             <>
               <Link
@@ -136,6 +133,13 @@ const DisplayInMenu = ({ setMenuOpen }) => {
                 onClick={() => setMenuOpen(false)}
               >
                 <p>Create Account</p>
+              </Link>
+              <Link
+                className="menu-items"
+                to="/contact"
+                onClick={() => setMenuOpen(false)}
+              >
+                <p>Contact</p>
               </Link>
             </>
           )}

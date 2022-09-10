@@ -22,6 +22,7 @@ import CreatePost from "./components/routes/createpost/CreatePost";
 import AddRecipe from "./components/routes/AddRecipe";
 import ForgotPassword from "./components/routes/ForgotPassword";
 import EditPost from "./components/EditPost";
+import Contact from "./components/routes/Contact";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -141,6 +142,17 @@ function App() {
                 <Header />
                 <SignInForm />
               </PublicRoute>
+            }
+          />
+          <Route
+            exact
+            path="contact"
+            element={
+              <>
+                <Header />
+                <Contact />
+                <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
+              </>
             }
           />
           <Route

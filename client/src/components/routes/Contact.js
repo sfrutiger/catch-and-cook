@@ -2,18 +2,18 @@ import { useState } from "react";
 import emailjs, { send } from "emailjs-com";
 import { UserAuth } from "../../context/AuthContext";
 
-const ContactSupport = ({ setDisplayCase }) => {
+const Contact = ({ setDisplayCase }) => {
   const { user } = UserAuth();
   const [confirmSubmit, setConfirmSubmit] = useState(false);
-  const [subject, setSubject] = useState("Support request with no subject");
+  const [subject, setSubject] = useState("Inquiry with no subject");
   const [message, setMessage] = useState("");
+  const [email, setEmail] = useState(user ? user.email : "");
 
   const sendEmail = (e) => {
     e.preventDefault();
 
     var templateParams = {
-      username: user.displayName,
-      email: user.email,
+      email: email,
       subject: subject,
       message: message,
     };
@@ -41,16 +41,28 @@ const ContactSupport = ({ setDisplayCase }) => {
   };
 
   return (
-    <div name="contact" className="w-[50%] h-screen">
-      <div className="section">
-        <h1 className="section-header">
-          Submit your request for support below
-        </h1>
+    <div name="contact" className="w-full h-screen flex justify-center">
+      <div className="w-[50%] mt-16">
+        <h1 className="">Submit your inquiry below</h1>
         <div className="w-full flex flex-col items-center">
           <form
             className="flex flex-col py-2 w-full md:w-[75%]"
             onSubmit={(e) => sendEmail(e)}
           >
+            {!user ? (
+              <>
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </>
+            ) : (
+              ""
+            )}
+
             <label>Subject</label>
             <input
               type="text"
@@ -64,10 +76,10 @@ const ContactSupport = ({ setDisplayCase }) => {
               required
               onChange={(e) => setMessage(e.target.value)}
             />
-            <button className="buttons mt-2">Send request</button>
+            <button className="buttons mt-2 h-[40px]">Send request</button>
           </form>
           <button
-            className="buttons mt-0"
+            className="buttons mt-0 h-[40px]"
             onClick={() => {
               setDisplayCase("settings");
             }}
@@ -83,4 +95,4 @@ const ContactSupport = ({ setDisplayCase }) => {
   );
 };
 
-export default ContactSupport;
+export default Contact;

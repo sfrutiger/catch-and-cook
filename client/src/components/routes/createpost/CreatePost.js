@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { getAuth } from "firebase/auth";
@@ -26,7 +26,6 @@ const CreatePost = ({ posts, setPosts }) => {
   const [recipeName, setRecipeName] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
-  const postToEdit = useLocation().state;
 
   // Proceed to next step
   const nextStep = () => {
@@ -111,7 +110,12 @@ const CreatePost = ({ posts, setPosts }) => {
   const uploadPicture = async () => {
     const storageID = uuidv4();
     const storageRef = ref(storage, storageID);
-    await uploadBytes(storageRef, picture);
+    const metadata = {
+      customMetadata: {
+        author: user.uid,
+      },
+    };
+    await uploadBytes(storageRef, picture, metadata);
     return (downloadURL = await getDownloadURL(storageRef));
   };
 

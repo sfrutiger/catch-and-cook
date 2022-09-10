@@ -25,14 +25,6 @@ const Settings = ({ setDisplayCase }) => {
       <button
         className="menu-items"
         onClick={() => {
-          setDisplayCase("requestsupport");
-        }}
-      >
-        Request support
-      </button>
-      <button
-        className="menu-items"
-        onClick={() => {
           setDisplayCase("deleteaccount");
         }}
       >
