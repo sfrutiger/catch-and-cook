@@ -57,6 +57,7 @@ function App() {
   useEffect(() => {
     setSkip(0);
     getPosts();
+    setMyFeedSkip(0);
   }, [postEdited]);
 
   const handleScroll = (e) => {
@@ -87,7 +88,11 @@ function App() {
 
   // handle state on route changes to facillitate infinite scroll and scroll restoration
   useEffect(() => {
-    if (routePath.pathname === "/signedin" || routePath.pathname === "/") {
+    if (
+      routePath.pathname === "/signedin" ||
+      routePath.pathname === "/" ||
+      routePath.pathname === "myposts"
+    ) {
       returnFeedToSamePosition(); // restore scroll position
       setUserFeedSkip(0); // reset skip for infinite scroll in user feed
       setMyFeedSkip(0);

@@ -164,6 +164,9 @@ const EditPost = ({
           } catch (error) {
             console.log(error);
           }
+        })
+        .then(function () {
+          setPostEdited(postEdited + 1);
         });
     } else {
       console.log("Access denied. Only post author can delete recipe");

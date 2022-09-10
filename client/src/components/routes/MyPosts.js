@@ -21,7 +21,7 @@ const MyPosts = ({
       const response = await axios.get(
         `/api/posts?skip=${myFeedSkip}&userid=${userID}`
       );
-      if (myPosts.length > 0) {
+      if (myPosts.length > 0 && myFeedSkip !== 0) {
         setMyPosts([...myPosts, ...response.data]);
       } else {
         setMyPosts(response.data);
@@ -33,7 +33,12 @@ const MyPosts = ({
 
   useEffect(() => {
     getMyPosts();
-  }, [userID, myFeedSkip]);
+  }, [user, myFeedSkip, postEdited]);
+
+  useEffect(() => {
+    setMyPosts([]);
+    getMyPosts();
+  }, [postEdited]);
 
   return (
     <>
