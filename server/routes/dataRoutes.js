@@ -8,7 +8,7 @@ const axios = require("axios");
 // @access Private
 router.get("/weather", auth, async (req, res) => {
   try {
-    const weatherAPIKey = process.env.REACT_APP_WEATHER_API_KEY;
+    const weatherAPIKey = process.env.WEATHER_API_KEY;
     const latitude = req.query.latitude;
     const longitude = req.query.longitude;
     const nearestHour = req.query.nearestHour;
@@ -28,7 +28,7 @@ router.get("/weather", auth, async (req, res) => {
 // @access Private
 router.get("/reversegeocode", auth, async (req, res) => {
   try {
-    const googleMapsAPIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+    const googleMapsAPIKey = process.env.GOOGLE_MAPS_API_KEY;
     const latitude = req.query.latitude;
     const longitude = req.query.longitude;
     const response = await axios.get(
@@ -39,11 +39,5 @@ router.get("/reversegeocode", auth, async (req, res) => {
     res.json({ success: false });
   }
 });
-
-//get general location from geographic coordinates
-/* export const reverseGeocode = (coordinates) => {
-  
-  return response;
-}; */
 
 module.exports = router;

@@ -44,7 +44,7 @@ const ChangeUsername = ({ setDisplayCase }) => {
           axios.patch(
             `/api/users/${id}`,
             {
-              displayName: username,
+              username: username,
             },
             {
               headers: {
@@ -70,8 +70,8 @@ const ChangeUsername = ({ setDisplayCase }) => {
     try {
       const response = await axios.get("/api/users", {
         params: {
-          criteria: "displayName",
-          displayName: username,
+          criteria: "username",
+          username: username,
         },
       });
       if (response.data.length === 0) {
