@@ -30,6 +30,8 @@ if (process.env.NODE_ENV === "development") {
   tokenURI = process.env.FB_PRODUCTION_TOKEN_URI;
   authProvider = process.env.FB_PRODUCTION_AUTH_PROVIDER_X509_CERT_URL;
   clientCertURL = process.env.FB_PRODUCTION_CLIENT_X509_CERT_URL;
+} else {
+  console.log("environment not set");
 }
 
 admin.initializeApp({

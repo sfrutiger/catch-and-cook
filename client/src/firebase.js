@@ -32,6 +32,8 @@ if (environment === "development") {
     appId: process.env.REACT_APP_FIREBASE_PRODUCTION_APPID,
     measurementId: process.env.REACT_APP_FIREBASE_PRODUCTION_MEASUREMENTID,
   };
+} else {
+  console.log("environment not set");
 }
 
 // Initialize Firebase
