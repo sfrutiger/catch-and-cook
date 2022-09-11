@@ -72,24 +72,20 @@ const AddRecipe = ({ setMyPosts, postEdited, setPostEdited }) => {
   const editRecipe = () => {
     auth.currentUser.getIdToken(true).then(function (idToken) {
       try {
-        axios
-          .patch(
-            `/api/recipes/${recipe._id}`,
-            {
-              author: user.uid,
-              name: recipeName,
-              ingredients: recipeIngredients,
-              instructions: recipeInstructions,
+        axios.patch(
+          `/api/recipes/${recipe._id}`,
+          {
+            author: user.uid,
+            name: recipeName,
+            ingredients: recipeIngredients,
+            instructions: recipeInstructions,
+          },
+          {
+            headers: {
+              authtoken: idToken,
             },
-            {
-              headers: {
-                authtoken: idToken,
-              },
-            }
-          )
-          .then(function (response) {
-            return updatePost(response);
-          });
+          }
+        );
       } catch (error) {
         console.log(error);
       }

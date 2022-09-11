@@ -67,7 +67,7 @@ const ReportConfirmation = ({
     <>
       {reportConfirmation ? (
         <div className="absolute w-full h-full top-0 left-0 bg-black/[0.6] z-10 flex items-center justify-around">
-          <div className="p-4 w-[400px] h-[150px] bg-slate-600 rounded-lg flex flex-col items-center justify-center">
+          <div className="p-4 w-[400px] h-[150px] bg-slate-600 shadow-3xl rounded-lg flex flex-col items-center justify-center">
             {!confirmSubmit ? (
               <div>
                 <p className="mb-8">

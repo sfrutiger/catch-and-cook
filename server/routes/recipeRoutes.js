@@ -26,21 +26,33 @@ router.get("/", async (req, res) => {
 // @route POST /api/recipe
 // @access Private
 router.post("/", auth, (req, res) => {
-  const recipe = Recipe.create({
-    authorUID: req.body.author,
-    /* pictureDownloadURL: req.body.pictureDownloadURL, */
-    name: req.body.name,
-    ingredients: req.body.ingredients,
-    instructions: req.body.instructions,
-  }).then((recipe) => res.status(200).json(recipe));
+  const decodedTokenUID = res.locals.uid;
+  if (req.body.author === decodedTokenUID) {
+    const recipe = Recipe.create({
+      authorUID: req.body.author,
+      /* pictureDownloadURL: req.body.pictureDownloadURL, */
+      name: req.body.name,
+      ingredients: req.body.ingredients,
+      instructions: req.body.instructions,
+    }).then((recipe) => res.status(200).json(recipe));
+  } else {
+    console.log("access denied");
+  }
 });
 
 // @desc Delete recipe
 // @route DELETE /api/posts
 // @access Private
 router.delete("/:id", auth, (req, res) => {
+  const decodedTokenUID = res.locals.uid;
   Recipe.findById(req.params.id)
-    .then((recipe) => recipe.remove().then(() => res.json({ success: true })))
+    .then((recipe) => {
+      if (recipe.authorUID === decodedTokenUID) {
+        recipe.remove().then(() => res.json({ success: true }));
+      } else {
+        console.log("access denied");
+      }
+    })
     .catch((err) => res.status(404).json({ success: false }));
 });
 
@@ -49,25 +61,34 @@ router.delete("/:id", auth, (req, res) => {
 // @access Private
 router.delete("/accountdeletion/:uid", auth, async (req, res) => {
   const userToDelete = req.params.uid;
-  try {
-    const response = await Recipe.deleteMany({
-      authorUID: userToDelete,
-    });
-  } catch (error) {
-    console.log(error);
+  const decodedTokenUID = res.locals.uid;
+  if (userToDelete === decodedTokenUID) {
+    try {
+      const response = await Recipe.deleteMany({
+        authorUID: userToDelete,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    console.log("access denied");
   }
 });
 
-// @desc update redipce
+// @desc update recipe
 // @route PATCH /api/recipes
 // @access Private
 router.patch("/:id", auth, async (req, res) => {
-  try {
-    const result = await Recipe.findByIdAndUpdate(req.params.id, req.body);
-    res.send(result);
-  } catch (error) {
-    res.json({ success: false });
-  }
+  const decodedTokenUID = res.locals.uid;
+  Recipe.findById(req.params.id)
+    .then((recipe) => {
+      if (recipe.authorUID === decodedTokenUID) {
+        recipe.updateOne(req.body).then(() => res.json({ success: true }));
+      } else {
+        console.log("access denied");
+      }
+    })
+    .catch((err) => res.status(404).json({ success: false }));
 });
 
 module.exports = router;
