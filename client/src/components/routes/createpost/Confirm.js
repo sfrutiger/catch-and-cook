@@ -76,6 +76,10 @@ const Confirm = ({
           Post
         </button>
       </div>
+      <p className="text-sm absolute bottom-20">
+        *Posts containing explicit, offensive, or inappropriate content will be
+        removed.
+      </p>
     </div>
   );
 };

@@ -13,13 +13,10 @@ const LocationAndConditions = ({
   setCoordinates,
   setShareCoordinates,
   date,
-  location,
   coordinates,
   time,
-  conditions,
   shareCoordinates,
 }) => {
-  const googleMapsAPIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
   const auth = getAuth();
 
   let nearestHour;

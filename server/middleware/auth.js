@@ -1,13 +1,36 @@
 const admin = require("firebase-admin");
-const projectID = process.env.FB_PROJECT_ID;
-const privateKeyID = process.env.FB_PRIVATE_KEY_ID;
-const privateKey = process.env.FB_PRIVATE_KEY;
-const clientEmail = process.env.FB_CLIENT_EMAIL;
-const clientID = process.env.FB_CLIENT_ID;
-const authURI = process.env.FB_AUTH_URI;
-const tokenURI = process.env.FB_TOKEN_URI;
-const authProvider = process.env.FB_AUTH_PROVIDER_X509_CERT_URL;
-const clientCertURL = process.env.FB_CLIENT_X509_CERT_URL;
+
+let projectID;
+let privateKeyID;
+let privateKey;
+let clientEmail;
+let clientID;
+let authURI;
+let tokenURI;
+let authProvider;
+let clientCertURL;
+
+if (process.env.NODE_ENV === "development") {
+  projectID = process.env.FB_DEVELOPMENT_PROJECT_ID;
+  privateKeyID = process.env.FB_DEVELOPMENT_PRIVATE_KEY_ID;
+  privateKey = process.env.FB_DEVELOPMENT_PRIVATE_KEY;
+  clientEmail = process.env.FB_DEVELOPMENT_CLIENT_EMAIL;
+  clientID = process.env.FB_DEVELOPMENT_CLIENT_ID;
+  authURI = process.env.FB_DEVELOPMENT_AUTH_URI;
+  tokenURI = process.env.FB_DEVELOPMENT_TOKEN_URI;
+  authProvider = process.env.FB_DEVELOPMENT_AUTH_PROVIDER_X509_CERT_URL;
+  clientCertURL = process.env.FB_DEVELOPMENT_CLIENT_X509_CERT_URL;
+} else if (process.env.NODE_ENV === "production") {
+  projectID = process.env.FB_PRODUCTION_PROJECT_ID;
+  privateKeyID = process.env.FB_PRODUCTION_PRIVATE_KEY_ID;
+  privateKey = process.env.FB_PRODUCTION_PRIVATE_KEY;
+  clientEmail = process.env.FB_PRODUCTION_CLIENT_EMAIL;
+  clientID = process.env.FB_PRODUCTION_CLIENT_ID;
+  authURI = process.env.FB_PRODUCTION_AUTH_URI;
+  tokenURI = process.env.FB_PRODUCTION_TOKEN_URI;
+  authProvider = process.env.FB_PRODUCTION_AUTH_PROVIDER_X509_CERT_URL;
+  clientCertURL = process.env.FB_PRODUCTION_CLIENT_X509_CERT_URL;
+}
 
 admin.initializeApp({
   credential: admin.credential.cert({

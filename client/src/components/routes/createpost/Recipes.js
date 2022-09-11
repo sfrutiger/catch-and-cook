@@ -53,7 +53,11 @@ const Recipes = ({
           Next
         </button>
       </div>
-      <p>*additional recipes can be added after posting</p>
+      <p className="text-sm">*Additional recipes can be added after posting</p>
+      <p className="text-sm absolute bottom-20">
+        *Posts containing explicit, offensive, or inappropriate content will be
+        removed.
+      </p>
     </div>
   );
 };

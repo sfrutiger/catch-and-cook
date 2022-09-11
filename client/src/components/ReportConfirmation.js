@@ -71,7 +71,8 @@ const ReportConfirmation = ({
             {!confirmSubmit ? (
               <div>
                 <p className="mb-8">
-                  Does this contain offensive or inappropriate content?
+                  Does this contain explicit, offensive, or inappropriate
+                  content?
                 </p>
                 <div className="flex w-full">
                   <button

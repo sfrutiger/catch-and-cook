@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "catch-and-cook-dev"
+    "development": "catch-and-cook-dev",
+    "production": "catch-and-cook---production"
   }
 }
