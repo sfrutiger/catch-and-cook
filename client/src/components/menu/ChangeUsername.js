@@ -8,7 +8,6 @@ const ChangeUsername = ({ setDisplayCase }) => {
   const { user } = UserAuth();
   const [username, setUsername] = useState(user.displayName);
   const [error, setError] = useState("");
-  const [userDocument, setUserDocument] = useState({});
 
   //reset error
   useEffect(() => {
@@ -17,32 +16,14 @@ const ChangeUsername = ({ setDisplayCase }) => {
     }, 5000);
   }, [error]);
 
-  const getUserDocument = async () => {
-    try {
-      const response = await axios.get("/api/users", {
-        params: {
-          criteria: "uid",
-          uid: user.uid,
-        },
-      });
-      setUserDocument(response.data[0]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getUserDocument();
-  }, []);
-
   const changeUsername = (username) => {
-    const id = userDocument._id;
+    const uid = auth.currentUser.uid;
     try {
       auth.currentUser
         .getIdToken(true)
         .then(function (idToken) {
           axios.patch(
-            `/api/users/${id}`,
+            `/api/users/${uid}`,
             {
               username: username,
             },

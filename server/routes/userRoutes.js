@@ -56,12 +56,15 @@ router.get("/", async (req, res) => {
 // @desc update user
 // @route PATCH /api/users
 // @access Private
-router.patch("/:id", auth, async (req, res) => {
-  const userToUpdate = req.params.id;
+router.patch("/:uid", auth, async (req, res) => {
+  const userToUpdate = req.params.uid;
   const decodedTokenUID = res.locals.uid;
   if (userToUpdate === decodedTokenUID) {
     try {
-      const result = await User.findByIdAndUpdate(req.params.id, req.body);
+      const result = await User.findOneAndUpdate(
+        { uid: decodedTokenUID },
+        req.body
+      );
       res.send(result);
     } catch (error) {
       res.json({ success: false });
