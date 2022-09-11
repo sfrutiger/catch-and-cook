@@ -51,17 +51,15 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const deleteAccount = (user) => {
-    console.log("try delete from mongo");
     auth.currentUser
       .getIdToken(true)
       .then(function (idToken) {
-        console.log("after getting IdToken");
         axios.delete(`/api/users/${auth.currentUser.uid}`, {
           headers: {
             authtoken: idToken,
           },
         });
-        axios.delete(`/api/posts/accountdeletion/${auth.currentUser.uid}`, {
+        /* axios.delete(`/api/posts/accountdeletion/${auth.currentUser.uid}`, {
           headers: {
             authtoken: idToken,
           },
@@ -70,12 +68,12 @@ export const AuthContextProvider = ({ children }) => {
           headers: {
             authtoken: idToken,
           },
-        });
+        }); */
       })
       //need to figure out how to delete pictures from firebase
-      .then(function () {
+      /* .then(function () {
         return deleteUser(user);
-      })
+      }) */
       .catch((error) => {
         console.log(error);
       });

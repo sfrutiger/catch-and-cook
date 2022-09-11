@@ -33,27 +33,39 @@ router.get("/", async (req, res) => {
 // @route POST /api/posts
 // @access Private
 router.post("/", auth, (req, res) => {
-  const post = Post.create({
-    authorUID: req.body.authorUID,
-    pictureDownloadURL: req.body.pictureDownloadURL,
-    species: req.body.species,
-    date: req.body.date,
-    time: req.body.time,
-    location: req.body.location,
-    coordinates: req.body.coordinates,
-    shareCoordinates: req.body.shareCoordinates,
-    conditions: req.body.conditions,
-    method: req.body.method,
-    recipes: req.body.recipes,
-  }).then((post) => res.status(200).json(post));
+  const decodedTokenUID = res.locals.uid;
+  if (req.body.authorUID === decodedTokenUID) {
+    const post = Post.create({
+      authorUID: req.body.authorUID,
+      pictureDownloadURL: req.body.pictureDownloadURL,
+      species: req.body.species,
+      date: req.body.date,
+      time: req.body.time,
+      location: req.body.location,
+      coordinates: req.body.coordinates,
+      shareCoordinates: req.body.shareCoordinates,
+      conditions: req.body.conditions,
+      method: req.body.method,
+      recipes: req.body.recipes,
+    }).then((post) => res.status(200).json(post));
+  } else {
+    console.log("access denied");
+  }
 });
 
 // @desc Delete post
 // @route DELETE /api/posts
 // @access Private
 router.delete("/:id", auth, (req, res) => {
+  const decodedTokenUID = res.locals.uid;
   Post.findById(req.params.id)
-    .then((post) => post.remove().then(() => res.json({ success: true })))
+    .then((post) => {
+      if (post.authorUID === decodedTokenUID) {
+        post.remove().then(() => res.json({ success: true }));
+      } else {
+        console.log("access denied");
+      }
+    })
     .catch((err) => res.status(404).json({ success: false }));
 });
 
@@ -61,13 +73,18 @@ router.delete("/:id", auth, (req, res) => {
 // @route DELETE /api/posts/accountdeletion
 // @access Private
 router.delete("/accountdeletion/:uid", auth, async (req, res) => {
+  const decodedTokenUID = res.locals.uid;
   const userToDelete = req.params.uid;
-  try {
-    const response = await Post.deleteMany({
-      authorUID: userToDelete,
-    });
-  } catch (error) {
-    console.log(error);
+  if (userToDelete === decodedTokenUID) {
+    try {
+      const response = await Post.deleteMany({
+        authorUID: userToDelete,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    console.log("access denied");
   }
 });
 
@@ -75,12 +92,16 @@ router.delete("/accountdeletion/:uid", auth, async (req, res) => {
 // @route PATCH /api/posts
 // @access Private
 router.patch("/:id", auth, async (req, res) => {
-  try {
-    const result = await Post.findByIdAndUpdate(req.params.id, req.body);
-    res.send(result);
-  } catch (error) {
-    res.json({ success: false });
-  }
+  const decodedTokenUID = res.locals.uid;
+  Post.findById(req.params.id)
+    .then((post) => {
+      if (post.authorUID === decodedTokenUID) {
+        post.updateOne(req.body).then(() => res.json({ success: true }));
+      } else {
+        console.log("access denied");
+      }
+    })
+    .catch((err) => res.status(404).json({ success: false }));
 });
 
 module.exports = router;

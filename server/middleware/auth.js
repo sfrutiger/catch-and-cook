@@ -54,7 +54,9 @@ function auth(req, res, next) {
     admin
       .auth()
       .verifyIdToken(req.headers.authtoken)
-      .then(() => {
+      .then((decodedToken) => {
+        const uid = decodedToken.uid;
+        res.locals.uid = uid;
         next();
       })
       .catch(() => {

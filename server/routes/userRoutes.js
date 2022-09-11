@@ -19,9 +19,14 @@ router.post("/", auth, (req, res) => {
 // @access Private
 router.delete("/:uid", auth, (req, res) => {
   const userToDelete = req.params.uid;
-  User.findOne({ uid: userToDelete })
-    .then((user) => user.remove().then(() => res.json({ success: true })))
-    .catch((err) => res.status(404).json({ success: false }));
+  const decodedTokenUID = res.locals.uid;
+  if (userToDelete === decodedTokenUID) {
+    User.findOne({ uid: userToDelete })
+      .then((user) => user.remove().then(() => res.json({ success: true })))
+      .catch((err) => res.status(404).json({ success: false }));
+  } else {
+    console.log("access denied");
+  }
 });
 
 // @desc Get user from criteria
@@ -52,11 +57,17 @@ router.get("/", async (req, res) => {
 // @route PATCH /api/users
 // @access Private
 router.patch("/:id", auth, async (req, res) => {
-  try {
-    const result = await User.findByIdAndUpdate(req.params.id, req.body);
-    res.send(result);
-  } catch (error) {
-    res.json({ success: false });
+  const userToUpdate = req.params.id;
+  const decodedTokenUID = res.locals.uid;
+  if (userToUpdate === decodedTokenUID) {
+    try {
+      const result = await User.findByIdAndUpdate(req.params.id, req.body);
+      res.send(result);
+    } catch (error) {
+      res.json({ success: false });
+    }
+  } else {
+    console.log("access denied");
   }
 });
 
