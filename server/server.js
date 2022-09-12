@@ -15,4 +15,15 @@ app.use("/api/recipes", require("./routes/recipeRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/data", require("./routes/dataRoutes"));
 
+// Accessing the path module
+const path = require("path");
+
+if (process.env.NODE_ENV === "production") {
+  //set static folder
+  app.use(express.static(__dirname, "client/build"));
+}
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
+
 app.listen(port, () => console.log(`Server started on port ${port}`));
