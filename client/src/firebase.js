@@ -8,7 +8,7 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 let firebaseConfig = {};
-const environment = process.env.REACT_APP_NODE_ENV;
+const environment = process.env.NODE_ENV;
 
 if (environment === "development") {
   firebaseConfig = {
