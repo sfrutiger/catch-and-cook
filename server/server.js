@@ -19,11 +19,12 @@ app.use("/api/data", require("./routes/dataRoutes"));
 const path = require("path");
 
 if (process.env.NODE_ENV === "production") {
-  //set static folder
-  app.use(express.static(__dirname, "client/build"));
+  // Step 1:
+  app.use(express.static(path.resolve(__dirname, "./client/build")));
+  // Step 2:
+  app.get("*", function (request, response) {
+    response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+  });
 }
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-});
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
