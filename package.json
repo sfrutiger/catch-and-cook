@@ -4,10 +4,13 @@
   "description": "App for sharing what you catch and how you cook it",
   "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "server": "nodemon server/server.js",
+    "server": "nodemon server",
     "client": "npm start --prefix ./client/",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "start": "concurrently --kill-others-on-fail \"node server.js\" \"npm run client\""
   },
   "author": "Seth Frutiger",
   "license": "MIT",
