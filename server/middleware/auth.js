@@ -1,6 +1,6 @@
 const admin = require("firebase-admin");
 
-let projectID;
+/* let projectID;
 let privateKeyID;
 let privateKey;
 let clientEmail;
@@ -32,11 +32,14 @@ if (process.env.NODE_ENV === "development") {
   clientCertURL = process.env.FB_PRODUCTION_CLIENT_X509_CERT_URL;
 } else {
   console.log("environment not set");
-}
+} */
+
+const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT);
 
 admin.initializeApp({
-  credential: admin.credential.cert({
-    type: "service_account",
+  credential: admin.credential.cert(
+    serviceAccount
+    /*     type: "service_account",
     project_id: projectID,
     private_key_id: privateKeyID,
     private_key: privateKey,
@@ -45,8 +48,8 @@ admin.initializeApp({
     auth_uri: authURI,
     token_uri: tokenURI,
     auth_provider_x509_cert_url: authProvider,
-    client_x509_cert_url: clientCertURL,
-  }),
+    client_x509_cert_url: clientCertURL, */
+  ),
 });
 
 function auth(req, res, next) {
