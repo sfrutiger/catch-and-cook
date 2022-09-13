@@ -13,18 +13,18 @@ const SpeciesAndMethods = ({
           <label className="py-2">Species</label>
           <input
             onChange={(e) => setSpecies(e.target.value)}
-            className="border py-1"
+            className="border py-1 placeholder-slate-500"
             type="text"
-            value={species}
+            placeholder="unknown"
           />
         </div>
         <div className="flex flex-col py-2">
           <label className="py-2">Method</label>
           <input
             onChange={(e) => setMethod(e.target.value)}
-            className="border py-1"
+            className="border py-1 placeholder-slate-500"
             type="text"
-            value={method}
+            placeholder="not specified"
           />
         </div>
       </form>

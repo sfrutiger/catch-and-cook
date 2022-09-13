@@ -2,6 +2,7 @@ import axios from "axios";
 import Map from "./Map";
 import Switch from "../../Switch";
 import { getAuth } from "firebase/auth";
+import { useState, useEffect } from "react";
 
 const LocationAndConditions = ({
   nextStep,
@@ -18,6 +19,14 @@ const LocationAndConditions = ({
   shareCoordinates,
 }) => {
   const auth = getAuth();
+
+  const [error, setError] = useState("");
+  //reset error
+  useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 5000);
+  }, [error]);
 
   let nearestHour;
   let nearestDate = date;
@@ -120,7 +129,7 @@ const LocationAndConditions = ({
       reverseGeocode(coordinates);
       nextStep();
     } else {
-      console.log("select catch location, date, and time of catch");
+      setError("Select location, date, and time of catch");
     }
   };
 
@@ -185,6 +194,7 @@ const LocationAndConditions = ({
           Next
         </button>
       </div>
+      <p className="error-message">{error}</p>
     </div>
   );
 };

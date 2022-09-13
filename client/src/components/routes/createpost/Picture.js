@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Picture = ({
   nextStep,
@@ -10,6 +11,23 @@ const Picture = ({
     setPicture(e.target.files[0]);
     setPicturePreviewURL(URL.createObjectURL(e.target.files[0]));
   }
+
+  const [error, setError] = useState("");
+  //reset error
+  useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 5000);
+  }, [error]);
+
+  const handleClick = () => {
+    if (picturePreviewURL) {
+      setError("");
+      nextStep();
+    } else {
+      setError("A picture is required");
+    }
+  };
 
   return (
     <div className="max-w-[700px] mx-auto my-8 p-4">
@@ -24,12 +42,13 @@ const Picture = ({
           </button>
         </Link>
         <button
-          onClick={() => nextStep()}
+          onClick={() => handleClick()}
           className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
         >
           Next
         </button>
       </div>
+      <p className="error-message">{error}</p>
       <p className="text-sm absolute bottom-20">
         *Posts containing explicit, offensive, or inappropriate content will be
         removed.

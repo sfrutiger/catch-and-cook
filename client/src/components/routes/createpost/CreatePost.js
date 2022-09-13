@@ -20,9 +20,9 @@ const CreatePost = ({ posts, setPosts }) => {
   const [time, setTime] = useState("");
   const [conditions, setConditions] = useState([""]);
   const [location, setLocation] = useState("");
-  const [species, setSpecies] = useState("");
+  const [species, setSpecies] = useState("unknown");
   const [coordinates, setCoordinates] = useState("");
-  const [method, setMethod] = useState("");
+  const [method, setMethod] = useState("not specified");
   const [recipeName, setRecipeName] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
