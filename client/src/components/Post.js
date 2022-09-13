@@ -63,12 +63,14 @@ const Post = ({
 
   const getRecipes = async () => {
     try {
-      const response = await axios.get(`/api/recipes`, {
-        params: {
-          recipes: recipeIDs.reduce((x, y) => `${x},${y}`),
-        },
-      });
-      setPostRecipes(response.data);
+      if (recipeIDs) {
+        const response = await axios.get(`/api/recipes`, {
+          params: {
+            recipes: recipeIDs.reduce((x, y) => `${x},${y}`),
+          },
+        });
+        setPostRecipes(response.data);
+      }
     } catch (error) {
       console.log(error);
     }
