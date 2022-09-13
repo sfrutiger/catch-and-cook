@@ -37,8 +37,6 @@ function App() {
   const routePath = useLocation();
   const [postEdited, setPostEdited] = useState(0);
 
-  console.log(process.env.REACT_APP_TEST);
-
   const getPosts = async () => {
     try {
       const response = await axios.get(`/api/posts?skip=${skip}`);
