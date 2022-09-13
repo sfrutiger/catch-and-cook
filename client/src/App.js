@@ -38,6 +38,7 @@ function App() {
   const [postEdited, setPostEdited] = useState(0);
 
   console.log(process.env.REACT_APP_TEST);
+  console.log(process.env.REACT_APP_TEST);
 
   const getPosts = async () => {
     try {
