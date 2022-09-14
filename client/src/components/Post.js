@@ -104,7 +104,7 @@ const Post = ({
   };
 
   return (
-    <div className="shadow-3xl w-full max-w-[700px] mb-4 p-4 relative">
+    <div className="bg-tertiary text-light rounded-md shadow-black shadow-2xl w-full max-w-[700px] mb-4 p-4 relative">
       <ReportConfirmation
         post={post}
         postType={"post"}

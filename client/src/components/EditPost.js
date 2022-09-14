@@ -268,7 +268,7 @@ const EditPost = ({
         deleteConfirmation={deleteConfirmation}
         setDeleteConfirmation={setDeleteConfirmation}
       ></DeletePostConfirmation>
-      <div className="sticky top-0 w-full h-[60px] bg-slate-700 flex justify-center">
+      <div className="sticky top-0 w-full h-[60px] bg-secondary text-light flex justify-center">
         <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
           <FaTimes
             onClick={() => discardChanges()}
@@ -284,7 +284,7 @@ const EditPost = ({
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="shadow-3xl w-full max-w-[700px] mt-4 mb-20 p-4">
+        <div className="bg-tertiary shadow-3xl w-full max-w-[700px] mt-4 mb-20 p-4">
           <div className="flex w-full justify-between mb-2">
             <div
               className="w-[300px]"

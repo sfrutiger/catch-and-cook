@@ -6,16 +6,16 @@ const Footer = ({ setMenuOpen, createPostVisible }) => {
   const { user } = UserAuth();
 
   return (
-    <div className="fixed bottom-0 w-full h-[70px] bg-slate-700 flex justify-center">
+    <div className="fixed bottom-0 w-full h-[70px] bg-secondary flex justify-center">
       <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
         <Link to="/">
-          <FaHome className="text-2xl cursor-pointer m-0" />
+          <FaHome className="text-2xl cursor-pointer m-0 text-light" />
         </Link>
         {user ? (
           <Link to="/createpost" className="w-[50%] max-w-[700px] ">
             <button
               style={{ display: createPostVisible ? "block" : "none" }}
-              className="w-full h-[2.6rem] bg-white text-slate-500 rounded"
+              className="w-full h-[2.6rem] bg-light text-dark rounded"
             >
               Create Post
             </button>
@@ -27,7 +27,7 @@ const Footer = ({ setMenuOpen, createPostVisible }) => {
         )}
         <FaBars
           onClick={() => setMenuOpen(true)}
-          className="text-2xl cursor-pointer m-0"
+          className="text-2xl cursor-pointer m-0 text-light"
         />
       </div>
     </div>

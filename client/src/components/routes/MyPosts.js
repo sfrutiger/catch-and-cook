@@ -42,7 +42,7 @@ const MyPosts = ({
 
   return (
     <>
-      <div className="sticky top-0 w-full h-[60px] bg-slate-700 flex justify-center">
+      <div className="sticky top-0 w-full h-[60px] bg-secondary text-light flex justify-center">
         <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
           <h1 className="text-xl w-full text-center">{user.displayName}</h1>
           <div className="w-[0px]"></div>
