@@ -181,7 +181,7 @@ const LocationAndConditions = ({
       <div className="flex flex-row">
         <button
           onClick={() => previousStep()}
-          className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 mr-1"
+          className="w-full h-[3rem] my-2 buttons mb-2 mr-1"
         >
           Back
         </button>
@@ -189,7 +189,7 @@ const LocationAndConditions = ({
           onClick={() => {
             handleClick();
           }}
-          className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
+          className="w-full h-[3rem] my-2 buttons mb-2 ml-1"
         >
           Next
         </button>

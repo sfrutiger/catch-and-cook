@@ -13,7 +13,7 @@ const SpeciesAndMethods = ({
           <label className="py-2">Species</label>
           <input
             onChange={(e) => setSpecies(e.target.value)}
-            className="border py-1 placeholder-slate-500"
+            className="border py-1 placeholder-light"
             type="text"
             placeholder="unknown"
           />
@@ -22,7 +22,7 @@ const SpeciesAndMethods = ({
           <label className="py-2">Method</label>
           <input
             onChange={(e) => setMethod(e.target.value)}
-            className="border py-1 placeholder-slate-500"
+            className="border py-1 placeholder-light"
             type="text"
             placeholder="not specified"
           />
@@ -31,13 +31,13 @@ const SpeciesAndMethods = ({
       <div className="flex flex-row">
         <button
           onClick={() => previousStep()}
-          className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 mr-1"
+          className="w-full h-[3rem] my-2 buttons mb-2 mr-1"
         >
           Back
         </button>
         <button
           onClick={() => nextStep()}
-          className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
+          className="w-full h-[3rem] my-2 buttons mb-2 ml-1"
         >
           Next
         </button>

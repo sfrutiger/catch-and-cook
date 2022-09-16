@@ -42,14 +42,15 @@ const MyPosts = ({
 
   return (
     <>
-      <div className="sticky top-0 w-full h-[60px] bg-secondary text-light flex justify-center">
+      <div className="sticky top-0 w-full h-[60px] bg-primary flex justify-center">
         <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
-          <h1 className="text-xl w-full text-center">{user.displayName}</h1>
-          <div className="w-[0px]"></div>
+          <h1 className="text-xl w-full text-center font-semibold">
+            {user.displayName}
+          </h1>
         </div>
       </div>
       {myPosts.length ? (
-        <div className="w-full my-8 mb-16 flex flex-col items-center">
+        <div className="w-full mb-16 flex flex-col items-center">
           {myPosts.map((post) => (
             <Post
               key={post._id}

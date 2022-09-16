@@ -1,21 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply bg-tertiary text-dark;
+    @apply bg-primary text-light font-sans;
   }
 
   input {
-    @apply bg-slate-500;
+    @apply bg-light text-dark;
   }
   textarea {
-    @apply bg-slate-500;
+    @apply bg-light text-dark;
   }
 
   .buttons {
-    @apply w-full h-[1.8rem] bg-gray-300 text-slate-500 rounded /* mb-2 */;
+    @apply w-full h-[1.8rem] bg-white text-dark rounded font-semibold;
+  }
+
+  .buttons-dark {
+    @apply w-full h-[1.8rem] bg-quaternary text-light rounded font-semibold;
+  }
+
+  .buttons-secondary {
+    @apply border-2 border-secondary bg-tertiary text-light font-semibold rounded-lg;
   }
 
   .signin-buttons-mobile {
@@ -27,7 +37,7 @@
   }
 
   .menu-items {
-    @apply shadow-3xl w-[200px] text-center mb-4 p-4 cursor-pointer;
+    @apply w-[200px] text-center mb-4 p-4 cursor-pointer;
   }
 
   .error-message {

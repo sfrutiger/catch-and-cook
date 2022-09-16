@@ -67,7 +67,7 @@ const ReportConfirmation = ({
     <>
       {reportConfirmation ? (
         <div className="absolute w-full h-full top-0 left-0 bg-black/[0.6] z-10 flex items-center justify-around">
-          <div className="p-4 w-[400px] h-[150px] bg-slate-600 shadow-3xl rounded-lg flex flex-col items-center justify-center">
+          <div className="p-4 w-[400px] h-[150px] text-dark font-semibold bg-quinary border-2 border-secondary rounded-lg flex flex-col items-center justify-center">
             {!confirmSubmit ? (
               <div>
                 <p className="mb-8">
@@ -76,13 +76,13 @@ const ReportConfirmation = ({
                 </p>
                 <div className="flex w-full">
                   <button
-                    className="buttons h-[40px] ml-2 mr-1"
+                    className="buttons-dark h-[40px] ml-2 mr-1"
                     onClick={() => setReportConfirmation(false)}
                   >
                     Cancel
                   </button>
                   <button
-                    className="buttons h-[40px] mr-2 ml-1"
+                    className="buttons-dark h-[40px] mr-2 ml-1"
                     onClick={() => {
                       handClick();
                     }}

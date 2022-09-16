@@ -104,7 +104,7 @@ const Post = ({
   };
 
   return (
-    <div className="bg-tertiary text-light rounded-md shadow-black shadow-2xl w-full max-w-[700px] mb-4 p-4 relative">
+    <div className="bg-secondary rounded-lg border-2 border-secondary w-full max-w-[700px] mb-4 p-4 relative">
       <ReportConfirmation
         post={post}
         postType={"post"}
@@ -134,7 +134,7 @@ const Post = ({
             >
               <div className="flex items-baseline">
                 <FaUser />
-                <p className="curser-pointer hover:underline ml-2">
+                <p className="curser-pointer hover:underline font-semibold ml-2">
                   {authorUsername || "User"}
                 </p>
               </div>
@@ -175,11 +175,11 @@ const Post = ({
       </div>
       {postRecipes.length ? (
         <div className="mt-4 w-full">
-          <p>Recipes:</p>
+          <p className="font-semibold">Recipes:</p>
           <div className="mt-2 grid sm:grid-cols-2 gap-x-4">
             {postRecipes.map((recipe) => (
               <div key={recipe._id}>
-                <div className="shadow-3xl min-w-[150px] w-full text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
+                <div className="buttons-secondary min-w-[150px] w-full text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
                   <Link
                     to={`/recipedetails/${recipe._id}`}
                     state={recipe}

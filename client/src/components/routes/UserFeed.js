@@ -35,20 +35,20 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
 
   return (
     <>
-      <div className="sticky top-0 w-full h-[60px] bg-secondary flex justify-center text-light">
+      <div className="top-0 w-full h-[60px] bg-primary flex justify-center text-light">
         <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
           <FaArrowLeft
             onClick={() => handleClick()}
             className="text-2xl cursor-pointer"
           />
-          <h1 className="text-xl w-[50%] max-w-[700px] text-center">
+          <h1 className="text-xl w-[50%] max-w-[700px] text-center font-semibold">
             {data[1]}
           </h1>
-          <div className="w-[0px]"></div>
+          <div className="w-[20px]"></div>
         </div>
       </div>
       {userPosts.length ? (
-        <div className="w-full my-8 mb-16 flex flex-col items-center">
+        <div className="w-full mb-16 flex flex-col items-center">
           {userPosts.map((post) => (
             <Post key={post._id} post={post} />
           ))}

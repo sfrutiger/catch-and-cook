@@ -90,10 +90,10 @@ const DisplayInMenu = ({ setMenuOpen }) => {
           {user ? (
             <>
               <Link to="/myposts" onClick={() => setMenuOpen(false)}>
-                <p className="menu-items">My Posts</p>
+                <p className="menu-items buttons-secondary">My Posts</p>
               </Link>
               <p
-                className="menu-items"
+                className="menu-items buttons-secondary"
                 onClick={() => setDisplayCase("settings")}
               >
                 Settings
@@ -102,40 +102,46 @@ const DisplayInMenu = ({ setMenuOpen }) => {
           ) : (
             ""
           )}
-          <p className="menu-items" onClick={() => setDisplayCase("about")}>
+          <p
+            className="menu-items buttons-secondary"
+            onClick={() => setDisplayCase("about")}
+          >
             About
           </p>
           {user ? (
             <>
               <Link
-                className="menu-items"
+                className="menu-items buttons-secondary"
                 to="/contact"
                 onClick={() => setMenuOpen(false)}
               >
                 <p>Contact</p>
               </Link>
-              <p className="menu-items" onClick={handleLogout}>
+              <p
+                className="menu-items buttons-secondary"
+                onClick={handleLogout}
+              >
                 Sign Out
               </p>
             </>
           ) : (
             <>
               <Link
-                className="menu-items"
+                className="menu-items buttons-secondary"
                 to="/signin"
                 onClick={() => setMenuOpen(false)}
               >
                 <p>Sign In</p>
               </Link>
               <Link
-                className="menu-items"
+                className="menu-items buttons-secondary"
                 to="/signup"
                 onClick={() => setMenuOpen(false)}
               >
                 <p>Create Account</p>
               </Link>
               <Link
-                className="menu-items"
+                className="menu-items buttons-secondary"
                 to="/contact"
                 onClick={() => setMenuOpen(false)}
               >
