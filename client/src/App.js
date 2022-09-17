@@ -108,7 +108,7 @@ function App() {
   return (
     <AuthContextProvider>
       <div
-        className="App overflow-y-scroll h-[90vh]"
+        className="App overflow-y-scroll h-[calc(100vh_-_71px)]" //height must be vh minus height of foot plus at least one pixel for infinite scroll to work on pixel 3 xl
         id="App"
         onScroll={handleScroll}
       >

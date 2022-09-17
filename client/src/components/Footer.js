@@ -6,6 +6,7 @@ const Footer = ({ setMenuOpen, createPostVisible }) => {
   const { user } = UserAuth();
 
   return (
+    //changing footer height may mess up infinite scroll on mobile
     <div className="fixed bottom-0 w-full h-[70px] bg-secondary border-t-2 border-secondary flex justify-center">
       <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
         <Link to="/">
