@@ -66,7 +66,7 @@ const ChangeUsername = ({ setDisplayCase }) => {
   };
 
   const handleSubmit = (e) => {
-    const specialCharacters = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const specialCharacters = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
     e.preventDefault();
     setError("");
     if (!username) {
