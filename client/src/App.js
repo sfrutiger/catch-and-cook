@@ -108,7 +108,7 @@ function App() {
   return (
     <AuthContextProvider>
       <div
-        className="App overflow-y-scroll h-[100vh]"
+        className="App overflow-y-scroll h-[90vh]"
         id="App"
         onScroll={handleScroll}
       >

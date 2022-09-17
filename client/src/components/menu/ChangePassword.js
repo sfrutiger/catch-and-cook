@@ -32,40 +32,42 @@ const ChangePassword = ({ setDisplayCase }) => {
   };
 
   return (
-    <div>
+    <div className="w-full flex flex-col items-center">
+      <div className="w-[60%]">
+        <form className="flex flex-col" onSubmit={handleSubmit}>
+          <label htmlFor="oldpassword">Old password</label>
+          <input
+            className="h-[40px] my-2"
+            name="oldpassword"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          ></input>
+          <label htmlFor="newpassword">New password</label>
+          <input
+            className="h-[40px] my-2"
+            name="newpassword"
+            type="password"
+            onChange={(e) => setNewPassword(e.target.value)}
+          ></input>
+          <label htmlFor="confirmnewpassword">Confirm new password</label>
+          <input
+            className="h-[40px] my-2"
+            name="confirmnewpassword"
+            type="password"
+            onChange={(e) => setConfirmNewPassword(e.target.value)}
+          ></input>
+          <button className="buttons my-2 h-[40px]">Save change</button>
+        </form>
+        <button
+          className="buttons h-[40px]"
+          onClick={() => {
+            setDisplayCase("settings");
+          }}
+        >
+          Cancel
+        </button>
+      </div>
       <p className="text-red-400 mb-2">{error}</p>
-      <form className="flex flex-col" onSubmit={handleSubmit}>
-        <label htmlFor="oldpassword">Old password</label>
-        <input
-          className="h-[40px] my-2"
-          name="oldpassword"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-        <label htmlFor="newpassword">New password</label>
-        <input
-          className="h-[40px] my-2"
-          name="newpassword"
-          type="password"
-          onChange={(e) => setNewPassword(e.target.value)}
-        ></input>
-        <label htmlFor="confirmnewpassword">Confirm new password</label>
-        <input
-          className="h-[40px] my-2"
-          name="confirmnewpassword"
-          type="password"
-          onChange={(e) => setConfirmNewPassword(e.target.value)}
-        ></input>
-        <button className="buttons my-2 h-[40px]">Save change</button>
-      </form>
-      <button
-        className="buttons h-[40px]"
-        onClick={() => {
-          setDisplayCase("settings");
-        }}
-      >
-        Cancel
-      </button>
     </div>
   );
 };

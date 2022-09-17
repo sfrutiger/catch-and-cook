@@ -66,32 +66,46 @@ const ChangeUsername = ({ setDisplayCase }) => {
   };
 
   const handleSubmit = (e) => {
+    const specialCharacters = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     e.preventDefault();
-    checkUsernameAvailability(username);
+    setError("");
+    if (!username) {
+      setError("Username is required");
+    } else if (username.length < 4) {
+      setError("Username must be 4 to 24 characters in length");
+    } else if (username.length > 24) {
+      setError("Username must be 4 to 24 characters in length");
+    } else if (specialCharacters.test(username)) {
+      setError("Username may contain only letters, numbers, and _.");
+    } else {
+      checkUsernameAvailability(username);
+    }
   };
 
   return (
-    <div>
+    <div className="w-full flex flex-col items-center">
+      <div className="w-[60%]">
+        <form className="flex flex-col" onSubmit={handleSubmit}>
+          <label htmlFor="username">Username:</label>
+          <input
+            className="h-[40px] my-2"
+            name="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          ></input>
+          <button className="buttons h-[40px] my-2">Save change</button>
+        </form>
+        <button
+          className="buttons h-[40px]"
+          onClick={() => {
+            setDisplayCase("settings");
+          }}
+        >
+          Cancel
+        </button>
+      </div>
       <p className="text-red-400 mb-2">{error}</p>
-      <form className="flex flex-col" onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
-          className="h-[40px] my-2"
-          name="username"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        ></input>
-        <button className="buttons h-[40px] my-2">Save change</button>
-      </form>
-      <button
-        className="buttons h-[40px]"
-        onClick={() => {
-          setDisplayCase("settings");
-        }}
-      >
-        Cancel
-      </button>
     </div>
   );
 };

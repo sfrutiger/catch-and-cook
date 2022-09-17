@@ -44,10 +44,17 @@ const SignUpForm = () => {
   };
 
   const handleSubmit = (e) => {
+    const specialCharacters = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     e.preventDefault();
     setError("");
     if (!username) {
       setError("Username is required");
+    } else if (username.length < 4) {
+      setError("Username must be 4 to 24 characters in length");
+    } else if (username.length > 24) {
+      setError("Username must be 4 to 24 characters in length");
+    } else if (specialCharacters.test(username)) {
+      setError("Username may contain only letters, numbers, and _.");
     } else if (!email) {
       setError("An email address is required");
     } else if (!password) {
@@ -105,11 +112,11 @@ const SignUpForm = () => {
         </div>
         <div className="flex flex-row">
           <Link to="/" className="w-full mr-1">
-            <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2">
+            <button className="w-full h-[3rem] my-2 buttons mb-2">
               Cancel
             </button>
           </Link>
-          <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1">
+          <button className="w-full h-[3rem] my-2  buttons mb-2 ml-1">
             Sign Up
           </button>
         </div>

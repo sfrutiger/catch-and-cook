@@ -64,11 +64,11 @@ const SignInForm = () => {
         </Link>
         <div className="flex flex-row mt-2">
           <Link to="/" className="w-full mr-1">
-            <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2">
+            <button className="w-full h-[3rem] my-2 buttons mb-2">
               Cancel
             </button>
           </Link>
-          <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1">
+          <button className="w-full h-[3rem] my-2 buttons mb-2 ml-1">
             Sign in
           </button>
         </div>
