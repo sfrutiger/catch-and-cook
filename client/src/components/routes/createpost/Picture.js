@@ -30,24 +30,28 @@ const Picture = ({
   };
 
   return (
-    <div className="max-w-[700px] mx-auto my-8 p-4">
-      <img src={picturePreviewURL} alt="Catch" />
-      <form>
-        <input type="file" onChange={(e) => handleChange(e)} />
-      </form>
-      <div className="flex flex-row">
-        <Link to="/" className="w-full mr-1">
-          <button className="w-full h-[3rem] my-2 buttons mr-1">Cancel</button>
-        </Link>
-        <button
-          onClick={() => handleClick()}
-          className="w-full h-[3rem] my-2 buttons ml-1"
-        >
-          Next
-        </button>
+    <div className="max-w-[700px] h-[95%] mx-auto mt-8 p-4 flex flex-col justify-between">
+      <div>
+        <img src={picturePreviewURL} alt="Catch" />
+        <form>
+          <input type="file" onChange={(e) => handleChange(e)} />
+        </form>
+        <div className="flex flex-row">
+          <Link to="/" className="w-full mr-1">
+            <button className="w-full h-[3rem] my-2 buttons mr-1">
+              Cancel
+            </button>
+          </Link>
+          <button
+            onClick={() => handleClick()}
+            className="w-full h-[3rem] my-2 buttons ml-1"
+          >
+            Next
+          </button>
+        </div>
+        <p className="error-message">{error}</p>
       </div>
-      <p className="error-message">{error}</p>
-      <p className="text-sm absolute bottom-20">
+      <p className="text-sm">
         *Posts containing explicit, offensive, or inappropriate content will be
         removed.
       </p>
