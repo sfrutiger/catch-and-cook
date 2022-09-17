@@ -15,7 +15,7 @@ const RecipeDetails = ({ myFeed }) => {
 
   return (
     <div className="w-full my-8 mb-16 flex flex-col items-center">
-      <div className="shadow-3xl w-full max-w-[700px] text-center mb-4 p-4">
+      <div className="border-2 border-secondary bg-secondary rounded-lg w-full max-w-[700px] text-center mb-4 p-4">
         <ReportConfirmation
           recipe={recipe}
           postType={"recipe"}

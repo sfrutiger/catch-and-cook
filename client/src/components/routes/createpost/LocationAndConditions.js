@@ -134,12 +134,12 @@ const LocationAndConditions = ({
   };
 
   return (
-    <div className="max-w-[700px] mx-auto my-8 p-4">
+    <div className="max-w-[700px] mx-auto mt-8 p-4">
       <Map
         setCoordinates={setCoordinates}
         defaultLat={41.5}
         defaultLong={-71.5}
-        mapHeight={"400px"}
+        mapHeight={"60vw"}
       ></Map>
       <div className="flex flex-row justify-between py-2">
         <Switch
@@ -162,6 +162,7 @@ const LocationAndConditions = ({
       </h1>
       <form>
         <div className="flex flex-col py-2">
+          <label htmlFor="date">Date:</label>
           <input
             onChange={(e) => setDate(e.target.value)}
             className="border py-1"
@@ -170,6 +171,7 @@ const LocationAndConditions = ({
           />
         </div>
         <div className="flex flex-col py-2">
+          <label htmlFor="date">Time:</label>
           <input
             onChange={(e) => setTime(e.target.value)}
             className="border py-1"

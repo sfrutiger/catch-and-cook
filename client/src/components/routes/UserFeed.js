@@ -35,7 +35,7 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
 
   return (
     <>
-      <div className="top-0 w-full h-[60px] bg-primary flex justify-center text-light">
+      <div className="sticky z-10 top-0 w-full h-[60px] bg-primary flex justify-center">
         <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
           <FaArrowLeft
             onClick={() => handleClick()}

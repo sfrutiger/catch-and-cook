@@ -179,7 +179,7 @@ const Post = ({
           <div className="mt-2 grid sm:grid-cols-2 gap-x-4">
             {postRecipes.map((recipe) => (
               <div key={recipe._id}>
-                <div className="buttons-secondary min-w-[150px] w-full text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
+                <div className="buttons min-w-[150px] w-full text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
                   <Link
                     to={`/recipedetails/${recipe._id}`}
                     state={recipe}

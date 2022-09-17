@@ -10,30 +10,22 @@
   }
 
   input {
-    @apply bg-light text-dark;
+    @apply bg-light text-dark rounded border-2 border-secondary;
   }
   textarea {
-    @apply bg-light text-dark;
+    @apply bg-light text-dark rounded border-2 border-secondary;
   }
 
   .buttons {
-    @apply w-full h-[1.8rem] bg-white text-dark rounded font-semibold;
-  }
-
-  .buttons-dark {
-    @apply w-full h-[1.8rem] bg-quaternary text-light rounded font-semibold;
-  }
-
-  .buttons-secondary {
-    @apply border-2 border-secondary bg-tertiary text-light font-semibold rounded-lg;
-  }
-
-  .signin-buttons-mobile {
-    @apply w-[150px] h-[1.8rem] bg-white text-slate-500 rounded mb-2;
+    @apply w-full border-2 border-secondary bg-tertiary text-light font-semibold rounded-lg;
   }
 
   .form-items {
     @apply flex flex-col;
+  }
+
+  .confirmation {
+    @apply text-dark font-semibold bg-quinary border-2 border-secondary rounded-lg;
   }
 
   .menu-items {

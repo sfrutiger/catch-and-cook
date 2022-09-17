@@ -5,7 +5,7 @@ const Menu = ({ menuOpen, setMenuOpen }) => {
   return (
     <>
       {menuOpen ? (
-        <div className="w-[100vw] h-[100vh] bg-black/[0.5] z-10 absolute top-0 text-light">
+        <div className="z-20 w-[100vw] h-[100vh] bg-black/[0.5] absolute top-0 text-light">
           <div
             onClick={() => setMenuOpen(false)}
             className="w-full h-[40%]"

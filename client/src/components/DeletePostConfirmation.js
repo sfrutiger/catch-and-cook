@@ -26,7 +26,7 @@ const DeletePostConfirmation = ({
     <>
       {deleteConfirmation ? (
         <div className="w-[100vw] h-[100vh] bg-black/[0.6] z-10 absolute top-0 flex items-center justify-around">
-          <div className="w-[400px] h-[150px] bg-slate-600 rounded-lg flex flex-col items-center justify-center">
+          <div className="w-[400px] h-[150px] confirmation flex flex-col items-center justify-center">
             <p className="mb-8">
               Are you sure you want to delete this {typeOfDeletion}?
             </p>

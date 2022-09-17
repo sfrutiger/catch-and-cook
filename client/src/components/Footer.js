@@ -15,7 +15,7 @@ const Footer = ({ setMenuOpen, createPostVisible }) => {
           <Link to="/createpost" className="w-[50%] max-w-[700px] ">
             <button
               style={{ display: createPostVisible ? "block" : "none" }}
-              className="w-full h-[2.6rem] buttons rounded"
+              className="w-full h-[3rem] buttons"
             >
               Create Post
             </button>

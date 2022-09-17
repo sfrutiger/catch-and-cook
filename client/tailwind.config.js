@@ -16,8 +16,8 @@ module.exports = {
         secondary: "#191919",
         tertiary: "#222222",
         quaternary: "#454545",
-        quinary: "#bbbbbb",
-        light: "#aaaaaa",
+        quinary: "#888895",
+        light: "#888895",
       },
       borderColor: {
         secondary: "#454545",

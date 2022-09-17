@@ -284,7 +284,7 @@ const EditPost = ({
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="bg-tertiary shadow-3xl w-full max-w-[700px] mt-4 mb-20 p-4">
+        <div className="bg-secondary shadow-3xl w-full max-w-[700px] mt-4 mb-20 p-4">
           <div className="flex w-full justify-between mb-2">
             <div
               className="w-[300px]"
@@ -399,7 +399,7 @@ const EditPost = ({
               <div className="mt-2 grid sm:grid-cols-2 gap-x-4">
                 {postRecipes.map((recipe) => (
                   <div key={recipe._id}>
-                    <div className="shadow-3xl min-w-[150px] w-full text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
+                    <div className="buttons min-w-[150px] w-full text-center cursor-pointer mr-4 mb-4 flex flex-col justify-end">
                       <div className="text-xl cursor-pointer p-2 pb-0 flex w-full  justify-between">
                         <Link to="/addrecipe" state={[post, recipe]}>
                           <FaEdit />

@@ -140,13 +140,11 @@ const AddRecipe = ({ setMyPosts, postEdited, setPostEdited }) => {
       </form>
       <div className="flex flex-row">
         <Link to="/myposts" className="w-full mr-1">
-          <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2">
-            Cancel
-          </button>
+          <button className="w-full h-[3rem] my-2 buttons mb-2">Cancel</button>
         </Link>
         <button
           onClick={(e) => handleSubmit(e)}
-          className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1"
+          className="w-full h-[3rem] my-2 buttons mb-2 ml-1"
         >
           Save recipe
         </button>
