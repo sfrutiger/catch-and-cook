@@ -67,7 +67,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="max-w-[700px] mx-auto my-8 p-4">
+    <div className="max-w-[700px] h-[50%] mx-auto my-8 p-4">
       <div>
         <h1 className="text-2xl py-2">Sign up for a free account</h1>
         <p className="py-2">

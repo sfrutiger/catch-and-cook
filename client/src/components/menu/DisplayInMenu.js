@@ -13,6 +13,7 @@ import DeleteAccount from "./DeleteAccount";
 const DisplayInMenu = ({ setMenuOpen }) => {
   const { user } = UserAuth();
   const [displayCase, setDisplayCase] = useState("");
+  const [username, setUsername] = useState(user.displayName);
   const navigate = useNavigate();
   const logOut = () => {
     return signOut(auth);
@@ -33,7 +34,7 @@ const DisplayInMenu = ({ setMenuOpen }) => {
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
           <FaArrowLeft
-            className="absolute left-3 top-3 cursor-pointer text-2xl"
+            className="absolute left-5 top-5 cursor-pointer text-2xl"
             onClick={() => setDisplayCase("")}
           />
           <About />
@@ -44,10 +45,15 @@ const DisplayInMenu = ({ setMenuOpen }) => {
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
           <FaArrowLeft
-            className="absolute left-3 top-3 cursor-pointer text-2xl"
+            className="absolute left-5 top-5 cursor-pointer text-2xl"
             onClick={() => setDisplayCase("")}
           />
-          <Settings setDisplayCase={setDisplayCase} />
+          <Settings
+            setDisplayCase={setDisplayCase}
+            displayCase={displayCase}
+            username={username}
+            setUsername={setUsername}
+          />
         </div>
       );
 
@@ -55,10 +61,14 @@ const DisplayInMenu = ({ setMenuOpen }) => {
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
           <FaArrowLeft
-            className="absolute left-3 top-3 cursor-pointer text-2xl"
+            className="absolute left-5 top-5 cursor-pointer text-2xl"
             onClick={() => setDisplayCase("")}
           />
-          <ChangeUsername setDisplayCase={setDisplayCase} />
+          <ChangeUsername
+            setDisplayCase={setDisplayCase}
+            username={username}
+            setUsername={setUsername}
+          />
         </div>
       );
 

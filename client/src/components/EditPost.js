@@ -287,7 +287,7 @@ const EditPost = ({
         <div className="bg-secondary shadow-3xl w-full max-w-[700px] mt-4 mb-20 p-4">
           <div className="flex w-full justify-between mb-2">
             <div
-              className="w-[300px]"
+              className="max-w-[50%]"
               style={{ display: loading ? "none" : "block" }}
             >
               <img
@@ -305,13 +305,11 @@ const EditPost = ({
               />
             </div>
             {post.conditions ? (
-              <div>
+              <div className="ml-4 mt-8">
                 <p>{conditions.currentConditions.conditions}</p>
                 <p>Temperature: {conditions.currentConditions.temp} °F</p>
                 <p>Wind: {conditions.currentConditions.windspeed} mph</p>
-                <p>
-                  Pressure: {conditions.currentConditions.pressure} millibars
-                </p>
+                <p>Pressure: {conditions.currentConditions.pressure} mbar</p>
               </div>
             ) : (
               ""

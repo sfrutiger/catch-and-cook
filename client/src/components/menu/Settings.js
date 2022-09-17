@@ -1,11 +1,11 @@
 import { UserAuth } from "../../context/AuthContext";
 
-const Settings = ({ setDisplayCase }) => {
+const Settings = ({ displayCase, setDisplayCase, username, setUsername }) => {
   const { user } = UserAuth();
 
   return (
     <div className="flex flex-col items-center">
-      <p className="mb-10 text-xl">Logged in as {user.displayName}</p>
+      <p className="mb-10 text-xl">Logged in as {username}</p>
       <button
         className="menu-items buttons"
         onClick={() => {

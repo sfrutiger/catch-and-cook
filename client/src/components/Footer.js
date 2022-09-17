@@ -7,8 +7,8 @@ const Footer = ({ setMenuOpen, createPostVisible }) => {
 
   return (
     //changing footer height may mess up infinite scroll on mobile
-    <div className="fixed bottom-0 w-full h-[70px] bg-secondary border-t-2 border-secondary flex justify-center">
-      <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
+    <div className="fixed bottom-0 w-full h-[70px] bg-secondary shadow-3xl shadow-black flex justify-center">
+      <div className="w-full max-w-[780px] h-full flex items-center justify-around">
         <Link to="/">
           <FaHome className="text-2xl cursor-pointer m-0 text-light" />
         </Link>

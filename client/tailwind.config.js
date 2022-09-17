@@ -9,12 +9,13 @@ module.exports = {
         header: ["Caveat"],
       },
       boxShadow: {
-        "3xl": "0 0 50px 10px rgba(0, 0, 0, 0.2)",
+        "2xl": "0 0 20px -5px black",
+        "3xl": "0 0 20px 2px black",
       },
       backgroundColor: {
         primary: "black",
-        secondary: "#191919",
-        tertiary: "#222222",
+        secondary: "#202020",
+        tertiary: "#282828",
         quaternary: "#454545",
         quinary: "#888895",
         light: "#888895",

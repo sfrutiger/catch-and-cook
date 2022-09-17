@@ -17,7 +17,7 @@
   }
 
   .buttons {
-    @apply w-full border-2 border-secondary bg-tertiary text-light font-semibold rounded-lg;
+    @apply w-full shadow-2xl bg-tertiary text-light font-semibold rounded-lg;
   }
 
   .form-items {

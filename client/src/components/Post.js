@@ -104,7 +104,7 @@ const Post = ({
   };
 
   return (
-    <div className="bg-secondary rounded-lg border-2 border-secondary w-full max-w-[700px] mb-4 p-4 relative">
+    <div className="bg-secondary rounded-lg w-full max-w-[700px] mb-4 p-4 relative">
       <ReportConfirmation
         post={post}
         postType={"post"}
@@ -199,12 +199,14 @@ const Post = ({
         <p className="my-4">No recipes yet</p>
       )}
       {!myFeed ? (
-        <div
-          className="flex items-baseline text-sm w-full justify-end cursor-pointer"
-          onClick={() => setReportConfirmation(true)}
-        >
-          <FaFontAwesomeFlag className="transform scale-x-[-1] mr-1" />
-          <p>Report</p>
+        <div className="flex w-full justify-end">
+          <div
+            className="cursor-pointer text-sm flex items-baseline p-2"
+            onClick={() => setReportConfirmation(true)}
+          >
+            <FaFontAwesomeFlag className="transform scale-x-[-1] mr-1" />
+            <p>Report</p>
+          </div>
         </div>
       ) : (
         ""

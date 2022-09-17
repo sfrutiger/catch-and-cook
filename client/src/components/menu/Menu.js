@@ -10,12 +10,14 @@ const Menu = ({ menuOpen, setMenuOpen }) => {
             onClick={() => setMenuOpen(false)}
             className="w-full h-[40%]"
           ></div>
-          <div className="w-full h-[60%] flex items-center bg-secondary border-t-2 border-secondary absolute bottom-0">
-            <FaTimes
-              onClick={() => setMenuOpen(false)}
-              className="absolute right-3 top-3 cursor-pointer text-2xl"
-            />
-            <DisplayInMenu setMenuOpen={setMenuOpen} />
+          <div className="w-full h-[60%] flex justify-center bg-secondary absolute bottom-0">
+            <div className="max-w-[700px] w-full h-full relative flex items-center">
+              <FaTimes
+                onClick={() => setMenuOpen(false)}
+                className="absolute right-5 top-5 cursor-pointer text-2xl"
+              />
+              <DisplayInMenu setMenuOpen={setMenuOpen} />
+            </div>
           </div>
         </div>
       ) : (

@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
         res.send(response);
       }
       case "username": {
-        const username = req.query.username;
+        const username = "^" + req.query.username + "$";
         const response = await User.find({
           username: { $regex: username, $options: "i" },
         });

@@ -4,10 +4,10 @@ import axios from "axios";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../../firebase";
 
-const ChangeUsername = ({ setDisplayCase }) => {
+const ChangeUsername = ({ setDisplayCase, username, setUsername }) => {
   const { user } = UserAuth();
-  const [username, setUsername] = useState(user.displayName);
   const [error, setError] = useState("");
+  const [newUsername, setNewUsername] = useState(username);
 
   //reset error
   useEffect(() => {
@@ -16,7 +16,7 @@ const ChangeUsername = ({ setDisplayCase }) => {
     }, 5000);
   }, [error]);
 
-  const changeUsername = (username) => {
+  const changeUsername = (newUsername) => {
     const uid = auth.currentUser.uid;
     try {
       auth.currentUser
@@ -25,7 +25,7 @@ const ChangeUsername = ({ setDisplayCase }) => {
           axios.patch(
             `/api/users/${uid}`,
             {
-              username: username,
+              username: newUsername,
             },
             {
               headers: {
@@ -36,10 +36,11 @@ const ChangeUsername = ({ setDisplayCase }) => {
         })
         .then(function () {
           updateProfile(auth.currentUser, {
-            displayName: username,
+            displayName: newUsername,
           });
         })
         .then(function () {
+          setUsername(newUsername);
           setDisplayCase("settings");
         });
     } catch (error) {
@@ -47,16 +48,16 @@ const ChangeUsername = ({ setDisplayCase }) => {
     }
   };
 
-  const checkUsernameAvailability = async (username) => {
+  const checkUsernameAvailability = async (newUsername) => {
     try {
       const response = await axios.get("/api/users", {
         params: {
           criteria: "username",
-          username: username,
+          username: newUsername,
         },
       });
       if (response.data.length === 0) {
-        changeUsername(username);
+        changeUsername(newUsername);
       } else {
         setError("Username unavailable");
       }
@@ -69,16 +70,16 @@ const ChangeUsername = ({ setDisplayCase }) => {
     const specialCharacters = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
     e.preventDefault();
     setError("");
-    if (!username) {
+    if (!newUsername) {
       setError("Username is required");
-    } else if (username.length < 4) {
+    } else if (newUsername.length < 4) {
       setError("Username must be 4 to 24 characters in length");
-    } else if (username.length > 24) {
+    } else if (newUsername.length > 24) {
       setError("Username must be 4 to 24 characters in length");
-    } else if (specialCharacters.test(username)) {
+    } else if (specialCharacters.test(newUsername)) {
       setError("Username may contain only letters, numbers, and _.");
     } else {
-      checkUsernameAvailability(username);
+      checkUsernameAvailability(newUsername);
     }
   };
 
@@ -91,8 +92,8 @@ const ChangeUsername = ({ setDisplayCase }) => {
             className="h-[40px] my-2"
             name="username"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={newUsername}
+            onChange={(e) => setNewUsername(e.target.value)}
           ></input>
           <button className="buttons h-[40px] my-2">Save change</button>
         </form>
