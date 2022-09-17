@@ -13,7 +13,7 @@ import DeleteAccount from "./DeleteAccount";
 const DisplayInMenu = ({ setMenuOpen }) => {
   const { user } = UserAuth();
   const [displayCase, setDisplayCase] = useState("");
-  const [username, setUsername] = useState(user.displayName);
+  const [username, setUsername] = useState(user ? user.displayName : "");
   const navigate = useNavigate();
   const logOut = () => {
     return signOut(auth);
