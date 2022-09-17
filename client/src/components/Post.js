@@ -155,9 +155,7 @@ const Post = ({
               <p>{post.conditions.currentConditions.conditions}</p>
               <p>Temperature: {post.conditions.currentConditions.temp} °F</p>
               <p>Wind: {post.conditions.currentConditions.windspeed} mph</p>
-              <p>
-                Pressure: {post.conditions.currentConditions.pressure} millibars
-              </p>
+              <p>Pressure: {post.conditions.currentConditions.pressure} mbar</p>
             </>
           ) : (
             ""
