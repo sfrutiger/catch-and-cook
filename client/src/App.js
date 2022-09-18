@@ -196,6 +196,7 @@ function App() {
                   feedPosition={feedPosition}
                   setUserFeedId={setUserFeedId}
                   setSkip={setSkip}
+                  endOfPosts={endOfPosts}
                 />
                 <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
               </ProtectedRoute>
