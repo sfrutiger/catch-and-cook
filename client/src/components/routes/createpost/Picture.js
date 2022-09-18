@@ -32,11 +32,11 @@ const Picture = ({
   return (
     <div className="max-w-[700px] h-[95%] mx-auto mt-8 p-4 flex flex-col justify-between">
       <div>
-        <img src={picturePreviewURL} alt="Catch" />
+        <img src={picturePreviewURL} alt="" />
         <form>
           <input type="file" onChange={(e) => handleChange(e)} />
         </form>
-        <div className="flex flex-row">
+        <div className="flex flex-row mt-4">
           <Link to="/" className="w-full mr-1">
             <button className="w-full h-[3rem] my-2 buttons mr-1">
               Cancel

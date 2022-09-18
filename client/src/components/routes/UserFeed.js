@@ -14,7 +14,7 @@ const UserFeed = ({
   const location = useLocation();
   const data = location.state;
   const navigate = useNavigate();
-  const [endOfPosts, setEndOfPosts] = useState(false);
+  const [endOfPosts, setEndOfPosts] = useState(true);
 
   const getPosts = async () => {
     const userID = data[0].authorUID;
@@ -28,10 +28,12 @@ const UserFeed = ({
         response.data.length > 0
       ) {
         setUserPosts([...userPosts, ...response.data]);
+        setEndOfPosts(false);
       } else if (response.data.length === 0 && userFeedSkip !== 0) {
         setEndOfPosts(true);
       } else {
         setUserPosts(response.data);
+        setEndOfPosts(false);
       }
     } catch (error) {
       console.log(error);
