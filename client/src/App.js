@@ -36,12 +36,15 @@ function App() {
   const [feedPosition, setFeedPosition] = useState("");
   const routePath = useLocation();
   const [postEdited, setPostEdited] = useState(0);
+  const [endOfPosts, setEndOfPosts] = useState(false);
 
   const getPosts = async () => {
     try {
       const response = await axios.get(`/api/posts?skip=${skip}`);
-      if (posts.length > 0 && skip !== 0) {
+      if (posts.length > 0 && skip !== 0 && response.data.length > 0) {
         setPosts([...posts, ...response.data]);
+      } else if (response.data.length === 0 && skip !== 0) {
+        setEndOfPosts(true);
       } else {
         setPosts(response.data);
       }
@@ -124,6 +127,8 @@ function App() {
                   posts={posts}
                   feedPosition={feedPosition}
                   setUserFeedId={setUserFeedId}
+                  setSkip={setSkip}
+                  endOfPosts={endOfPosts}
                 />
                 <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
               </PublicRoute>
@@ -190,6 +195,7 @@ function App() {
                   posts={posts}
                   feedPosition={feedPosition}
                   setUserFeedId={setUserFeedId}
+                  setSkip={setSkip}
                 />
                 <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
               </ProtectedRoute>

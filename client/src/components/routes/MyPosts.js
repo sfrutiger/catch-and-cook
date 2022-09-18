@@ -2,6 +2,7 @@ import Post from "../Post";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
+import LoadMoreButton from "../LoadMoreButton";
 
 const MyPosts = ({
   posts,
@@ -15,14 +16,17 @@ const MyPosts = ({
   const { user } = UserAuth();
   const userID = user.uid;
   const myFeed = "my feed, not general or user feed"; //this is to clarify Post component is generated from myPosts
+  const [endOfPosts, setEndOfPosts] = useState(false);
 
   const getMyPosts = async () => {
     try {
       const response = await axios.get(
         `/api/posts?skip=${myFeedSkip}&userid=${userID}`
       );
-      if (myPosts.length > 0 && myFeedSkip !== 0) {
+      if (myPosts.length > 0 && myFeedSkip !== 0 && response.data.length > 0) {
         setMyPosts([...myPosts, ...response.data]);
+      } else if (response.data.length === 0 && myFeedSkip !== 0) {
+        setEndOfPosts(true);
       } else {
         setMyPosts(response.data);
       }
@@ -50,7 +54,7 @@ const MyPosts = ({
         </div>
       </div>
       {myPosts.length ? (
-        <div className="w-full mb-16 flex flex-col items-center">
+        <div className="w-full mb-8 flex flex-col items-center">
           {myPosts.map((post) => (
             <Post
               key={post._id}
@@ -66,6 +70,11 @@ const MyPosts = ({
       ) : (
         ""
       )}
+      <LoadMoreButton
+        posts={myPosts}
+        setSkip={setMyFeedSkip}
+        endOfPosts={endOfPosts}
+      />
     </>
   );
 };

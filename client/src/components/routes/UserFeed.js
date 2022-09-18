@@ -1,13 +1,20 @@
 import Post from "../Post";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import LoadMoreButton from "../LoadMoreButton";
 
-const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
+const UserFeed = ({
+  userFeedSkip,
+  setUserFeedSkip,
+  userPosts,
+  setUserPosts,
+}) => {
   const location = useLocation();
   const data = location.state;
   const navigate = useNavigate();
+  const [endOfPosts, setEndOfPosts] = useState(false);
 
   const getPosts = async () => {
     const userID = data[0].authorUID;
@@ -15,8 +22,14 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
       const response = await axios.get(
         `/api/posts?skip=${userFeedSkip}&userid=${userID}`
       );
-      if (userPosts.length > 0) {
+      if (
+        userPosts.length > 0 &&
+        userFeedSkip !== 0 &&
+        response.data.length > 0
+      ) {
         setUserPosts([...userPosts, ...response.data]);
+      } else if (response.data.length === 0 && userFeedSkip !== 0) {
+        setEndOfPosts(true);
       } else {
         setUserPosts(response.data);
       }
@@ -48,7 +61,7 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
         </div>
       </div>
       {userPosts.length ? (
-        <div className="w-full mb-16 flex flex-col items-center">
+        <div className="w-full mb-8 flex flex-col items-center">
           {userPosts.map((post) => (
             <Post key={post._id} post={post} />
           ))}
@@ -56,6 +69,11 @@ const UserFeed = ({ userFeedSkip, userPosts, setUserPosts }) => {
       ) : (
         ""
       )}
+      <LoadMoreButton
+        posts={userPosts}
+        setSkip={setUserFeedSkip}
+        endOfPosts={endOfPosts}
+      />
     </>
   );
 };
