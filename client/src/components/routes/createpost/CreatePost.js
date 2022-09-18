@@ -127,7 +127,7 @@ const CreatePost = ({ posts, setPosts }) => {
       } else {
         createPost();
       }
-      navigate("/signedin");
+      navigate("/");
     } catch (error) {
       console.log(error.message);
     }
