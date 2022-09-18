@@ -71,9 +71,9 @@ export const AuthContextProvider = ({ children }) => {
         });
       })
       //need to figure out how to delete pictures from firebase
-      /* .then(function () {
+      .then(function () {
         return deleteUser(user);
-      }) */
+      })
       .catch((error) => {
         console.log(error);
       });
