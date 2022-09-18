@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
 import axios from "axios";
+import { auth } from "./firebase";
 
 //import components
 import Header from "./components/Header";
@@ -121,7 +128,7 @@ function App() {
             exact
             path="/"
             element={
-              <PublicRoute>
+              <>
                 <Header />
                 <Feed
                   posts={posts}
@@ -131,7 +138,7 @@ function App() {
                   endOfPosts={endOfPosts}
                 />
                 <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
-              </PublicRoute>
+              </>
             }
           />
           <Route
@@ -181,25 +188,9 @@ function App() {
             path="forgotpassword"
             element={
               <PublicRoute>
+                <Header />
                 <ForgotPassword />
               </PublicRoute>
-            }
-          />
-          <Route
-            exact
-            path="signedin"
-            element={
-              <ProtectedRoute>
-                <Header />
-                <Feed
-                  posts={posts}
-                  feedPosition={feedPosition}
-                  setUserFeedId={setUserFeedId}
-                  setSkip={setSkip}
-                  endOfPosts={endOfPosts}
-                />
-                <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
-              </ProtectedRoute>
             }
           />
           <Route

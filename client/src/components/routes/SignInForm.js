@@ -22,13 +22,15 @@ const SignInForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    signIn(email, password).then(function (error) {
-      if (error) {
-        setError(error.message);
-      } else {
+    signIn(email, password)
+      .then(function (error) {
+        if (error) {
+          setError(error.message);
+        }
+      })
+      .then(function () {
         navigate("/");
-      }
-    });
+      });
   };
 
   return (

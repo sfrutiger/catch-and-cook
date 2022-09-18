@@ -1,11 +1,19 @@
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
   const auth = getAuth();
   const [email, setEmail] = useState();
   const navigate = useNavigate();
+  const [error, setError] = useState();
+
+  //reset error
+  useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 5000);
+  }, [error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,9 +22,7 @@ const ForgotPassword = () => {
         navigate("/");
       })
       .catch((error) => {
-        /* const errorCode = error.code;
-        const errorMessage = error.message; */
-        console.log(error);
+        setError(error.message);
       });
   };
 
@@ -40,15 +46,16 @@ const ForgotPassword = () => {
         </div>
         <div className="flex flex-row">
           <Link to="/" className="w-full mr-1">
-            <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2">
+            <button className="w-full h-[3rem] my-2 buttons mb-2">
               Cancel
             </button>
           </Link>
-          <button className="w-full h-[3rem] my-2 bg-white text-slate-500 rounded mb-2 ml-1">
+          <button className="w-full h-[3rem] my-2 buttons mb-2 ml-1">
             Send password reset email
           </button>
         </div>
       </form>
+      {error ? <p className="error-message">{error}</p> : ""}
     </div>
   );
 };

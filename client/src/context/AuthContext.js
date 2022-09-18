@@ -59,7 +59,7 @@ export const AuthContextProvider = ({ children }) => {
             authtoken: idToken,
           },
         });
-        /* axios.delete(`/api/posts/accountdeletion/${auth.currentUser.uid}`, {
+        axios.delete(`/api/posts/accountdeletion/${auth.currentUser.uid}`, {
           headers: {
             authtoken: idToken,
           },
@@ -68,7 +68,7 @@ export const AuthContextProvider = ({ children }) => {
           headers: {
             authtoken: idToken,
           },
-        }); */
+        });
       })
       //need to figure out how to delete pictures from firebase
       /* .then(function () {
