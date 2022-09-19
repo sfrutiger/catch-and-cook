@@ -188,9 +188,6 @@ const Post = ({
                     to={`/recipedetails/${recipe._id}`}
                     state={recipe}
                     key={recipe._id}
-                    onClick={() =>
-                      sessionStorage.setItem("scrollPosition", feedPosition)
-                    }
                   >
                     <div className="cursor-pointer flex items-center justify-center h-12 my-4 whitespace-pre-wrap">
                       {recipe.name}

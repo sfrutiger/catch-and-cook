@@ -72,7 +72,7 @@ function App() {
 
   const handleScroll = (e) => {
     const { offsetHeight, scrollTop, scrollHeight } = e.target;
-    setFeedPosition(scrollTop);
+    /* setFeedPosition(scrollTop); */
     if (offsetHeight + scrollTop === scrollHeight) {
       switch (routePath.pathname) {
         case `/userfeed/${userFeedId}`:
@@ -86,6 +86,10 @@ function App() {
       }
     }
   };
+
+  useEffect(() => {
+    document.getElementById("App").scrollTo(0, 0);
+  }, [routePath.pathname]);
 
   //return to scroll position was messing up recipes, will re-implement later
   /*   // get scroll position from session storage for scroll restoration
