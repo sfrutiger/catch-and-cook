@@ -7,7 +7,7 @@ const Feed = ({ posts, feedPosition, setUserFeedId, setSkip, endOfPosts }) => {
   return (
     <>
       {posts.length ? (
-        <div className="w-full mt-8 flex flex-col items-center">
+        <div className="w-full my-8 flex flex-col items-center">
           {posts.map((post) => (
             <Post
               key={post._id}

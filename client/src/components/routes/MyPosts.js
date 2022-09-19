@@ -55,7 +55,7 @@ const MyPosts = ({
         </div>
       </div>
       {myPosts.length ? (
-        <div className="w-full mb-8 flex flex-col items-center">
+        <div className="w-full my-8 flex flex-col items-center">
           {myPosts.map((post) => (
             <Post
               key={post._id}
