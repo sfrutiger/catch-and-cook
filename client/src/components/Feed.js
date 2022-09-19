@@ -17,11 +17,17 @@ const Feed = ({ posts, feedPosition, setUserFeedId, setSkip, endOfPosts }) => {
               generalFeed={generalFeed}
             />
           ))}
+          <LoadMoreButton
+            posts={posts}
+            setSkip={setSkip}
+            endOfPosts={endOfPosts}
+          />
         </div>
       ) : (
-        ""
+        <div className="w-full mt-28 flex flex-col justify-center items-center">
+          <p>No posts to show</p>
+        </div>
       )}
-      <LoadMoreButton posts={posts} setSkip={setSkip} endOfPosts={endOfPosts} />
     </>
   );
 };

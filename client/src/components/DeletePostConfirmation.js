@@ -7,13 +7,14 @@ const DeletePostConfirmation = ({
   deletePost,
   deleteRecipe,
   recipeToDelete,
+  myPosts,
 }) => {
   const navigate = useNavigate();
 
   const handClick = () => {
     switch (typeOfDeletion) {
       case "post":
-        deletePost();
+        deletePost(myPosts);
         break;
       case "recipe":
         deleteRecipe(recipeToDelete);

@@ -1,8 +1,8 @@
 const LoadMoreButton = ({ endOfPosts, setSkip, posts }) => {
   return (
-    <div className="flex w-full justify-center my-8">
+    <div className="mt-4">
       {endOfPosts ? (
-        <p>No more posts to show</p>
+        <p>End of posts</p>
       ) : (
         <button
           className="buttons w-[200px] h-[2.6rem]"

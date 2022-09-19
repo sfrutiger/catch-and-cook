@@ -139,7 +139,7 @@ const LocationAndConditions = ({
         setCoordinates={setCoordinates}
         defaultLat={41.5}
         defaultLong={-71.5}
-        mapHeight={"60vw"}
+        mapHeight={"40vh"}
       ></Map>
       <div className="flex flex-row justify-between py-2">
         <Switch

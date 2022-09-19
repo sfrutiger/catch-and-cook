@@ -43,19 +43,17 @@ function App() {
   const [feedPosition, setFeedPosition] = useState("");
   const routePath = useLocation();
   const [postEdited, setPostEdited] = useState(0);
-  const [endOfPosts, setEndOfPosts] = useState(true);
+  const [endOfPosts, setEndOfPosts] = useState(false);
 
   const getPosts = async () => {
     try {
       const response = await axios.get(`/api/posts?skip=${skip}`);
       if (posts.length > 0 && skip !== 0 && response.data.length > 0) {
         setPosts([...posts, ...response.data]);
-        setEndOfPosts(false);
       } else if (response.data.length === 0 && skip !== 0) {
         setEndOfPosts(true);
       } else {
         setPosts(response.data);
-        setEndOfPosts(false);
       }
     } catch (error) {
       console.log(error);
