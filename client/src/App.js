@@ -88,6 +88,10 @@ function App() {
   };
 
   useEffect(() => {
+    setUserFeedSkip(0);
+    setMyFeedSkip(0);
+    setUserPosts([]);
+    setMyPosts([]);
     document.getElementById("App").scrollTo(0, 0);
   }, [routePath.pathname]);
 
