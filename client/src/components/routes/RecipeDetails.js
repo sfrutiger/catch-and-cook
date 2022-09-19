@@ -26,13 +26,24 @@ const RecipeDetails = ({ myFeed }) => {
           onClick={() => handleClick()}
           className="text-xl cursor-pointer m-0"
         />
-        <h1 className="mb-4 text-2xl">{recipe.name}</h1>
-        <p className="mb-4 whitespace-pre-wrap">
-          Ingredients: {recipe.ingredients}
-        </p>
-        <p className="mb-4 whitespace-pre-wrap">
-          Instructions: {recipe.instructions}
-        </p>
+        {recipe.name ? <h1 className="mb-4 text-2xl">{recipe.name}</h1> : ""}
+        {recipe.ingredients ? (
+          <div className="mb-4 mx-8 text-left">
+            <h2 className="text-xl mb-2">Ingredients:</h2>
+            <p className="whitespace-pre-wrap">{recipe.ingredients}</p>
+          </div>
+        ) : (
+          ""
+        )}
+        {recipe.instructions ? (
+          <div className="mb-4 mx-8 text-left">
+            <h2 className="text-xl mb-2">Instructions:</h2>
+            <p className="whitespace-pre-wrap">{recipe.instructions}</p>
+          </div>
+        ) : (
+          ""
+        )}
+
         {!myFeed ? (
           <div className="flex w-full justify-end">
             <div
