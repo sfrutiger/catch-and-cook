@@ -87,7 +87,8 @@ function App() {
     }
   };
 
-  // get scroll position from session storage for scroll restoration
+  //return to scroll position was messing up recipes, will re-implement later
+  /*   // get scroll position from session storage for scroll restoration
   useEffect(() => {
     if (feedPosition === 0 || feedPosition === NaN) {
       const scrollPosition = sessionStorage.getItem("scrollPosition");
@@ -109,7 +110,7 @@ function App() {
 
   const returnFeedToSamePosition = () => {
     document.getElementById("App").scrollTo(0, feedPosition);
-  };
+  }; */
 
   return (
     <AuthContextProvider>
