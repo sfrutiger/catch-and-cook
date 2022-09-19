@@ -168,8 +168,14 @@ const Post = ({
       >
         <FaSpinner icon="spinner" className="text-5xl animate-spin w-full" />
       </div>
-      <div style={{ display: loading ? "none" : "block" }}>
-        <img src={post.pictureDownloadURL} onLoad={() => setLoading(false)} />
+      <div className="w-full" style={{ display: loading ? "none" : "block" }}>
+        <div className="w-full flex justify-center">
+          <img
+            className="max-h-[50vh]"
+            src={post.pictureDownloadURL}
+            onLoad={() => setLoading(false)}
+          />
+        </div>
       </div>
       {postRecipes.length ? (
         <div className="mt-4 w-full">
