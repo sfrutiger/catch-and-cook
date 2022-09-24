@@ -80,7 +80,7 @@ const Contact = ({ setDisplayCase }) => {
               required
               onChange={(e) => setMessage(e.target.value)}
             />
-            <button className="buttons mt-2 h-[40px]">Send request</button>
+            <button className="buttons mt-2 h-[40px]">Send</button>
           </form>
           <button
             className="buttons mt-0 h-[40px]"

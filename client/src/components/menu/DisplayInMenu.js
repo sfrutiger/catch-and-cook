@@ -33,10 +33,12 @@ const DisplayInMenu = ({ setMenuOpen }) => {
     case "about":
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
-          <FaArrowLeft
-            className="absolute left-5 top-5 cursor-pointer text-2xl"
+          <button
+            className="absolute left-5 top-5 cursor-pointer text-2xl p-3"
             onClick={() => setDisplayCase("")}
-          />
+          >
+            <FaArrowLeft />
+          </button>
           <About />
         </div>
       );
