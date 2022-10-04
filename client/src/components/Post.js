@@ -123,7 +123,7 @@ const Post = ({
         )}
       </div>
       <div className="flex justify-between mb-2">
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start bg-slate-300 max-w-[67%]">
           {generalFeed ? (
             <Link
               to={`/userfeed/${post.authorUID}`}
