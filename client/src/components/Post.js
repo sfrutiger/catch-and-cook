@@ -104,7 +104,7 @@ const Post = ({
   };
 
   return (
-    <div className="bg-secondary rounded-lg w-full max-w-[700px] mb-4 p-4 relative">
+    <div className="bg-secondary rounded-lg w-full max-w-[700px] mb-4 p-4 relative text-xs sm:text-sm md:text-base">
       <ReportConfirmation
         post={post}
         postType={"post"}
@@ -149,14 +149,24 @@ const Post = ({
           <p>Species: {post.species}</p>
           <p>Method: {post.method}</p>
         </div>
-        <div className="flex flex-col items-end">
-          {post.conditions.currentConditions ? (
-            <>
-              <p>{post.conditions.currentConditions.conditions}</p>
-              <p>Temperature: {post.conditions.currentConditions.temp} °F</p>
-              <p>Wind: {post.conditions.currentConditions.windspeed} mph</p>
-              <p>Pressure: {post.conditions.currentConditions.pressure} mbar</p>
-            </>
+        <div className="flex flex-col items-end ml-2">
+          {post.conditions.currentConditions.conditions ? (
+            <p>{post.conditions.currentConditions.conditions}</p>
+          ) : (
+            ""
+          )}
+          {post.conditions.currentConditions.temp ? (
+            <p>Temperature: {post.conditions.currentConditions.temp} °F</p>
+          ) : (
+            ""
+          )}
+          {post.conditions.currentConditions.windspeed ? (
+            <p>Wind: {post.conditions.currentConditions.windspeed} mph</p>
+          ) : (
+            ""
+          )}
+          {post.conditions.currentConditions.pressure ? (
+            <p>Pressure: {post.conditions.currentConditions.pressure} mbar</p>
           ) : (
             ""
           )}
