@@ -83,7 +83,7 @@ const Contact = ({ setDisplayCase }) => {
             <button className="buttons mt-2 h-[40px]">Send</button>
           </form>
           <button
-            className="buttons mt-0 h-[40px]"
+            className="buttons mt-0 h-[40px] md:w-[75%]"
             onClick={() => {
               navigate(-1);
             }}
