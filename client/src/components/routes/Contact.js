@@ -46,10 +46,10 @@ const Contact = ({ setDisplayCase }) => {
   return (
     <div name="contact" className="w-full h-screen flex justify-center">
       <div className="w-[50%] mt-16">
-        <h1 className="">Submit your inquiry below</h1>
         <div className="w-full flex flex-col items-center">
+          <h1 className="w-full md:w-[90%]">Submit your inquiry below</h1>
           <form
-            className="flex flex-col py-2 w-full md:w-[75%]"
+            className="flex flex-col py-2 w-full md:w-[90%]"
             onSubmit={(e) => sendEmail(e)}
           >
             {!user ? (
@@ -83,7 +83,7 @@ const Contact = ({ setDisplayCase }) => {
             <button className="buttons mt-2 h-[40px]">Send</button>
           </form>
           <button
-            className="buttons mt-0 h-[40px] md:w-[75%]"
+            className="buttons mt-0 h-[40px] md:w-[90%]"
             onClick={() => {
               navigate(-1);
             }}
