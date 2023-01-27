@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const Post = require("../models/postModel");
 
-// @desc Get posts
+// @desc Get posts for feed
 // @route GET /api/posts
 // @access Public
 // infinite scroll
@@ -26,6 +26,24 @@ router.get("/", async (req, res) => {
     res.send(posts);
   } catch (e) {
     res.status(500).send();
+  }
+});
+
+// @desc Get coordinates of posts
+// @route GET /api/posts/coordinates
+// @access Private
+router.get("/coordinates", auth, async (req, res) => {
+  const decodedTokenUID = res.locals.uid;
+  const userID = req.query.userid ? req.query.userid : { $exists: true };
+  if (userID === decodedTokenUID) {
+    try {
+      const posts = await Post.find({ authorUID: userID }, undefined);
+      res.send(posts);
+    } catch (e) {
+      res.status(500).send();
+    }
+  } else {
+    console.log("access denied");
   }
 });
 

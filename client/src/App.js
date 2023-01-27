@@ -220,7 +220,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <Header />
-                <CatchMap />
+                <CatchMap myPosts={myPosts} />
               </ProtectedRoute>
             }
           />

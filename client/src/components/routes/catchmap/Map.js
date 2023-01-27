@@ -1,33 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import axios from "axios";
+import { UserAuth } from "../../../context/AuthContext";
+import { getAuth } from "firebase/auth";
 
-const Map = ({ setCoordinates, defaultLat, defaultLong, mapHeight }) => {
-  const [latitude, setLatitude] = useState(defaultLat);
-  const [longitude, setLongitude] = useState(defaultLong); //I need to change this to default to user location
+const Map = ({ mapHeight }) => {
+  //need to make sure it has auth or redirect on refresh
+  const { user } = UserAuth();
+  const userID = user.uid || "";
+  const auth = getAuth();
 
-  const mapCenter = {
-    lat: 45,
-    lng: 45,
+  const [catchMapPosts, setCatchMapPosts] = useState();
+
+  const getMyPosts = () => {
+    if (auth.currentUser.uid) {
+      auth.currentUser.getIdToken(true).then(async function (idToken) {
+        try {
+          const response = await axios.get(
+            `/api/posts/coordinates?&userid=${userID}`,
+            {
+              headers: {
+                authtoken: idToken,
+              },
+            }
+          );
+          setCatchMapPosts(response.data);
+          console.log(catchMapPosts);
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    } else {
+      console.log("Access denied. Only post author can delete post");
+    }
   };
 
-  //create array of catch locations with ID from DB
-  const catchLocations = [
-    {
-      ID: 1,
-      lat: 45,
-      lng: 45,
-    },
-    {
-      _id: 2,
-      lat: 46,
-      lng: 46,
-    },
-    {
-      _id: 3,
-      lat: 46,
-      lng: 45,
-    },
-  ];
+  useEffect(() => {
+    getMyPosts();
+  }, []);
+
+  const mapCenter = {
+    lat: 41.402,
+    lng: -71.571,
+  };
 
   //find maximum zoom to fit all markers
 
@@ -41,18 +56,18 @@ const Map = ({ setCoordinates, defaultLat, defaultLong, mapHeight }) => {
           height: mapHeight,
           width: "80%",
         }}
-        zoom={7}
+        zoom={11}
         center={mapCenter}
         mapTypeId={"satellite"}
       >
-        {catchLocations ? (
+        {catchMapPosts ? (
           <>
-            {catchLocations.map((event) => (
+            {catchMapPosts.map((post) => (
               <Marker
-                key={event._id}
+                key={post._id}
                 position={{
-                  lat: event.lat,
-                  lng: event.lng,
+                  lat: post.coordinates[1],
+                  lng: post.coordinates[0],
                 }}
               />
             ))}
