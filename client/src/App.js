@@ -30,6 +30,7 @@ import AddRecipe from "./components/routes/AddRecipe";
 import ForgotPassword from "./components/routes/ForgotPassword";
 import EditPost from "./components/EditPost";
 import Contact from "./components/routes/Contact";
+import CatchMap from "./components/routes/catchmap/CatchMap";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -211,6 +212,16 @@ function App() {
                 />
                 <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
               </>
+            }
+          />
+          <Route
+            exact
+            path="catchmap"
+            element={
+              <ProtectedRoute>
+                <Header />
+                <CatchMap />
+              </ProtectedRoute>
             }
           />
           <Route

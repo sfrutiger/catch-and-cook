@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import LoadMoreButton from "../LoadMoreButton";
+import { Link } from "react-router-dom";
 
 const MyPosts = ({
   posts,
@@ -47,15 +48,20 @@ const MyPosts = ({
 
   return (
     <>
-      <div className="sticky z-10 top-0 w-full h-[60px] bg-primary flex justify-center">
+      <div className="sticky z-10 top-0 w-full h-[70px] mb-6 bg-primary flex justify-center">
         <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
-          <h1 className="text-xl w-full text-center font-semibold">
-            {user.displayName}
-          </h1>
+          <div>
+            <h1 className="text-xl w-full text-center font-semibold my-2">
+              {user.displayName}
+            </h1>
+            <Link to={`/catchmap`}>
+              <button className="buttons p-2">View catch map</button>
+            </Link>
+          </div>
         </div>
       </div>
       {myPosts.length ? (
-        <div className="w-full my-8 flex flex-col items-center">
+        <div className="w-full mb-8 flex flex-col items-center">
           {myPosts.map((post) => (
             <Post
               key={post._id}
