@@ -82,8 +82,7 @@ const Map = ({ mapHeight }) => {
 
 export default Map;
 
-{
-  /* 
+/* 
   <div>
   {catchLocations.map((catch) => (
     <Marker
@@ -95,4 +94,8 @@ export default Map;
     />
   ))}
 </div>; */
-}
+
+/* google.maps.event.addListener(map, 'bounds_changed', function() {
+  map.getBounds().contains(marker.getPosition()) 
+});
+} */
