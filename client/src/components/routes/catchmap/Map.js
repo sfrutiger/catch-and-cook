@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import axios from "axios";
 import { UserAuth } from "../../../context/AuthContext";
@@ -9,8 +9,7 @@ const Map = ({ mapHeight }) => {
   const { user } = UserAuth();
   const userID = user.uid || "";
   const auth = getAuth();
-
-  const [catchMapPosts, setCatchMapPosts] = useState();
+  const [catchMapPosts, setCatchMapPosts] = useState([]);
 
   const getMyPosts = () => {
     if (auth.currentUser.uid) {
@@ -31,13 +30,9 @@ const Map = ({ mapHeight }) => {
         }
       });
     } else {
-      console.log("Access denied. Only post author can delete post");
+      console.log("Access denied. Auth required to view catch map.");
     }
   };
-
-  useEffect(() => {
-    getMyPosts();
-  }, []);
 
   const mapCenter = {
     lat: 41.402,
@@ -45,6 +40,26 @@ const Map = ({ mapHeight }) => {
   };
 
   //find maximum zoom to fit all markers
+
+  const [map, setMap] = useState(null);
+  const onLoad = useCallback((map) => setMap(map), []);
+
+  useEffect(() => {
+    if (map) {
+      const bounds = new window.google.maps.LatLngBounds();
+      catchMapPosts.map((post) => {
+        bounds.extend({
+          lat: post.coordinates[1],
+          lng: post.coordinates[0],
+        });
+      });
+      map.fitBounds(bounds);
+    }
+  }, [map, catchMapPosts]);
+
+  useEffect(() => {
+    getMyPosts();
+  }, []);
 
   return (
     <LoadScript
@@ -58,6 +73,7 @@ const Map = ({ mapHeight }) => {
         }}
         zoom={11}
         center={mapCenter}
+        onLoad={onLoad}
         mapTypeId={"satellite"}
       >
         {catchMapPosts ? (
@@ -81,21 +97,3 @@ const Map = ({ mapHeight }) => {
 };
 
 export default Map;
-
-/* 
-  <div>
-  {catchLocations.map((catch) => (
-    <Marker
-      key={catch._id}
-      position={{
-                lat: catch.lat,
-                lng: catch.lng,
-              }}
-    />
-  ))}
-</div>; */
-
-/* google.maps.event.addListener(map, 'bounds_changed', function() {
-  map.getBounds().contains(marker.getPosition()) 
-});
-} */
