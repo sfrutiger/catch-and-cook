@@ -46,10 +46,12 @@ const DisplayInMenu = ({ setMenuOpen }) => {
     case "settings":
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
-          <FaArrowLeft
-            className="absolute left-5 top-5 cursor-pointer text-2xl"
+          <button
+            className="absolute left-5 top-5 cursor-pointer text-2xl p-3"
             onClick={() => setDisplayCase("")}
-          />
+          >
+            <FaArrowLeft />
+          </button>
           <Settings
             setDisplayCase={setDisplayCase}
             displayCase={displayCase}
@@ -62,10 +64,12 @@ const DisplayInMenu = ({ setMenuOpen }) => {
     case "changeusername":
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
-          <FaArrowLeft
-            className="absolute left-5 top-5 cursor-pointer text-2xl"
-            onClick={() => setDisplayCase("")}
-          />
+          <button
+            className="absolute left-5 top-5 cursor-pointer text-2xl p-3"
+            onClick={() => setDisplayCase("settings")}
+          >
+            <FaArrowLeft />
+          </button>
           <ChangeUsername
             setDisplayCase={setDisplayCase}
             username={username}
@@ -77,10 +81,12 @@ const DisplayInMenu = ({ setMenuOpen }) => {
     case "changepassword":
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
-          <FaArrowLeft
-            className="absolute left-3 top-3 cursor-pointer text-2xl"
-            onClick={() => setDisplayCase("")}
-          />
+          <button
+            className="absolute left-5 top-5 cursor-pointer text-2xl p-3"
+            onClick={() => setDisplayCase("settings")}
+          >
+            <FaArrowLeft />
+          </button>
           <ChangePassword setDisplayCase={setDisplayCase} />
         </div>
       );
@@ -88,10 +94,12 @@ const DisplayInMenu = ({ setMenuOpen }) => {
     case "deleteaccount":
       return (
         <div className="w-full h-[30%] flex flex-col items-center justify-around">
-          <FaArrowLeft
-            className="absolute left-3 top-3 cursor-pointer text-2xl"
-            onClick={() => setDisplayCase("")}
-          />
+          <button
+            className="absolute left-5 top-5 cursor-pointer text-2xl p-3"
+            onClick={() => setDisplayCase("settings")}
+          >
+            <FaArrowLeft />
+          </button>
           <DeleteAccount setDisplayCase={setDisplayCase} />
         </div>
       );
