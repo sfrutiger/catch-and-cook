@@ -55,7 +55,7 @@ const MyPosts = ({
               {user.displayName}
             </h1>
             <Link to={`/catchmap`}>
-              <button className="buttons p-2">View catch map</button>
+              <button className="buttons p-2">View map of catches</button>
             </Link>
           </div>
         </div>

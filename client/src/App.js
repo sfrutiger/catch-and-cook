@@ -31,6 +31,7 @@ import ForgotPassword from "./components/routes/ForgotPassword";
 import EditPost from "./components/EditPost";
 import Contact from "./components/routes/Contact";
 import CatchMap from "./components/routes/catchmap/CatchMap";
+import CatchDetails from "./components/routes/CatchDetails";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -191,6 +192,17 @@ function App() {
           />
           <Route
             exact
+            path="catchdetails/:id"
+            element={
+              <>
+                <Header />
+                <CatchDetails />
+                <Footer setMenuOpen={setMenuOpen} />
+              </>
+            }
+          />
+          <Route
+            exact
             path="forgotpassword"
             element={
               <PublicRoute>
@@ -221,6 +233,7 @@ function App() {
               <ProtectedRoute>
                 <Header />
                 <CatchMap myPosts={myPosts} />
+                <Footer setMenuOpen={setMenuOpen} createPostVisible={true} />
               </ProtectedRoute>
             }
           />

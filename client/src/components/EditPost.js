@@ -272,17 +272,21 @@ const EditPost = ({
       ></DeletePostConfirmation>
       <div className="sticky top-0 w-full h-[60px] bg-secondary text-light flex justify-center">
         <div className="w-full max-w-[1500px] h-full flex items-center justify-around">
-          <FaTimes
-            onClick={() => discardChanges()}
-            className="text-2xl cursor-pointer text-red-500"
-          />
+          <button>
+            <FaTimes
+              onClick={() => discardChanges()}
+              className="text-2xl cursor-pointer text-red-500"
+            />
+          </button>
           <h1 className="text-xl w-[50%] max-w-[700px] text-center">
             Edit post
           </h1>
-          <FaCheck
-            onClick={() => saveChanges()}
-            className="text-2xl cursor-pointer text-green-500"
-          />
+          <button>
+            <FaCheck
+              onClick={() => saveChanges()}
+              className="text-2xl cursor-pointer text-green-500"
+            />
+          </button>
         </div>
       </div>
       <div className="flex justify-center">

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import axios from "axios";
 import { UserAuth } from "../../../context/AuthContext";
@@ -10,6 +11,7 @@ const Map = ({ mapHeight }) => {
   const userID = user.uid || "";
   const auth = getAuth();
   const [catchMapPosts, setCatchMapPosts] = useState([]);
+  const navigate = useNavigate();
 
   const getMyPosts = () => {
     if (auth.currentUser.uid) {
@@ -37,6 +39,12 @@ const Map = ({ mapHeight }) => {
   const mapCenter = {
     lat: 41.402,
     lng: -71.571,
+  };
+
+  const linkToPost = (post) => {
+    navigate(`/catchdetails/${post._id}`, {
+      state: { id: post._id },
+    });
   };
 
   //find maximum zoom to fit all markers
@@ -85,6 +93,7 @@ const Map = ({ mapHeight }) => {
                   lat: post.coordinates[1],
                   lng: post.coordinates[0],
                 }}
+                onClick={() => linkToPost(post)}
               />
             ))}
           </>
